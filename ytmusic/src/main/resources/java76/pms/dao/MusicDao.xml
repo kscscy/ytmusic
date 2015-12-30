@@ -3,21 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="java76.pms.dao.BoardDao">
+<mapper namespace="java76.pms.dao.MusicDao">
 
-  <resultMap type="board" id="boardMap">
+  <resultMap type="music" id="musicMap">
     <id 		column="bno" 		property="no"/>
     <result column="cre_dt" 		property="createdDate"/>
     <result column="afile" 		property="attachFile"/>
   </resultMap>
 
-  <select id="selectList" resultMap="boardMap" parameterType="map">
+  <select id="selectList" resultMap="musicMap" parameterType="map">
     select 
       bno,
       title,
       views,
       cre_dt 
-    from board
+    from music
     order by 
     <choose>
       <when test="keyword == 'title'">title </when>
@@ -31,18 +31,18 @@
     limit #{startIndex}, #{length}
   </select>
   
-  <insert id="insert" parameterType="board">
-    insert into board(title,content,pwd,cre_dt,afile) 
+  <insert id="insert" parameterType="music">
+    insert into music(title,content,pwd,cre_dt,afile) 
     values(#{title},#{content},#{password},now(),#{attachFile})
   </insert>
   
   <delete id="delete" parameterType="map">
-    delete from board 
+    delete from music 
   	where bno=#{no} and (pwd is null or pwd=#{password})
   </delete>
   
-  <update id="update" parameterType="board">
-    update board set 
+  <update id="update" parameterType="music">
+    update music set 
       title=#{title},
       content=#{content},
       cre_dt=now(),
@@ -50,7 +50,7 @@
     where bno=#{no} and (pwd is null or pwd=#{password})
   </update>
   
-  <select id="selectOne" resultMap="boardMap" parameterType="int">
+  <select id="selectOne" resultMap="musicMap" parameterType="int">
     select 
       bno,
       title,
@@ -58,7 +58,7 @@
       views,
       cre_dt,
   	  afile 
-    from board
+    from music
     where bno=#{no}
   </select>
 </mapper>

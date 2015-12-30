@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="java76.pms.dao.StudentDao">
+<mapper namespace="java76.pms.dao.MemberDao">
 	<sql id="select_inc">
 		select name, email, tel, cid, photo
 	</sql>
 	
-	<select id="selectList" resultType="student" parameterType="map">
+	<select id="selectList" resultType="member" parameterType="map">
 		<include refid="select_inc"/> 
-		from student
+		from member
 		order by
 		<choose>
       <when test="keyword == 'email'"> email </when>
@@ -24,17 +24,17 @@
 		limit #{startIndex}, #{length}
 	</select>
 
-	<insert id="insert" parameterType="student">
-		insert into student(name,email,tel,cid,photo,pwd)
+	<insert id="insert" parameterType="member">
+		insert into member(name,email,tel,cid,photo,pwd)
 		values(#{name},#{email},#{tel},#{cid},#{photo},sha1(#{password}))
 	</insert>
 
 	<delete id="delete" parameterType="string">
-		delete from student where email=#{value}
+		delete from member where email=#{value}
 	</delete>
 
-	<update id="update" parameterType="student">
-		update student set
+	<update id="update" parameterType="member">
+		update member set
 		name=#{name},
 		tel=#{tel},
 		cid=#{cid},
@@ -42,15 +42,15 @@
 		where email=#{email}
 	</update>
 	
-	<select id="selectOne" resultType="student" parameterType="string">
+	<select id="selectOne" resultType="member" parameterType="string">
 		<include refid="select_inc"/>
-		from student
+		from member
 		where email=#{email}
 	</select>
 	
-	<select id="selectOneByEmailPassword" resultType="student" parameterType="map">
+	<select id="selectOneByEmailPassword" resultType="member" parameterType="map">
 		<include refid="select_inc"/>
-		from student
+		from member
 		where email=#{email} and pwd=sha1(#{password})
 	</select>
 </mapper>
