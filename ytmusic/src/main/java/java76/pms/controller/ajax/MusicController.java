@@ -50,7 +50,7 @@ public class MusicController {
     String musicUrl1 = null;
     String musicUrl = "https://www.youtube.com/watch?v=" + vid.getVid();
     System.out.println(musicUrl);
-    try {
+    try { 
       // run the Unix "ps -ef" command
       // using the Runtime exec method:
       Process p = null;
