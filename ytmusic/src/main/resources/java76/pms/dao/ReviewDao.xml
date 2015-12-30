@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="java76.pms.dao.ReviewDao">
+
+  <resultMap type="review" id="reviewMap">
+    <id 		column="rno" 		property="reviewNo"/>
+    <result column="mno"     property="memberNo"/>
+    <result column="cre_dt" 		property="createdDate"/>
+    <result column="photo" 		property="photo"/>
+  </resultMap>
+
+  <select id="selectList" resultMap="reviewMap" parameterType="map">
+    select 
+    rno,
+      title,
+      writer,
+      genre,
+      views,
+      text,
+      photo,
+      video,
+      cre_dt
+    from review
+    order by rno desc 
+    limit #{startIndex}, #{length}
+  </select>
+  
+  <insert id="insert" parameterType="review">
+    insert into review(title,text,video,photo,cre_dt,writer,style,genre) 
+    values(#{title},#{text},#{video},#{photo},now(),#{writer},#{style},#{genre})
+  </insert>
+  
+  <delete id="delete" parameterType="int">
+    delete from review 
+  	where rno=#{reviewNo}
+  </delete>
+  
+  <update id="update" parameterType="review">
+    update review set 
+      title=#{title},
+      text=#{text},
+      video=#{video},
+      photo=#{photo},
+      style={style},
+      genre=#{genre}
+    where rno=#{reviewNo}
+  </update>
+  
+  <select id="selectOne" resultMap="reviewMap" parameterType="int">
+    select 
+      title,
+      views,
+      text,
+      video,
+      photo,
+      rno,
+      writer,
+      cre_dt,
+      style, 
+      genre
+    from review
+    where rno=#{reviewNo}
+  </select>
+  
+</mapper>
