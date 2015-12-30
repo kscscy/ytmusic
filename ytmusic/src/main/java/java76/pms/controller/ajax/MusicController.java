@@ -14,18 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java76.pms.dao.BoardDao;
+import java76.pms.dao.MusicDao;
 import java76.pms.domain.AjaxResult;
-import java76.pms.domain.Board;
 import java76.pms.domain.Music;
+import java76.pms.domain.Music;
+import java76.pms.domain.Music2;
 
-@Controller("ajax.BoardController")
-@RequestMapping("/board/ajax/*")
-public class BoardController { 
+@Controller("ajax.MusicController")
+@RequestMapping("/music/ajax/*")
+public class MusicController { 
   
   public static final String SAVED_DIR = "/attachfile";
   
-  @Autowired BoardDao boardDao;
+  @Autowired MusicDao musicDao;
   @Autowired ServletContext servletContext;
   
   
@@ -37,8 +38,8 @@ public class BoardController {
 //  
 //  @RequestMapping("detail")
 //  public Object detail(int no) throws Exception {
-//    Board board = boardDao.selectOne(no);
-//    return new AjaxResult("success", board);
+//    Music music = musicDao.selectOne(no);
+//    return new AjaxResult("success", music);
 //  }
 //  
   
@@ -48,7 +49,7 @@ public class BoardController {
   
   
   @RequestMapping("musicPlay")
-  public Object musicPlay(Music vid) throws Exception {
+  public Object musicPlay(Music2 vid) throws Exception {
     System.out.println(vid);
     System.out.println(vid);
     System.out.println(vid);
@@ -108,57 +109,57 @@ public class BoardController {
     paramMap.put("keyword", keyword);
     paramMap.put("align", align);
     
-    List<Board> boards = boardDao.selectList(paramMap);
+    List<Music> musics = musicDao.selectList(paramMap);
     
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("status", "success");
-    resultMap.put("data", boards);
+    resultMap.put("data", musics);
     
     return resultMap;
   }
   
   @RequestMapping(value="add", method=RequestMethod.GET)
   public String form() {
-    return "board/BoardForm";
+    return "music/MusicForm";
   }
       
   @RequestMapping(value="add", method=RequestMethod.POST)
-  public AjaxResult add(Board board/*, MultipartFile file*/) throws Exception {
+  public AjaxResult add(Music music/*, MultipartFile file*/) throws Exception {
     /*
     if (file.getSize() > 0) {
       String newFileName = MultipartHelper.generateFilename(file.getOriginalFilename());  
       File attachfile = new File(servletContext.getRealPath(SAVED_DIR) 
                                   + "/" + newFileName);
       file.transferTo(attachfile);
-      board.setAttachFile(newFileName);
+      music.setAttachFile(newFileName);
     }
     */
-    boardDao.insert(board);
+    musicDao.insert(music);
     
     return new AjaxResult("success", null);
   }
   
   @RequestMapping("detail")
   public Object detail(int no) throws Exception {
-    Board board = boardDao.selectOne(no);
-    return new AjaxResult("success", board);
+    Music music = musicDao.selectOne(no);
+    return new AjaxResult("success", music);
   }
 
   @RequestMapping(value="update", method=RequestMethod.POST)
-  public AjaxResult update(Board board/*, MultipartFile file*/) throws Exception {
+  public AjaxResult update(Music music/*, MultipartFile file*/) throws Exception {
     /*
     if (file.getSize() > 0) {
       String newFileName = MultipartHelper.generateFilename(file.getOriginalFilename());  
       File attachfile = new File(servletContext.getRealPath(SAVED_DIR) 
                                   + "/" + newFileName);
       file.transferTo(attachfile);
-      board.setAttachFile(newFileName);
-    } else if (board.getAttachFile().length() == 0) {
-      board.setAttachFile(null);
+      music.setAttachFile(newFileName);
+    } else if (music.getAttachFile().length() == 0) {
+      music.setAttachFile(null);
     }
     */
     
-    if (boardDao.update(board) <= 0) {
+    if (musicDao.update(music) <= 0) {
       return new AjaxResult("failure", null);
     } 
     
@@ -172,7 +173,7 @@ public class BoardController {
     paramMap.put("no", no);
     paramMap.put("password", password);
     
-    if (boardDao.delete(paramMap) <= 0) {
+    if (musicDao.delete(paramMap) <= 0) {
       return new AjaxResult("failure", null);
     } 
 

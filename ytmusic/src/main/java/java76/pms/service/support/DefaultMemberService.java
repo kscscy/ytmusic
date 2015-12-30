@@ -7,23 +7,23 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java76.pms.dao.StudentDao;
-import java76.pms.domain.Student;
-import java76.pms.service.StudentService;
+import java76.pms.dao.MemberDao;
+import java76.pms.domain.Member;
+import java76.pms.service.MemberService;
 
 @Service
-public class DefaultStudentService implements StudentService {
+public class DefaultMemberService implements MemberService {
   private static Logger log = 
-      Logger.getLogger(DefaultStudentService.class);
+      Logger.getLogger(DefaultMemberService.class);
   
-  @Autowired StudentDao studentDao;
+  @Autowired MemberDao memberDao;
   
-  public List<Student> getStudentList(
+  public List<Member> getMemberList(
       int pageNo, 
       int pageSize, 
       String keyword, 
       String align) {
-    log.debug("getStudentList() 호출됨");
+    log.debug("getMemberList() 호출됨");
     
     HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("startIndex", (pageNo - 1) * pageSize);
@@ -31,36 +31,36 @@ public class DefaultStudentService implements StudentService {
     paramMap.put("keyword", keyword);
     paramMap.put("align", align);
     
-    return studentDao.selectList(paramMap);
+    return memberDao.selectList(paramMap);
   }
 
-  public void register(Student student) {
+  public void register(Member member) {
     log.debug("register() 호출됨");
-    studentDao.insert(student);
+    memberDao.insert(member);
   }
 
   public void remove(String email) {
     log.debug("remove() 호출됨");
-    studentDao.delete(email);
+    memberDao.delete(email);
   }
   
-  public void change(Student student) {
+  public void change(Member member) {
     log.debug("change() 호출됨");
-    studentDao.update(student);
+    memberDao.update(member);
   }
 
-  public Student retrieve(String email) {
+  public Member retrieve(String email) {
     log.debug("retrieve(email) 호출됨");
-    return studentDao.selectOne(email);
+    return memberDao.selectOne(email);
   }
 
-  public Student retrieve(String email, String password) {
+  public Member retrieve(String email, String password) {
     log.debug("retrieve(email,password) 호출됨");
     HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("email", email);
     paramMap.put("password", password);
     
-    return studentDao.selectOneByEmailPassword(paramMap);
+    return memberDao.selectOneByEmailPassword(paramMap);
   }
 }
 

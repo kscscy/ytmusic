@@ -2,7 +2,7 @@ package java76.pms.domain;
 
 import java.io.Serializable;
 
-public class Student implements Serializable {
+public class Member implements Serializable {
   private static final long serialVersionUID = 1L;
   
   protected String name;
@@ -12,9 +12,9 @@ public class Student implements Serializable {
   protected String photo;
   protected String password;
   
-  public Student() {}
+  public Member() {}
   
-  public Student(String name, String email) {
+  public Member(String name, String email) {
     this.email = email;
     this.name = name;
   }

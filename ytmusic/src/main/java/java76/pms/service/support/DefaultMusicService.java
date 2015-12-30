@@ -7,19 +7,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java76.pms.dao.BoardDao;
-import java76.pms.domain.Board;
-import java76.pms.service.BoardService;
+import java76.pms.dao.MusicDao;
+import java76.pms.domain.Music;
+import java76.pms.service.MusicService;
 
 @Service
-public class DefaultBoardService implements BoardService {
-  private static Logger log = Logger.getLogger(DefaultBoardService.class);
+public class DefaultMusicService implements MusicService {
+  private static Logger log = Logger.getLogger(DefaultMusicService.class);
   
-  @Autowired BoardDao boardDao;
+  @Autowired MusicDao musicDao;
   
-  public List<Board> getBoardList(int pageNo, int pageSize, 
+  public List<Music> getMusicList(int pageNo, int pageSize, 
       String keyword, String align) {
-    log.debug("getBoardList() 호출됨");
+    log.debug("getMusicList() 호출됨");
     
     HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("startIndex", (pageNo - 1) * pageSize);
@@ -27,12 +27,12 @@ public class DefaultBoardService implements BoardService {
     paramMap.put("keyword", keyword);
     paramMap.put("align", align);
     
-    return boardDao.selectList(paramMap);
+    return musicDao.selectList(paramMap);
   }
   
-  public void register(Board board) {
+  public void register(Music music) {
     log.debug("register() 호출됨");
-    boardDao.insert(board);
+    musicDao.insert(music);
   }
   
   public void remove(int no, String password) {
@@ -41,18 +41,19 @@ public class DefaultBoardService implements BoardService {
     paramMap.put("no", no);
     paramMap.put("password", password);
     
-    boardDao.delete(paramMap);
+    musicDao.delete(paramMap);
   }
   
-  public void change(Board board) {
+  public void change(Music music) {
     log.debug("change() 호출됨");
-    boardDao.update(board);
+    musicDao.update(music);
   }
 
-  public Board retieve(int no) {
+  public Music retieve(int no) {
     log.debug("retieve() 호출됨");
-    return boardDao.selectOne(no);
+    return musicDao.selectOne(no);
   }
+
 }
 
 

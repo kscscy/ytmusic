@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import java76.pms.domain.Student;
-import java76.pms.filter.AuthFilter;
+import java76.pms.domain.Member;
+import sun.net.httpserver.AuthFilter;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
   private static final Logger log = Logger.getLogger(AuthFilter.class);
@@ -20,8 +20,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     
     log.debug("로그인 인터셉터 실행!");
     
-    Student loginUser = (Student)request.getSession()
-                                        .getAttribute("loginUser");
+    Member loginUser = (Member)request.getSession()
+                                         .getAttribute("loginUser");
     
     if (!request.getServletPath().startsWith("/auth") 
         && loginUser == null) {

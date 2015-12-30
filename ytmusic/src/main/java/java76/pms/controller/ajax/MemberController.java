@@ -1,4 +1,4 @@
-package java76.pms.controller;
+package java76.pms.controller.ajax;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,17 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java76.pms.domain.Student;
-import java76.pms.service.StudentService;
-import java76.pms.util.MultipartHelper;
+import java76.pms.domain.Member;
+import java76.pms.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
-@RequestMapping("/student/*")
-public class StudentController {
+@RequestMapping("/member/*")
+public class MemberController {
   public static final String SAVED_DIR = "/file";
   
-  @Autowired StudentService studentService;
+  @Autowired MemberService memberService;
   @Autowired ServletContext servletContext;
 
   @RequestMapping("list")
@@ -35,18 +34,18 @@ public class StudentController {
       @RequestParam(defaultValue="asc") String align,
       Model model) throws Exception {
 
-    List<Student> students = studentService.getStudentList(
+    List<Member> members = memberService.getMemberList(
         pageNo, pageSize, keyword, align);
 
-    model.addAttribute("students", students);
+    model.addAttribute("members", members);
 
-    return "student/StudentList";
+    return "member/MemberList";
 
   }
   
   @RequestMapping(value="add", method=RequestMethod.GET)
   public String form() {
-    return "student/StudentForm";
+    return "member/MemberForm";
   }
   
   @RequestMapping(value="add", method=RequestMethod.POST)
@@ -61,26 +60,15 @@ public class StudentController {
 
     String newFileName = null;
     
-    if (photofile.getSize() > 0) {
-      newFileName = MultipartHelper.generateFilename(photofile.getOriginalFilename());  
-      File attachfile = new File(
-          servletContext.getRealPath(SAVED_DIR) + "/" + newFileName);
-      photofile.transferTo(attachfile);
-      
-      makeThumbnailImage(
-        servletContext.getRealPath(SAVED_DIR) + "/" + newFileName, 
-        servletContext.getRealPath(SAVED_DIR) + "/s-" + newFileName + ".png");
-    }
-    
-    Student student = new Student();
-    student.setName(name);
-    student.setEmail(email);
-    student.setTel(tel);
-    student.setCid(cid);
-    student.setPassword(password);
-    student.setPhoto(newFileName);
+    Member member = new Member();
+    member.setName(name);
+    member.setEmail(email);
+    member.setTel(tel);
+    member.setCid(cid);
+    member.setPassword(password);
+    member.setPhoto(newFileName);
 
-    studentService.register(student);
+    memberService.register(member);
 
     return "redirect:list.do";
 
@@ -90,10 +78,10 @@ public class StudentController {
   public String detail(String email, Model model) 
           throws Exception {
 
-    Student student = studentService.retrieve(email);
-    model.addAttribute("student", student);
+    Member member = memberService.retrieve(email);
+    model.addAttribute("member", member);
 
-    return "student/StudentDetail";
+    return "member/MemberDetail";
   }
 
   @RequestMapping("update")
@@ -108,36 +96,25 @@ public class StudentController {
 
     String newFileName = null;
     
-    if (photofile.getSize() > 0) {
-      newFileName = MultipartHelper.generateFilename(photofile.getOriginalFilename());  
-      File attachfile = new File(
-          servletContext.getRealPath(SAVED_DIR) + "/" + newFileName);
-      photofile.transferTo(attachfile);
-      
-      makeThumbnailImage(
-          servletContext.getRealPath(SAVED_DIR) + "/" + newFileName, 
-          servletContext.getRealPath(SAVED_DIR) + "/s-" + newFileName + ".png");
-    }
-    
-    Student student = new Student();
-    student.setName(name);
-    student.setEmail(email);
-    student.setTel(tel);
-    student.setCid(cid);
+    Member member = new Member();
+    member.setName(name);
+    member.setEmail(email);
+    member.setTel(tel);
+    member.setCid(cid);
     
     if (newFileName != null) {
-      student.setPhoto(newFileName);
+      member.setPhoto(newFileName);
     } else if (newFileName == null && photo.length() > 0) {
-      student.setPhoto(photo);
+      member.setPhoto(photo);
     }
     
-    studentService.change(student);
+    memberService.change(member);
     return "redirect:list.do";
   }
   
   @RequestMapping("delete")
   public String delete(String email, Model model) throws Exception {
-    studentService.remove(email);
+    memberService.remove(email);
     return "redirect:list.do";
   }
   
