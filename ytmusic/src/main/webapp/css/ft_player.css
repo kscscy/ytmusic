@@ -228,7 +228,7 @@ body {
 	top: 0;
 	right: 0;
 	min-width: 1024px;
-	height: 112px;
+	height: 56px;
 	border-top: 1px solid #0067c4;
 	border-bottom: 1px solid #278fe8;
 	background: #400080;
@@ -240,7 +240,7 @@ body {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	width: 185px;
+	width: 300px;
 	padding: 0 !important;
 	background: ;
 	z-index: 10000;
