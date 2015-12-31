@@ -6,14 +6,27 @@
 </head>
 <body>
   <div id="buttons">
-  <label> <input id="query" value='cats' type="text"/><button id="search-button"  onclick="keyWordsearch()">Search</button></label>
-  <button id="search-button"  onclick="getPopularList()">인기차트</button>
+    <label> <input id="query" value='사랑은' type="text" />
+    <button id="search-button" onclick="keyWordsearch()">Search</button></label>
+    <button id="search-button" onclick="getChartList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기차트</button>
+    <button id="search-button" onclick="getChartList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신음악</button>
   </div>
   <div id="search-container"></div>
   <div id="video-container"></div>
-  <ul id="results"></ul>
-  <footer id="footer">
-  </footer>
+  <div class="bs-example" data-example-id="hoverable-table"> <table class="table table-hover" id ="resultTableRow"></table> </div>
+  
+  
+  <footer id="footer"> </footer>
+  
+  
+  
+  
+  <script src="../lib/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script
+    src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
   <script>
   
   
@@ -41,7 +54,6 @@
 
   // Retrieve the list of videos in the specified playlist.
   function requestVideoPlaylist(playlistId, pageToken) {
-    $('#video-container').html('');
     var requestOptions = {
       playlistId: playlistId,
       part: 'snippet',
@@ -63,11 +75,12 @@
 
       var playlistItems = response.result.items;
       if (playlistItems) {
+    	  $('#resultTableRow').empty();
         $.each(playlistItems, function(index, item) {
           displayResult(item.snippet);
         });
       } else {
-        $('#video-container').html('Sorry you have no uploaded videos');
+        $('#resultTableRow').append('Sorry you have no uploaded videos');
       }
     });
   }
@@ -76,7 +89,12 @@
   function displayResult(videoSnippet) {
     var title = videoSnippet.title;
     var videoId = videoSnippet.resourceId.videoId;
-    $('#video-container').append('<p>' + title + ' - ' + videoId + '</p>');
+    vidThumburl =  videoSnippet.thumbnails.default.url;
+    vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+    
+    $('#resultTableRow').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-xs" onclick=playMusic("'+videoId+'")>'+'vid'+videoId+'</button></td></tr>');
+    
+    
   }
 
   // Retrieve the next page of videos in the playlist.
@@ -112,10 +130,10 @@
   
   
   
-    function getPopularList(){
+    function getChartList(chartListId){
             gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
             gapi.client.load('youtube', 'v3', function() {
-            	requestVideoPlaylist('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe');
+            	requestVideoPlaylist(chartListId);
             });
     }
     
@@ -134,17 +152,21 @@
             });
             request.execute(function(response) {
                     var str = JSON.stringify(response.result);
-                    $('#search-container').html('<pre>' + str + '</pre>');
-                    $('#results').empty();
+                    //$('#search-container').html('<pre>' + str + '</pre>');
+                    $('#resultTableRow').empty();
                     
                     var resultItems = response.result.items;
                     //console.log(resultItems);
+                    var i = 1;
                     $.each(resultItems, function(index, item) {
+                    	//displayResult(item.snippet);
                       vidTitle = item.snippet.title;
                       vid = item.id.videoId;
                       vidThumburl =  item.snippet.thumbnails.default.url;
-                      vidThumbimg = '<pre><img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:204px;height:128px"></pre>';
-                      $('#results').append('<pre>' + vidTitle + vidThumbimg +  '</pre>' + '<button id="newBtn'+vid+'" type="button" class="btn btn-primary btn-xs" onclick=playMusic("'+vid+'")>'+'vid'+vid+'</button>');
+                      vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+                      
+                      $('#resultTableRow').append('<tr> <th scope="row">'+i+'</th> <td>'+vidThumbimg+'</td> <td>'+vidTitle+'</td>'+'<td><button id="newBtn'+vid+'" type="button" class="btn btn-primary btn-xs" onclick=playMusic("'+vid+'")>'+'vid'+vid+'</button></td></tr>');
+                      i++;
                     });
             });
     }
@@ -178,6 +200,9 @@
   		    }
     		console.log(musicUrl);
     		
+    		
+    		
+    		
     		$(footer).empty();
     	    $("<tr>")
     	      .html('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>')
@@ -187,7 +212,6 @@
     }
  </script>
 
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
- <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
+
 </body>
 </html>
