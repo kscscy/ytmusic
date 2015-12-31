@@ -20,11 +20,11 @@
     "jquery": "1.11.3"
   },
   "install" : {
-	"path" : "src/main/webapp/lib",
-	"sources": {
+	 "path" : "src/main/webapp/lib",
+	 "sources": {
 		"bootstrap": "bower_components/bootstrap/dist/**",
 		"jquery": "bower_components/jquery/dist/**"
-	}
+  	}
   }
   
 }
