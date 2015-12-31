@@ -5,7 +5,7 @@
 0. 서비스 층을 위한 패키지 생성
   - java76.pms.service 패키지 추가
   
-1. 서비스 클래스 추가
+1. 서비스 클래스 추가 
   - 메서드 이름은 가능한 업무 용어를 사용하라!  
   - CourseEnrollmentService.java 추가
   - StudentService.java 추가
