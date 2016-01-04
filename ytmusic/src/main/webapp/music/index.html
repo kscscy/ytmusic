@@ -1,24 +1,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html> 
-<head>  
-<meta charset="utf-8"> 
+<html>
+<head>
+<meta charset="utf-8">
 <title>냥냥이닷컴</title>
-<!-- 테스트 부분 --> 
- 
+<!-- 테스트 부분 -->
+<script type="text/javascript" src="../css/jquery.js"></script>
+<script type="text/javascript" src="../css/interface.js"></script>
+<link rel="stylesheet" href="../css/style.css">
+
+<link rel="stylesheet" href="coin-slider-styles.css" type="text/css" />
 <!-- 테스트 부분 -->
 <link rel="stylesheet" href="../css/ft_player.css">
-<link rel="stylesheet" href="../css/sl_layout.css" type="text/css" />
-<!-- 슬라이드 부분 -->
-<script type="text/javascript" src="../css/sl_setup.js"></script>
-<!-- 슬라이드 부분 끝 -->
 <script type="text/javascript">
-	<script type="application/ld+json">
 	<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
-	</div>null
+	</div>
 </script>
+
 </head>
 <body class="Windows Chrome version47 responseLevel3 mainresponseLevel3">
+
 	<div id="header">
+	<div class="dock" id="dock">
+  <div class="dock-container">
+  <a class="dock-item" href="#"><img src="../image/home.png" alt="home" /><span>Home</span></a>
+  <a class="dock-item" href="#"><img src="../image/email.png" alt="contact" /><span>Contact</span></a> 
+  <a class="dock-item" href="#"><img src="../image/portfolio.png" alt="portfolio" /><span>Portfolio</span></a> 
+  <a class="dock-item" href="#"><img src="../image/music.png" alt="music" /><span>Music</span></a> 
+  <a class="dock-item" href="#"><img src="../image/video.png" alt="video" /><span>Video</span></a> 
+  <a class="dock-item" href="#"><img src="../image/history.png" alt="history" /><span>History</span></a> 
+  <a class="dock-item" href="#"><img src="../image/calendar.png" alt="calendar" /><span>Calendar</span></a> 
+  <a class="dock-item" href="#"><img src="../image/rss.png" alt="rss" /><span>RSS</span></a>
+  <a class="dock-item" href="#"><img src="../image/link.png" alt="link" /><span>link</span></a>
+  <a class="dock-item" href="#"><img src="../image/rss2.png" alt="rss2" /><span>RSS2</span></a> 
+</div>
+</div>
+<script type="text/javascript">
+	
+	$(document).ready(
+		function()
+		{
+			$('#dock').Fisheye(
+				{
+					maxWidth: 50,
+					items: 'a',
+					itemsText: 'span',
+					container: '.dock-container',
+					itemWidth: 40,
+					proximity: 90,
+					halign : 'center'
+				}
+			)
+		}
+	);
+
+</script>
+
 		<a href="/" tabindex="1"><span class="hide">냥냥이닷컴</span></a>
 
 		<div id="searchSection">
@@ -37,49 +73,15 @@
 
 	<div id="containers">
 		<div id="leftContainer"></div>
-
-		<div id="centerContainer" style="width: 1195px;">
-			<div class="tse-scrollable centerContainerScrollWrapper"
-				style="width: 1195px; height: 665px;">
-				<div class="tse-scroll-content"
-					style="width: 1195px; height: 665px;">
-					<div class="tse-content">
-						<div id="centerContents" class="contentsNormal">
-							<div id="mainContents" class="mainContents">
-								<div class="album_recent">
-									<div class="wrap_tit"></div>
-									<div class="listRecent list_recent">
-										<div class="wrapper col3">
-											<div id="waterwheelCarousel">
-												<img src="../image/1.gif" alt="" /> <img
-													src="../image/2.gif" alt="" /> <img src="../image/3.gif"
-													alt="" /> <img src="../image/4.gif" alt="" /> <img
-													src="../image/5.gif" alt="" /> <img src="../image/6.gif"
-													alt="" /> <img src="../image/7.gif" alt="" /> <img
-													src="../image/8.gif" alt="" /> <img src="../image/9.gif"
-													alt="" />
-												<div class="catalogStyleType01 rListing"
-													style="margin-top: -314px;"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="doubleContentsSection">
-							<div class="chartSection"></div>
-							<div class="secondSection"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div id="centerContainer" style="width: auto;">
+		<div id="rightContainer">
+		
+		</div>
 		</div>
 	</div>
 
-	<div id="rightContainer">
-			</div>
-
 	<div id="footer">
+	
 		<div id="player" style="z-index: 100;">
 			<div class="player">
 				<div class="guide"></div>
@@ -132,8 +134,7 @@
 					</div>
 					<div id="features">
 						<button id="favorite" class="dim" title="즐겨찾기"></button>
-						<button id="btn-lyrics" class="dim" title="가사보기"
-							subtitle="가사보기|가사등록"></button>
+						<button id="btn-lyrics" class="dim" title="가사보기"></button>
 						<button id="down" class="dim" title="다운로드"></button>
 						<div id="featuresTool"></div>
 					</div>
@@ -164,6 +165,8 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
+	
 </body>
 </html>
