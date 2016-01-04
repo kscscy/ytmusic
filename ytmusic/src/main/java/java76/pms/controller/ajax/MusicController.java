@@ -42,11 +42,6 @@ public class MusicController {
   @RequestMapping("musicPlay")
   public Object musicPlay(Music2 vid) throws Exception {
     System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
     String musicUrl1 = null;
     String musicUrl = "https://www.youtube.com/watch?v=" + vid.getVid();
     System.out.println(musicUrl);
@@ -54,11 +49,13 @@ public class MusicController {
       // run the Unix "ps -ef" command
       // using the Runtime exec method:
       Process p = null;
+      System.out.println(System.getProperty("os.name"));
       if (System.getProperty("os.name").startsWith("Win")) {
         p = Runtime.getRuntime()
             .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
-      } else if (System.getProperty("os.name").startsWith("Linux")) {
-        p = Runtime.getRuntime().exec(""/* 경로 */);
+      } else if (System.getProperty("os.name").startsWith("Mac")) {
+      	System.out.println("durltlfgodehla");
+        p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
       }
       
       BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
