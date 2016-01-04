@@ -314,9 +314,20 @@ body {
 	left: 0;
 	width: 90px;
 	height: 90px;
+	
+	-webkit-transition: -webkit-transform .8s ease-in-out;
+  transition: transform .5s ease-in-out;
+  
 	background:
 		url(//image.soribada.com/image/v25/player_new/player_group_01.png)
 		-125px -3px no-repeat
+		
+}
+
+#playerWrap #cover .glow:hover {
+	-webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+		
 }
 
 #playerWrap #cover .tag {
