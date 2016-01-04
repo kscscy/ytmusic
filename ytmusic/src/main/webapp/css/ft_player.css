@@ -120,6 +120,7 @@ body {
 	bottom: 0;
 	width: 220px;
 	background: #fff;
+	padding: 0 !important;
 	z-index: 10000;
 	border-left: 1px solid #e0e0e0
 }
@@ -147,11 +148,11 @@ body {
 #searchSection {
 	position: absolute;
 	top: 14px;
-	left: 186px
+	left: 1100px
 }
 
 #searchSection fieldset {
-	margin-right: 55px
+	margin-right: 200px
 }
 
 #searchSection legend {
@@ -230,8 +231,8 @@ body {
 	min-width: 1024px;
 	height: 56px;
 	border-top: 1px solid #0067c4;
-	border-bottom: 1px solid #278fe8;
-	background: #400080;
+	border-bottom: 1px solid #0067c4;
+	background: #f1f4f8;
 	z-index: 100000
 }
 
@@ -240,9 +241,8 @@ body {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	width: 300px;
+	width: 220px;
 	padding: 0 !important;
-	background: ;
 	z-index: 10000;
 	border-right: 1px solid #e0e0e0
 }
@@ -314,9 +314,20 @@ body {
 	left: 0;
 	width: 90px;
 	height: 90px;
+	
+	-webkit-transition: -webkit-transform .8s ease-in-out;
+  transition: transform .5s ease-in-out;
+  
 	background:
 		url(//image.soribada.com/image/v25/player_new/player_group_01.png)
 		-125px -3px no-repeat
+		
+}
+
+#playerWrap #cover .glow:hover {
+	-webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+		
 }
 
 #playerWrap #cover .tag {
@@ -947,7 +958,7 @@ body {
 	width: 221px;
 	height: 75px;
 	border: none;
-	background-color: #e3e6e9
+	background-color: #f1f4f8;
 }
 
 #player .function #list {
@@ -1499,4 +1510,3 @@ body {
 		-3px -908px no-repeat;
 	text-align: center
 }
-
