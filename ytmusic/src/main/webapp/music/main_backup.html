@@ -7,179 +7,155 @@
 <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-theme.css">
 <title>Y Music</title>
 <style type="text/css">
-html, body {
-  height: 100%;
-  padding: 0;
+
+html, body { height: 100%; padding: 0; } 
+
+body{
+margin:0;
+padding:0;
+line-height: 1.5em;
 }
 
-body {
-  min-width: 1024px;
-  margin: 0;
-  padding: 0;
-  line-height: 1.5em;
+b{font-size: 110%;}
+em{color: red;}
+
+#maincontainer{
+    min-height:100%;
 }
 
-b {
-  font-size: 110%;
+#topsection{
+background: #EAEAEA;
+height: 110px; /*Height of top section*/
 }
 
-em {
-  color: red;
+#topsection h1{
+margin: 0;
+padding-top: 15px;
 }
 
-#maincontainer {
-  min-height: 100%;
+#contentwrapper{
+float: left;
+width: 100%;
+padding-bottom: 5em;
 }
 
-#topsection {
-  background: #EAEAEA;
-  height: 110px; /*Height of top section*/
+#contentcolumn{
+margin: 0 200px 0 230px; /*Margins for content column. Should be "0 RightColumnWidth 0 LeftColumnWidth*/
 }
 
-#topsection h1 {
-  margin: 0;
-  padding-top: 15px;
+#leftcolumn{
+float: left;
+width: 230px; /*Width of left column*/
+margin-left: -100%;
+background: #C8FC98;
 }
 
-#contentwrapper {
-  float: left;
-  width: 100%;
-  padding-bottom: 5em;
+#rightcolumn{
+float: left;
+width: 200px; /*Width of right column*/
+margin-left: -200px; /*Set left marginto -(RightColumnWidth)*/
+background: #FDE95E;
 }
 
-#contentcolumn {
-  margin: 0 200px 0 230px;
-  /*Margins for content column. Should be "0 RightColumnWidth 0 LeftColumnWidth*/
+#footer{
+clear: left;
+width: 100%;
+height: 5em;
+background: black;
+color: #FFF;
+text-align: center;
+padding: 4px 0;
+position: fixed;
+bottom: 0;
 }
 
-#leftcolumn {
-  float: left;
-  width: 230px; /*Width of left column*/
-  margin-left: -100%;
-  background: #C8FC98;
+#footer a{
+color: #FFFF80;
 }
 
-#rightcolumn {
-  float: left;
-  width: 200px; /*Width of right column*/
-  margin-left: -200px; /*Set left marginto -(RightColumnWidth)*/
-  background: #FDE95E;
-}
-
-#footer {
-  clear: left;
-  width: 100%;
-  height: 50px;
-  background: black;
-  color: #FFF;
-  text-align: center;
-  padding: 0px 0;
-  position: fixed;
-  bottom: 0;
-}
-
-#footer a {
-  color: #FFFF80;
-}
-
-.innertube {
-  margin: 10px;
-  /*Margins for inner DIV inside each column (to provide padding)*/
-  margin-top: 0;
+.innertube{
+margin: 10px; /*Margins for inner DIV inside each column (to provide padding)*/
+margin-top: 0;
 }
 
 /* ####### responsive layout CSS ####### */
-@media ( max-width : 840px) {
-  /* 1st level responsive layout break point- drop right column down*/
-  #leftcolumn {
-    margin-left: -100%;
-  }
-  #rightcolumn {
-    float: none;
-    width: 100%;
-    margin-left: 0;
-    clear: both;
-  }
-  #contentcolumn {
-    margin-right: 0; /*Set margin to LeftColumnWidth*/
-  }
+
+@media (max-width: 840px){ /* 1st level responsive layout break point- drop right column down*/
+
+	#leftcolumn{
+	margin-left: -100%;
+	}
+	
+	#rightcolumn{
+	float: none;
+	width: 100%;
+	margin-left: 0;
+	clear: both;
+	}
+	
+	#contentcolumn{
+	margin-right: 0; /*Set margin to LeftColumnWidth*/
+	}
 }
 
-@media ( max-width : 600px) {
-  /* 2nd level responsive layout break point- drop left column down */
-  #leftcolumn {
-    float: none;
-    width: 100%;
-    clear: both;
-    margin-left: 0;
-  }
-  #contentcolumn {
-    margin-left: 0;
-  }
+@media (max-width: 600px){ /* 2nd level responsive layout break point- drop left column down */
+	#leftcolumn{
+	float: none;
+	width: 100%;
+	clear: both;
+	margin-left: 0;
+	}
+	
+	#contentcolumn{
+	margin-left: 0;
+	}
 }
+
 </style>
 
 </head>
 <body>
-  <div id="maincontainer">
+<div id="maincontainer">
 
-    <div id="topsection">
-      <div class="innertube">
-        <h1><a href="main.html">Y Music</a>에 오신것을 환영합니다.</h1>
-        <br>
+<div id="topsection">
+    <div class="innertube">
+        <h1>Y Music에 오신것을 환영합니다.</h1><br>
         <div id="buttons">
-          <label> <input id="query" value='사랑은' type="text" />
+            <label> <input id="query" value='사랑은' type="text" />
             <button id="search-button" onclick="keyWordsearch()">Search</button></label>
-
+            
         </div>
-      </div>
     </div>
+</div>
 
-    <div id="contentwrapper">
-      <div id="contentcolumn">
-        <div class="innertube">
-          <div class="bs-example" data-example-id="hoverable-table">
-            <table class="table table-hover" id="resultTableRow"></table>
-          </div>
-        </div>
-      </div>
-    </div>
+<div id="contentwrapper">
+<div id="contentcolumn">
+<div class="innertube">
+    <div class="bs-example" data-example-id="hoverable-table"> <table class="table table-hover" id ="resultTableRow"></table> </div>
+</div>
+</div>
+</div>
 
-    <div id="leftcolumn">
-      <div class="innertube">
-        <button
-          onclick="getChartList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기차트</button>
-        <br>
-        <button
-          onclick="getChartList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신음악</button>
-      </div>
-    </div>
+<div id="leftcolumn">
+<div class="innertube">
+    <button onclick="getChartList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기차트</button><br>
+    <button onclick="getChartList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신음악</button>
+</div>
+</div>
 
-    <div id="rightcolumn">
-      <div class="innertube">인기검색어</div>
-    </div>
+<div id="rightcolumn">
+<div class="innertube">인기검색어</div>
+</div>
 
-    <div id="footer"></div>
+<div id="footer"></div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-      aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body"></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+</div>
 
 
-  <script src="../lib/jquery/jquery.min.js"></script>
+<script src="../lib/jquery/jquery.min.js"></script>
 
-  <script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-    crossorigin="anonymous">
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">
  </script>
   <script
     src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
@@ -248,7 +224,7 @@ em {
     vidThumburl =  videoSnippet.thumbnails.default.url;
     vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
     
-    $('#resultTableRow').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+    $('#resultTableRow').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-xs" onclick=playMusic("'+videoId+'")>'+'vid'+videoId+'</button></td></tr>');
     
     
   }
@@ -316,12 +292,12 @@ em {
                     var i = 1;
                     $.each(resultItems, function(index, item) {
                     	//displayResult(item.snippet);
-                      title = item.snippet.title;
-                      videoId = item.id.videoId;
+                      vidTitle = item.snippet.title;
+                      vid = item.id.videoId;
                       vidThumburl =  item.snippet.thumbnails.default.url;
                       vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
                       
-                      $('#resultTableRow').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+                      $('#resultTableRow').append('<tr> <th scope="row">'+i+'</th> <td>'+vidThumbimg+'</td> <td>'+vidTitle+'</td>'+'<td><button id="newBtn'+vid+'" type="button" class="btn btn-primary btn-xs" onclick=playMusic("'+vid+'")>'+'vid'+vid+'</button></td></tr>');
                       i++;
                     });
             });
@@ -356,16 +332,41 @@ em {
   		    }
     		console.log(musicUrl);
     		
+    		
+    		
+    		
     		$(footer).empty();
     	    $("<tr>")
     	      .html('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>')
     				.appendTo(footer);
-    	    $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
     	  
     	}); 
     }
-   
+    
+    
+    
+    
     function playVideo(vid) {
+    	/* $.post('ajax/musicPlay.do', {
+    		vid: vid
+    	}, function(resultObj) {
+    		var ajaxResult = resultObj.ajaxResult;
+    		if (ajaxResult.status == "success") {
+    		      var musicUrl = ajaxResult.data;
+    		      console.log("iii" +resultObj);
+    			  alert(musicUrl);
+  		    }
+    		console.log(musicUrl);
+    		
+    		
+    	    $("<tr>")
+    	      .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
+    				.appendTo(footer);
+    	  
+    	}, 'json');  */
+    	
+    	
+    	
     	 $.getJSON('ajax/videoPlay.do?vid='+vid, function(resultObj) {
     		var ajaxResult = resultObj.ajaxResult;
     		if (ajaxResult.status == "success") {
@@ -373,17 +374,18 @@ em {
     		      //console.log("iii" +resultObj);
     			  //alert(musicUrl);
   		    }
-    		console.log(videoUrl);
-
-    		$(".modal-body").empty();
-    	    $(".modal-body").append('<video id="videoPlayer" controls="" autoplay="" name="media" width="100%"><source src='+videoUrl+' type="video/mp4"></video>');
-    	    $(".modal-body").append('<a href="'+videoUrl+'" download>다운로드</a>');
+    		console.log(musicUrl);
+    		
+    		
+    		
+    		
+    		$(footer).empty();
+    	    $("<tr>")
+    	      .html('<video controls="" autoplay="" name="media"><source src = '+videoUrl+ ' type="video/webm"></video>')
+    				.appendTo(footer);
+    	  
     	}); 
     }
-    
-    $('#myModal').click(function () {
-	    $('.modal-body').empty();
-    });
  </script>
 
 

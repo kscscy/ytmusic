@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java76.pms.dao.MusicDao;
 import java76.pms.domain.AjaxResult;
 import java76.pms.domain.Music;
-import java76.pms.domain.Music;
 import java76.pms.domain.Music2;
 
 @Controller("ajax.MusicController")
@@ -82,6 +81,50 @@ public class MusicController {
     }
     System.out.println("보낼 musicUrl1" + musicUrl1);
     return new AjaxResult("success", musicUrl1);
+  }
+  @RequestMapping("videoPlay")
+  public Object videoPlay(Music2 vid) throws Exception {
+    System.out.println(vid);
+    String videoUrl1 = null;
+    String videoUrl = "https://www.youtube.com/watch?v=" + vid.getVid();
+    System.out.println(videoUrl);
+    try { 
+      // run the Unix "ps -ef" command
+      // using the Runtime exec method:
+      Process p = null;
+      System.out.println(System.getProperty("os.name"));
+      if (System.getProperty("os.name").startsWith("Win")) {
+        p = Runtime.getRuntime()
+            .exec("c:/ytdl/youtube-dl.exe -g " + videoUrl);
+      } else if (System.getProperty("os.name").startsWith("Mac")) {
+        System.out.println("durltlfgodehla");
+        p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g " + videoUrl);
+      }
+      
+      BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+      
+      BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+      
+      // read the output from the command
+      System.out.println("Here is the standard output of the command:\n");
+      while ((videoUrl = stdInput.readLine()) != null) {
+        System.out.println(videoUrl);
+        videoUrl1 = videoUrl;
+        
+      }
+      
+      // read any errors from the attempted command
+      System.out.println("Here is the standard error of the command (if any):\n");
+      while ((videoUrl = stdError.readLine()) != null) {
+        System.out.println(videoUrl);
+      }
+      
+    } catch (IOException e) {
+      System.out.println("exception happened - here's what I know: ");
+      e.printStackTrace();
+    }
+    System.out.println("보낼 videoUrl1" + videoUrl1);
+    return new AjaxResult("success", videoUrl1);
   }
 
   @RequestMapping("list")
