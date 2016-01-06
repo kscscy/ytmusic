@@ -62,12 +62,6 @@ public class MusicController {
     // run the Unix "ps -ef" command
         // using the Runtime exec method:
       Process p = null;
-<<<<<<< HEAD
-      if(System.getProperty("os.name").startsWith("Win")) {
-        p = Runtime.getRuntime().exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 "+musicUrl);
-      } else if (System.getProperty("os.name").startsWith("Linux")){
-        p = Runtime.getRuntime().exec(""/*경로*/);
-=======
       System.out.println(System.getProperty("os.name"));
       if (System.getProperty("os.name").startsWith("Win")) {
         p = Runtime.getRuntime()
@@ -75,7 +69,6 @@ public class MusicController {
       } else if (System.getProperty("os.name").startsWith("Mac")) {
       	System.out.println("durltlfgodehla");
         p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
->>>>>>> a67bc0319afb5f45fbc6e1d99537d7b14b00413a
       }
         
         BufferedReader stdInput = new BufferedReader(new
@@ -106,12 +99,8 @@ public class MusicController {
     System.out.println("보낼 musicUrl1" + musicUrl1);
     return new AjaxResult("success", musicUrl1);
   }
-<<<<<<< HEAD
+
   
-  
-  
-  
-=======
   @RequestMapping("videoPlay")
   public Object videoPlay(Music2 vid) throws Exception {
     System.out.println(vid);
@@ -157,7 +146,6 @@ public class MusicController {
     return new AjaxResult("success", videoUrl1);
   }
 
->>>>>>> a67bc0319afb5f45fbc6e1d99537d7b14b00413a
   @RequestMapping("list")
   public Object list(
       @RequestParam(defaultValue="1") int pageNo,

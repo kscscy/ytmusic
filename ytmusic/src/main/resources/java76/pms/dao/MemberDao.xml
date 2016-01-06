@@ -5,28 +5,18 @@
 
 <mapper namespace="java76.pms.dao.MemberDao">
 	<sql id="select_inc">
-		select name, email, tel, cid, photo
+		select email, password 
 	</sql>
 	
 	<select id="selectList" resultType="member" parameterType="map">
 		<include refid="select_inc"/> 
 		from member
-		order by
-		<choose>
-      <when test="keyword == 'email'"> email </when>
-      <when test="keyword == 'tel'"> tel </when>
-      <otherwise> name </otherwise>
-    </choose>
-    <choose>
-      <when test="align == 'desc'">desc</when>
-      <otherwise>asc</otherwise>
-    </choose>
-		limit #{startIndex}, #{length}
+		order by email
 	</select>
 
 	<insert id="insert" parameterType="member">
-		insert into member(name,email,tel,cid,photo,pwd)
-		values(#{name},#{email},#{tel},#{cid},#{photo},sha1(#{password}))
+		insert into member(email,pwd)
+		values(#{email},sha1(#{password}))
 	</insert>
 
 	<delete id="delete" parameterType="string">
@@ -35,10 +25,7 @@
 
 	<update id="update" parameterType="member">
 		update member set
-		name=#{name},
-		tel=#{tel},
-		cid=#{cid},
-		photo=#{photo}
+		pwd=#{password} 
 		where email=#{email}
 	</update>
 	

@@ -16,7 +16,7 @@ body {
   min-width: 1024px;
   margin: 0;
   padding: 0;
-  line-height: 1.5em;
+  line-height: 1.5em;                   
 }
 
 b {
@@ -126,12 +126,26 @@ em {
     <div id="topsection">
       <div class="innertube">
         <h1><a href="main.html">Y Music</a>에 오신것을 환영합니다.</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signInModal" data-whatever="@mdo">로그인</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signUpModal" data-whatever="@fat">회원가입</button>
         <br>
         <div id="buttons">
           <label> <input id="query" value='사랑은' type="text" />
             <button id="search-button" onclick="keyWordsearch()">Search</button></label>
 
         </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
       </div>
     </div>
 
@@ -144,6 +158,12 @@ em {
         </div>
       </div>
     </div>
+    
+    
+    
+    
+    
+    
 
     <div id="leftcolumn">
       <div class="innertube">
@@ -166,10 +186,74 @@ em {
       aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-body"></div>
+          <div class="modal-body"></div>`
         </div>
       </div>
     </div>
+    
+    
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">회원가입</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">E-mail:</label>
+                <input type="text" class="form-control" id="email">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">Password:</label>
+                <textarea class="form-control" id="password"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">Password Confirm:</label>
+                <textarea class="form-control" id="passwordConfirm"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="login()">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
 
   </div>
 
@@ -326,6 +410,33 @@ em {
                     });
             });
     }
+	function login() {
+    	var email = $('#email').val();
+    	var password = $('#password').val();
+    	var passwordConfirm = $('#password').val();
+    	
+    	$.post('ajax/login.do', {
+    		email: email,
+    		password: password
+    	}, function(resultObj) {
+    		var ajaxResult = resultObj.ajaxResult;
+    		if (ajaxResult.status == "success") {
+    		      var musicUrl = ajaxResult.data;
+    		      console.log("iii" +resultObj);
+    			  alert(musicUrl);
+  		    }
+    		console.log(musicUrl);
+    		
+    		
+    	    $("<tr>")
+    	      .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
+    				.appendTo(footer);
+    	  
+    	}, 'json');
+    	
+    	
+    	
+    }
     function playMusic(vid) {
     	/* $.post('ajax/musicPlay.do', {
     		vid: vid
@@ -384,7 +495,17 @@ em {
     $('#myModal').click(function () {
 	    $('.modal-body').empty();
     });
+    
+    
+    
+    
+    
  </script>
+
+
+
+
+
 
 
 </body>
