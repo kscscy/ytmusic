@@ -1,4 +1,4 @@
-<!DOCTYPE>
+\<!DOCTYPE>
 <html>
 <head>
 <meta charset="utf-8">
@@ -25,31 +25,24 @@
 	</div>
 
 	<div id="containers">
-		<div id="leftContainer"></div>
-
+		<!-- <div id="leftContainer"></div> -->
 		<div id="centerTopContents" class="mainContents">
 			<div class="wrapper col3">
 				<div id="waterwheelCarousel"></div>
 			</div>
-		
-
-
-  		<div class="bestdisheswrapper">
-	   		<div id="bestdishes" class="container">
-  
-	   			<h2 class="wow fadeInUp" data-wow-delay="0.3s">장르별</h2>
-			   	<div class="slider" id="slider">
-					 <ul class="slides" id="slides"></ul>
-				  </div>
-				  <!-- end of slider-->
-  
-	   			<div id="rightContainer"></div>
-			  </div>
-		  </div>
 		</div>
 	</div>
-
-	<div id="footer">
+<!-- 	<div class="wrapper col1">
+		<div id="featured_slide">
+			<div id="slider">
+				<ul id="categories"></ul>
+				<a class="prev disabled"></a> <a class="next disabled"></a>
+				<div style="clear: both"></div>
+			</div>
+		</div>
+	</div>
+ -->
+<!-- 	<div id="footer">
 		<div id="player" style="z-index: 100;">
 			<div class="player">
 				<div class="guide"></div>
@@ -134,17 +127,14 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 
-	<link rel="stylesheet" href="../css/ft_player.css">
-	<link rel="stylesheet" href="../css/sl_layout.css" type="text/css">
-
+<link rel="stylesheet" href="../css/ft_player.css">
+<link rel="stylesheet" href="../css/sl_layout.css" type="text/css">
 	
-	<script	src="https://apis.google.com/js/client.js?onload=googleApiClientReady">
-		
-	</script>
-	<script>
+<script	src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<script>
 	
 	var listUrl = 'PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp';
 	var count = 0;
@@ -238,46 +228,32 @@
 					$('#waterwheelCarousel').append('Sorry you have no uploaded videos');
 					}
         });
-				
 		  } else {
 			  request.execute(function(response) {
 				  var playlistItems = response.result.items;
           if (playlistItems) {
-        	  $('#slides').empty();
+        	  $('#categories').empty();
         	 
         	  $.each(playlistItems, function(index, item) {
-        		  if(slideCount % 5 == 0) {
-        			  slideCount2++;
-        			  $('#slides').append(
-        				  '<li id="slide'+slideCount2+'" class="slide"></li>'	  
-        				);
-        		  }
-        		  slideCount++;
               displayResult2(item.snippet);
              });
         	  
               var s4 = document.createElement('script');
               s4.type = "text/javascript";
-              s4.src = "../js/slider/jquery.js";
+              s4.src = "../js/slider/scripts/jquery-photostack.js";
               document.body.appendChild(s4);
-              console.log("appended");
-            
+              console.log("appended s4");
+              
               var s5 = document.createElement('script');
               s5.type = "text/javascript";
-              s5.src = "../js/slider/jquery.glide.js";
+              s5.src = "../js/slider/scripts/jquery-coin-slider.min.js";
               document.body.appendChild(s5);
-              console.log("appended");
-              
-              $('#slider').glide({
-                  autoplay : false,
-                  animationDuration : 700,
-                  arrows : true,
-                  navigation : false,
-              });
+              console.log("appended s5");
           } else {
-          $('#slides').append('Sorry you have no uploaded videos');
+          $('#categories').append('Sorry you have no uploaded videos');
           }
 		    });
+			  count = 0;
 		  }
 		}
 		
@@ -298,12 +274,14 @@
 	    var videoId = videoSnippet.resourceId.videoId;
 	    vidThumburl = videoSnippet.thumbnails.medium.url;
 	    console.log("displayResult2 : " + title);
-	    vidThumbimg = '<div class="item">'
-        + '<img src="'+vidThumburl+'" width="150" height="150"'
-        + 'alt="sliderimg" class="wow flipInX" data-wow-delay=".8s">'
-        + '<h6>"'+title+'"</h6></div>'; 
-	    console.log(vidThumburl);
-      $('#slide'+slideCount2+'').append(vidThumbimg);
+	    
+	    vidThumbimg = '<li class="category">'
+	         + '<a href="#"><img src="'+vidThumburl+'" alt="" /></a>'
+	         + '<p></p>'
+	         + '<p class="readmore"><a href="#">'+title+'</a></p>'
+	         + '</li>'
+	    console.log(vidThumburl + " / " + vidThumbimg);
+      $('#categories').append(vidThumbimg);
    }
 
 		// Retrieve the next page of videos in the playlist.
@@ -315,46 +293,44 @@
 		function previousPage() {
 			requestVideoPlaylist(playlistId, prevPageToken);
 		}
-	</script>
-	<script type="text/javascript"
-		src="https://apis.google.com/js/client.js?onload=init"></script>
+</script>
+<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
 
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/carousel/jquery.waterwheelCarousel.min.js"></script>
 
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/carousel/jquery.waterwheelCarousel.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"	crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"	crossorigin="anonymous">
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"	crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"	crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"	crossorigin="anonymous">
-	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"	crossorigin="anonymous"></script>
-	
-	<!-- 
-	  
-  <link rel="stylesheet" href="../css/slider/jquery.bxslider.css" type="text/css">
-  <script type="text/javascript" src="../js/slider/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="../js/slider/jquery.easing.1.3.js"></script>
- -->
- 
-  <link rel="stylesheet" href="../css/slider/style.css" type="text/css">
-  <link rel="stylesheet" href="../css/slider/animate.css">
-  <link rel="stylesheet" href="../css/slider/screen.css" type="text/css">
-  <link rel="stylesheet" href="../css/slider/jquery.fullPage.css" type="text/css">
-  <script type="text/javascript" src="../js/slider/wow.min.js"></script>
-	<script>
-	new WOW().init();
-	</script>
-	<script type="text/javascript">
-/* 		(function($) { */
-		(document).ready(function($){
-			/* $('.bestdisheswrapper.slider').glide({ */
-		$('#slider').glide({
-				autoplay : false,
-				animationDuration : 700,
-				arrows : true,
-				navigation : false,
-			});
-		})(jQuery);
-	</script>
+<!-- slider 관련 -->	
+<link rel="stylesheet" href="../css/slider/styles/layout.css" type="text/css" />
+<script type="text/javascript" src="../js/slider/scripts/jquery.min.js"></script>
+<!-- tabs --> 
+<script type="text/javascript" src="../js/slider/scripts/jquery.ui.min.js"></script>
+<script type="text/javascript">
+(function($) {
+    $("#tabcontainer").tabs({
+        event: "click"
+    });
+})(jQuery);
+</script>
+<!-- / tabs -->
+<!-- coinslider -->
 
+<script type="text/javascript">
+(function($) {
+    $('#portfolioslider').coinslider({
+        width: 480,
+        height: 280,
+        navigation: false,
+        links: false,
+        hoverPause: true
+    });
+})(jQuery);
+</script>
+
+  
 
 </body>
 </html>
