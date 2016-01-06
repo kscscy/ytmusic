@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+#tst-section {
+	width: contain;
+	margin: 0px auto;
+	border: 1px solid #bcbcbc;
+	min-width: 1024px;
+	background:;
+}
+
+.menu_box {
+	position: fixed;
+	height: 60px;
+	width: 100%;
+	background: white;
+	border-bottom: 1px solid #ddd;
+}
+
+.logo a {
+	font-size: 46px;
+	padding: 15px 0 0 35px;
+	float: left;
+	color: #151515;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	text-decoration: none;
+}

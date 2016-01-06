@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+#section01 {
+	padding-left: 200px;
+	padding-top: 60px;
+	height: 1500px;
+	background: white url() top center no-repeat;
+}
+
+
+.formbutton{
+cursor:pointer;
+border:outset 1px #ccc;
+background:#999;
+color:#666;
+font-weight:bold;
+padding: 1px 2px;
+background:url(..image/formbg.gif) repeat-x left top;
+}
+

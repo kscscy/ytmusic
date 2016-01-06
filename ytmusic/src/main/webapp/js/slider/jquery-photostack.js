@@ -8,9 +8,10 @@ $(function() {
     var first = 1;
     var positions = {
         '0': 0,
-        '1': 1024,
-        '2': 1024
+        '1': 1240,
+        '2': 1240
     }
+
     var $categories = $('#categories');
     /**
      * number of categories available
@@ -20,6 +21,13 @@ $(function() {
     var $ulCountId0= $('#ulCountId-0');
     var $ulCountId10= $('#ulCountId-10');
     var $ulCountId20= $('#ulCountId-20');
+    var viewUl = $ulCountId0;
+    var pos = 0;
+    var ulPos = {
+            '0': $ulCountId0,
+            '1': $ulCountId10,
+            '2': $ulCountId20
+    }
     
     var hiddenRight1 = $(window).width() - $categories.offset().left;
     $ulCountId10.css('left', hiddenRight1 + 1000 +'px');
@@ -50,6 +58,7 @@ $(function() {
         /*if (!$categories.children('ul:nth-child(' + parseInt(first + 5) + ')').length || !navR) return;*/
         disableNavRight();
         disableNavLeft();
+        
         moveRight();
     });
     /**
@@ -57,79 +66,91 @@ $(function() {
      * the next 4 categories slide one position, and finally the next one in the list
      * slides in, to fill the space of the first one
      */
+    
+    
     function moveRight() {
-            var hiddenLeft = $categories.offset().left + 163;
-            var cnt = 0;
-            
-            
-            $categories.children('ul:nth-child(' + first + ')').animate(
-            		{
-		                'left': -1024 + 'px',
-		                'opacity': 0
-            		},
-            		500,
-            		function() {
-            			var $this = $(this);
-            			$categories.children('ul').slice(0, parseInt(3)).each(function(i) {
-            				console.log("i : " + i);
-							console.log("first : " + first);
-            				++first;
-							if(first == 4) {
-								first = 2;
-								return;
-							}
-            				var $elem = $(this);
-            				console.log("positions[i]" + positions[i]);
-            				
-            				$elem.animate({
-            					'left' : positions[i] - 1024 + 'px',
-            					'opacity' : 1
-            				}, 500, function(){});
-            			});
-            			
-            			/*
-            			var $this = $(this);
-            			console.log("$this : " + $this);
-            			$categories.children('ul').slice(0, parseInt(2)).each(function(i) {
-            				var $elem = $(this);
-            				console.log("$elem :"+$elem);
-            				console.log("i :"+i);
-            				$elem.animate({
-            					'left': positions[i] + 'px',
-            				}, 800, function() {
-            					++cnt;
-            					if (cnt == 4) {
-            						$categories.children('ul:nth-child(' + parseInt(first + 5) + ')').animate({
-            							'left': positions[cnt] + 'px',
-            							'opacity': 1
-            						}, 500, function() {
-                                //$this.hide();
-            							++first;
-            							if (parseInt(first + 4) < elems) enableNavRight();
-            							enableNavLeft();
-            						});
-            					}
-            				});
-            			});
-            		*/
-            			}
-            );
-		};
+    	var hiddenLeft = $categories.offset().left + 163;
+    	
+        var cnt = 0;
+    	cnt = pos + 1;
+    	console.log("pos1 : " + pos);
+        if(cnt > 2) {
+        	return;
+        }
+    	
+
+        console.log("pos2 : " + pos);
+        ulPos[pos].animate(
+    			{
+    				'left': -1240 + 'px',
+    				'opacity': 0
+    			},
+            	500,
+        		function() {
+        			pos++;
+    				if(pos > 2) {
+    					pos = 2;
+    				}
+        			ulPos[pos].animate({
+    					'left' : 0 + 'px',
+    					'opacity' : 1
+    				}, 500, function(){});
+        	        console.log("pos3 : " + pos);
+        		}
+        );
+
+    };
+    
+    
     /**
     * previous category
     */
     $slider.find('.prev').bind('click', function() {
-        if (first == 1 || !navL) return;
+    	console.log("prev1");
+        
+        console.log("prev2");
         disableNavRight();
+        console.log("prev3");
         disableNavLeft();
+        console.log("prev4");
         moveLeft();
+        console.log("prev5");
     });
+    
+    function moveLeft() {
+    	var hiddenLeft = $categories.offset().left + 163;
+    	var cnt = 0;
+    	console.log("pos1 : " + pos);
+    	viewUl = ulPos[pos];
+    	cnt = pos - 1;
+        if(cnt < 0) {
+        	cnt++;
+        	return;
+        }
+        console.log("pos2 : " + pos);
+    	viewUl.animate(
+    			{
+    				'left': 1240 + 'px',
+    				'opacity': 0
+    			},
+            	500,
+        		function() {
+        			pos--;
+        			viewUl = ulPos[pos];
+        			viewUl.animate({
+    					'left' : 0 + 'px',
+    					'opacity' : 1
+    				}, 500, function(){});
+        			console.log("pos3 : " + pos);
+        		}
+        );
+    };
     /**
      * we move the last category (the one on the right) to the right side of the window
      * the previous 4 categories slide one position, and finally the previous one in the list
      * slides in, to fill the space of the last one
      */
-    function moveLeft() {
+    function moveLeft2() {
             var hiddenRight = $(window).width() - $categories.offset().left;
             var cnt = 0;
             var last = first + 4;
