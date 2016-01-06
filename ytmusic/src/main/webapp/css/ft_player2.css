@@ -1,32 +1,138 @@
 @CHARSET "UTF-8";
 
-body, button, footer, html, ol, ul {
+@charset "utf-8";
+article, aside, details, figcaption, figure, footer, header, hgroup, nav,
+	section, summary {
+	display: block
+}
+
+audio, canvas, video {
+	display: inline-block
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big,
+	blockquote, body, button, canvas, caption, center, cite, code, dd, del,
+	details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure,
+	footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe,
+	img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output,
+	p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub,
+	summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul,
+	var, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
+	font: inherit;
 	vertical-align: baseline;
 	color: #3d3d3d
 }
 
 ol, ul {
-	vertical-align: baseline;
 	list-style: none
 }
 
 button {
 	background: 0 0;
-	vertical-align: baseline;
 	cursor: pointer;
 	outline: 0
 }
 
+a, a:active, a:hover, a:link, a:visited {
+	text-decoration: none;
+	font-size: 100%;
+	color: inherit;
+	font-weight: 400;
+	vertical-align: middle;
+	outline: 0
+}
+
+body a:hover {
+	color: #00a2ff
+}
+
+a:hover * {
+	color: #0366d7
+}
+
+fieldset {
+	border: none
+}
+
+.hide {
+	display: inline-block;
+	text-indent: -99999px;
+	width: 0;
+	height: 0;
+	line-height: 0;
+	overflow: hidden
+}
+
 html {
 	height: 100%;
+	overflow: hidden
 }
 
 body {
+	width: 100%;
+	height: 100%;
 	font-size: 12px;
 	line-height: 14px;
+	color: #fff
+}
+
+#soribadaWrapper {
+	width: 100%;
+	height: 100%
+}
+
+#containers {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 72px;
+	z-index: 10;
+	background: #fff
+}
+
+#containers .hasPaddingContents {
+	padding: 30px
+}
+
+#centerContainer {
+	position: relative;
+	margin: 0 220px 0 185px
+}
+
+#rightContainer {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 220px;
+	background: #fff;
+	padding: 0 !important;
+	z-index: 10000;
+	border-left: 1px solid #e0e0e0
+}
+
+#centerContents {
+	position: relative;
+	height: 100%
+}
+
+#leftContents, #rightContents {
+	position: relative;
+	top: 0;
+	left: 0
 }
 
 #footer {
@@ -35,9 +141,122 @@ body {
 	right: 0;
 	bottom: 0;
 	z-index: 10000;
-	min-width: 1024px; height : 76px;
-	background-color: #2d3e50;
+	min-width: 1024px
+}
+
+#searchSection {
+	position: absolute;
+	top: 14px;
+	left: 1100px
+}
+
+#searchSection fieldset {
+	margin-right: 200px
+}
+
+#searchSection legend {
+	position: absolute;
+	top: 0
+}
+
+#searchSection span {
+	display: block;
+	padding-left: 10px;
+	background:
+		url(//image.soribada.com/image/v27/main/header_sect_group_02.png) -1px
+		-152px no-repeat
+}
+
+#searchSection input {
+	display: inline-block;
+	width: 337px;
+	height: 26px;
+	padding-right: 10px;
+	border: none;
+	font-size: 12px;
+	color: #0f83e5;
+	font-weight: 700;
+	line-height: 30px;
+	background:
+		url(//image.soribada.com/image/v27/main/header_sect_group_02.png)
+		right -124px no-repeat
+}
+
+#searchSection .searchBtn {
+	position: absolute;
+	top: 0;
+	left: 350px;
+	width: 52px;
+	height: 28px;
+	background:
+		url(//image.soribada.com/image/v27/main/header_sect_group_02.png) -1px
+		-38px no-repeat
+}
+
+#searchSection .searchBtn span {
+	font-size: 0;
+	line-height: 0;
+	text-indent: -999em
+}
+
+#searchSection .suggestion {
+	width: 355px;
+	border: 1px solid #41a6ff;
+	background: #fff;
+	z-index: 9999
+}
+
+#searchSection .autoList {
+	height: 24px;
+	border: 1px solid #f3f8fc
+}
+
+#searchSection .inputKeyWord {
+	color: #2a7dd2;
+	background: 0 0;
+	padding-right: 0
+}
+
+.
+#soribadaWrapper {
+	min-width: 1024px
+}
+
+#header {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	min-width: 1024px;
+	height: 56px;
+	border-top: 1px solid #0067c4;
+	border-bottom: 1px solid #0067c4;
+	background: #f1f4f8;
+	z-index: 100000
+}
+
+#leftContainer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 220px;
+	padding: 0 !important;
+	z-index: 10000;
+	border-right: 1px solid #e0e0e0
+}
+
+#containers {
+	top: 58px
+}
+
+#centerContainer, #centerContents {
+	min-width: 815px
+}
+
+#footer {
 	height: 76px;
+	background-color: #2d3e50
 }
 
 #player {
@@ -94,14 +313,20 @@ body {
 	left: 0;
 	width: 90px;
 	height: 90px;
-	transition: transform .5s ease-in-out;
+	
+	-webkit-transition: -webkit-transform .8s ease-in-out;
+  transition: transform .5s ease-in-out;
+  
 	background:
 		url(//image.soribada.com/image/v25/player_new/player_group_01.png)
 		-125px -3px no-repeat
+		
 }
 
 #playerWrap #cover .glow:hover {
-	transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+		
 }
 
 #playerWrap #cover .tag {
@@ -1284,4 +1509,3 @@ body {
 		-3px -908px no-repeat;
 	text-align: center
 }
-

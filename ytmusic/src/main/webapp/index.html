@@ -12,8 +12,8 @@
 
 
 <link rel="stylesheet" href="css/ft_player.css">
-<link rel="stylesheet" href="css/sl_layout.css" type="text/css">
-<link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
+<link rel="stylesheet" href="css/carousel/sl_layout.css" type="text/css">
+<link rel="stylesheet" href="css/slider/layout.css" type="text/css" />
 
 <style>
 #containers {
@@ -183,7 +183,7 @@ body {
             
               var s4 = document.createElement('script');
               s4.type = "text/javascript";
-              s4.src = "layout/scripts/jquery-photostack.js";
+              s4.src = "js/slider/jquery-photostack.js";
               document.body.appendChild(s4);
               console.log("appended s4");
               
@@ -212,14 +212,9 @@ body {
       var title = videoSnippet.title;
       var videoId = videoSnippet.resourceId.videoId;
       vidThumburl = videoSnippet.thumbnails.medium.url;
-      /* console.log("displayResult2 : " + title); */
-/*       console.log(vidThumburl);
-      console.log('liCountId-'+liCountId); */
-      /*       vidThumbimg = '<a href="#"><img src="'+vidThumburl+'" alt=""></a>';
-      title = '<p class="readmore"><a href="#">'+title+'</a></p>'; */
+
       vidThumbimg = '<li><a href="#"><img src="'+vidThumburl+'" alt=""></a>'
            + '<p class="readmore"><a href="#">'+title+'</a></p></li>';
-      /* console.log(vidThumburl + " / " + vidThumbimg); */
       $('#liCountId-'+liCountId2+'').append(vidThumbimg);
    }
 
@@ -233,9 +228,10 @@ body {
       requestVideoPlaylist(playlistId, prevPageToken);
     }
 </script>
+
 <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
  
-<script type="text/javascript" src="layout/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="js/slider/jquery.min.js"></script>
 <script type="text/javascript" src="js/carousel/jquery.waterwheelCarousel.min.js"></script>
 
 

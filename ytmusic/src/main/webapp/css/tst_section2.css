@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+#section02 {
+	padding-left: 200px;
+	padding-top: 60px;
+	height: 1500px;
+	background: white url() top center no-repeat;
+}
+
