@@ -8,10 +8,8 @@ $(function() {
     var first = 1;
     var positions = {
         '0': 0,
-        '1': 1240,
-        '2': 1240
-        /*'3': 582,
-        '4': 776*/
+        '1': 1024,
+        '2': 1024
     }
     var $categories = $('#categories');
     /**
@@ -66,24 +64,25 @@ $(function() {
             
             $categories.children('ul:nth-child(' + first + ')').animate(
             		{
-		                'left': -960 + 'px',
+		                'left': -1024 + 'px',
 		                'opacity': 0
             		},
             		500,
             		function() {
             			var $this = $(this);
             			$categories.children('ul').slice(0, parseInt(3)).each(function(i) {
+            				console.log("i : " + i);
 							console.log("first : " + first);
             				++first;
-							if(first==4) {
-								first=2;
+							if(first == 4) {
+								first = 2;
 								return;
 							}
             				var $elem = $(this);
-            				console.log(positions[i]);
+            				console.log("positions[i]" + positions[i]);
             				
             				$elem.animate({
-            					'left' : positions[i] - 1240 + 'px',
+            					'left' : positions[i] - 1024 + 'px',
             					'opacity' : 1
             				}, 500, function(){});
             			});

@@ -1,30 +1,162 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Search</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-theme.css">
+<title>Y Music</title>
+<style type="text/css">
+
+html, body { height: 100%; padding: 0; } 
+
+body{
+margin:0;
+padding:0;
+line-height: 1.5em;
+}
+
+b{font-size: 110%;}
+em{color: red;}
+
+#maincontainer{
+    min-height:100%;
+}
+
+#topsection{
+background: #EAEAEA;
+height: 110px; /*Height of top section*/
+}
+
+#topsection h1{
+margin: 0;
+padding-top: 15px;
+}
+
+#contentwrapper{
+float: left;
+width: 100%;
+padding-bottom: 5em;
+}
+
+#contentcolumn{
+margin: 0 200px 0 230px; /*Margins for content column. Should be "0 RightColumnWidth 0 LeftColumnWidth*/
+}
+
+#leftcolumn{
+float: left;
+width: 230px; /*Width of left column*/
+margin-left: -100%;
+background: #C8FC98;
+}
+
+#rightcolumn{
+float: left;
+width: 200px; /*Width of right column*/
+margin-left: -200px; /*Set left marginto -(RightColumnWidth)*/
+background: #FDE95E;
+}
+
+#footer{
+clear: left;
+width: 100%;
+height: 5em;
+background: black;
+color: #FFF;
+text-align: center;
+padding: 4px 0;
+position: fixed;
+bottom: 0;
+}
+
+#footer a{
+color: #FFFF80;
+}
+
+.innertube{
+margin: 10px; /*Margins for inner DIV inside each column (to provide padding)*/
+margin-top: 0;
+}
+
+/* ####### responsive layout CSS ####### */
+
+@media (max-width: 840px){ /* 1st level responsive layout break point- drop right column down*/
+
+	#leftcolumn{
+	margin-left: -100%;
+	}
+	
+	#rightcolumn{
+	float: none;
+	width: 100%;
+	margin-left: 0;
+	clear: both;
+	}
+	
+	#contentcolumn{
+	margin-right: 0; /*Set margin to LeftColumnWidth*/
+	}
+}
+
+@media (max-width: 600px){ /* 2nd level responsive layout break point- drop left column down */
+	#leftcolumn{
+	float: none;
+	width: 100%;
+	clear: both;
+	margin-left: 0;
+	}
+	
+	#contentcolumn{
+	margin-left: 0;
+	}
+}
+
+</style>
+
 </head>
 <body>
-  <div id="buttons">
-    <label> <input id="query" value='사랑은' type="submit" />
-    <button id="search-button" onclick="keyWordsearch()">Search</button></label>
-    <button id="search-button" onclick="getChartList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기차트</button>
-    <button id="search-button" onclick="getChartList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신음악</button>
-  </div>
-  <div id="search-container"></div>
-  <div id="video-container"></div>
-  <div class="bs-example" data-example-id="hoverable-table"> <table class="table table-hover" id ="resultTableRow"></table> </div>
-  
-  
-  <footer id="footer"> </footer>
-  
-  
-  
-  
-  <script src="../lib/jquery/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<div id="maincontainer">
+
+<div id="topsection">
+    <div class="innertube">
+        <h1>Y Music에 오신것을 환영합니다.</h1><br>
+        <div id="buttons">
+            <label> <input id="query" value='사랑은' type="text" />
+            <button id="search-button" onclick="keyWordsearch()">Search</button></label>
+            
+        </div>
+    </div>
+</div>
+
+<div id="contentwrapper">
+<div id="contentcolumn">
+<div class="innertube">
+    <div class="bs-example" data-example-id="hoverable-table"> <table class="table table-hover" id ="resultTableRow"></table> </div>
+</div>
+</div>
+</div>
+
+<div id="leftcolumn">
+<div class="innertube">
+    <button onclick="getChartList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기차트</button><br>
+    <button onclick="getChartList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신음악</button>
+</div>
+</div>
+
+<div id="rightcolumn">
+<div class="innertube">인기검색어</div>
+</div>
+
+<div id="footer"></div>
+
+</div>
+
+
+<script src="../lib/jquery/jquery.min.js"></script>
+
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">
+ </script>
   <script
     src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
   <script>
@@ -107,6 +239,29 @@
     requestVideoPlaylist(playlistId, prevPageToken);
   }
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
     function getChartList(chartListId){
             gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
             gapi.client.load('youtube', 'v3', function() {
@@ -188,6 +343,49 @@
     	}); 
     }
     
+    
+    
+    
+    function playVideo(vid) {
+    	/* $.post('ajax/musicPlay.do', {
+    		vid: vid
+    	}, function(resultObj) {
+    		var ajaxResult = resultObj.ajaxResult;
+    		if (ajaxResult.status == "success") {
+    		      var musicUrl = ajaxResult.data;
+    		      console.log("iii" +resultObj);
+    			  alert(musicUrl);
+  		    }
+    		console.log(musicUrl);
+    		
+    		
+    	    $("<tr>")
+    	      .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
+    				.appendTo(footer);
+    	  
+    	}, 'json');  */
+    	
+    	
+    	
+    	 $.getJSON('ajax/videoPlay.do?vid='+vid, function(resultObj) {
+    		var ajaxResult = resultObj.ajaxResult;
+    		if (ajaxResult.status == "success") {
+    		      var videoUrl = ajaxResult.data;
+    		      //console.log("iii" +resultObj);
+    			  //alert(musicUrl);
+  		    }
+    		console.log(musicUrl);
+    		
+    		
+    		
+    		
+    		$(footer).empty();
+    	    $("<tr>")
+    	      .html('<video controls="" autoplay="" name="media"><source src = '+videoUrl+ ' type="video/webm"></video>')
+    				.appendTo(footer);
+    	  
+    	}); 
+    }
  </script>
 
 
