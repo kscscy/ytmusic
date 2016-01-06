@@ -1,53 +1,247 @@
-<!DOCTYPE html> 
-<!--
-    Free  Template by Mohamed Sobhy
-    https://www.facebook.com/Mido.HHH
--->
-<html lang="en">
+<!DOCTYPE>
+<html>
 <head>
-<title>glider</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="css/glide.core.css">
-<link rel="stylesheet" href="css/glide.theme.css">
+<meta charset="utf-8">
+<title>Y-Music</title>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<link ref="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+<link ref="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/wow.min.js"></script>
+
+
+<link rel="stylesheet" href="css/ft_player.css">
+<link rel="stylesheet" href="css/sl_layout.css" type="text/css">
+<link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
+
+<style>
+#containers {
+    top: 58px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+div {
+    display: block;
+}
+
+body {
+
+}
+
+.co13 {
+  padding:
+}
+
+</style>
+ 
 </head>
 <body>
 
-<div id="Glide" class="glide">
+	<div id="containers">
+<!-- 		<div id="leftContainer"></div> -->
+  <!-- 최신 음악 메인슬라이더 -->
+  
+		<div id="centerTopContents" class="mainContents">
+			<div class="wrapper col3">
+				<div id="waterwheelCarousel"></div>
+			</div>
+		</div>
+	<!-- 장르 슬라이더 -->
+		<div class="wrapper col1">
+			<div id="featured_slide">
+				<div id="slider">
+					<ul id="categories">
+					</ul>
+					<a class="prev disabled"></a> <a class="next disabled"></a>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="glide__arrows">
-        <button class="glide__arrow prev" data-glide-dir="<">prev</button>
-        <button class="glide__arrow next" data-glide-dir=">">next</button>
-    </div>
 
-    <div class="glide__wrapper">
-        <ul class="glide__track">
-            <li class="glide__slide"></li>
-            <li class="glide__slide"></li>
-            <li class="glide__slide"></li>
-        </ul>
-    </div>
 
-    <div class="glide__bullets">
-      <li class="slide"><img src="image/slider/thumb1.png"></li>
-      <li class="slide"><img src="image/slider/thumb2.jpg"></li>
-      <li class="slide"><img src="image/slider/thumb3.png"></li>
-      <li class="slide"><img src="image/slider/thumb1.png"></li>
-      <li class="slide"><img src="image/slider/thumb2.jpg"></li>
-      <li class="slide"><img src="image/slider/thumb3.png"></li>
-    </div>
-    
-    </div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-</div>
-      
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="js/slider/jquery.glide.js"></script>
-
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 <script>
-    $("#Glide").glide({
-        type: "slider"
-    });
-</script>
-</body>
+  
+  var listUrl = 'PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp';
+  var count = 0;
+  var liCountId = 0;
+  var liCountId2 = 1;
+    function init() {
+      console.log("init 호출1");
+      gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
+      gapi.client.load('youtube', 'v3', function() {
+        requestVideoPlaylist(listUrl);
+      });
+    }
+    //Define some variables used to remember state.
+    var playlistId, nextPageToken, prevPageToken;
 
+    // After the API loads, call a function to get the uploads playlist ID.
+    function handleAPILoaded() {
+      requestUserUploadsPlaylistId();
+    }
+
+    // Call the Data API to retrieve the playlist ID that uniquely identifies the
+    // list of videos uploaded to the currently authenticated user's channel.
+    function requestUserUploadsPlaylistId() {
+      // See https://developers.google.com/youtube/v3/docs/channels/list
+      var request = gapi.client.youtube.channels.list({
+        mine : true,
+        part : 'contentDetails'
+      });
+      request
+          .execute(function(response) {
+            playlistId = response.result.items[0].contentDetails.relatedPlaylists.uploads;
+            requestVideoPlaylist(playlistId);
+          });
+    }
+
+    // Retrieve the list of videos in the specified playlist.
+    function requestVideoPlaylist(playlistId, pageToken) {
+      var requestOptions = {
+        playlistId : playlistId,
+        part : 'snippet',
+        maxResults : 30
+      };
+      if (pageToken) {
+        requestOptions.pageToken = pageToken;
+      }
+      var request = gapi.client.youtube.playlistItems
+          .list(requestOptions);
+        
+      count++;
+      if (count < 2) {
+
+        request.execute(function(response) {
+            // Only show pagination buttons if there is a pagination token for the
+            // next or previous page of results.
+            
+            nextPageToken = response.result.nextPageToken;
+            var nextVis = nextPageToken ? 'visible' : 'hidden';
+            $('#next-button').css('visibility', nextVis);
+            prevPageToken = response.result.prevPageToken
+            var prevVis = prevPageToken ? 'visible' : 'hidden';
+            $('#prev-button').css('visibility', prevVis);
+
+            var playlistItems = response.result.items;
+            if (playlistItems) {
+             $('#waterwheelCarousel').empty();
+             $.each(playlistItems, function(index, item) {
+                displayResult(item.snippet);
+            });
+
+
+            var s = document.createElement('script');
+            s.type = "text/javascript";
+            s.src = "js/carousel/jquery.waterwheelCarousel.setup.js";
+            document.body.appendChild(s);
+            console.log("11111111111111111111111111111");
+          
+            var s2 = document.createElement('script');
+            s2.type = "text/javascript";
+            s2.src = "js/carousel/jquery.waterwheelCarousel.js";
+            document.body.appendChild(s2);
+            console.log("222222222222222222222222222222");
+
+            listUrl = 'PLDcnymzs18LVXfO_x0Ei0R24qDbVtyy66';
+            var s3 = document.createElement('script');
+            s3.type = "text/javascript";
+            s3.src = "https://apis.google.com/js/client.js?onload=init";
+            document.body.appendChild(s3);
+            console.log("appended");
+          } else {
+          $('#waterwheelCarousel').append('Sorry you have no uploaded videos');
+          }
+        });
+      } else {
+        request.execute(function(response) {
+          var playlistItems = response.result.items;
+          if (playlistItems) {
+            $('#categories').empty();
+
+            $.each(playlistItems, function(index, item) {
+            	  console.log(liCountId2);
+	              if(liCountId == 0) {
+	            	  liCountId2 = liCountId;  
+	            	  li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
+	                $('#categories').append(li);
+	              } else if(liCountId % 10 == 0) {
+	            	  liCountId2 = liCountId;  
+	                li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
+	                $('#categories').append(li);
+	              }
+	              ++liCountId;
+	              displayResult2(item.snippet);
+             });
+            
+              var s4 = document.createElement('script');
+              s4.type = "text/javascript";
+              s4.src = "layout/scripts/jquery-photostack.js";
+              document.body.appendChild(s4);
+              console.log("appended s4");
+              
+           } else {
+          $('#categories').append('Sorry you have no uploaded videos');
+          }
+        });
+        count = 0;
+      }
+    }
+    
+    // Create a listing for a video.
+    function displayResult(videoSnippet) {
+      var title = videoSnippet.title;
+      var videoId = videoSnippet.resourceId.videoId;
+      console.log(videoId);
+      vidThumburl = videoSnippet.thumbnails.high.url;
+      /* console.log(title); */
+      vidThumbimg = '<img id='+videoId+' src="'+vidThumburl+'" style="width:450px;" title="'+title+'">';
+
+      /* console.log(vidThumburl); */
+      $('#waterwheelCarousel').append(vidThumbimg);
+    }
+    
+    function displayResult2(videoSnippet) {
+      var title = videoSnippet.title;
+      var videoId = videoSnippet.resourceId.videoId;
+      vidThumburl = videoSnippet.thumbnails.medium.url;
+      /* console.log("displayResult2 : " + title); */
+/*       console.log(vidThumburl);
+      console.log('liCountId-'+liCountId); */
+      /*       vidThumbimg = '<a href="#"><img src="'+vidThumburl+'" alt=""></a>';
+      title = '<p class="readmore"><a href="#">'+title+'</a></p>'; */
+      vidThumbimg = '<li><a href="#"><img src="'+vidThumburl+'" alt=""></a>'
+           + '<p class="readmore"><a href="#">'+title+'</a></p></li>';
+      /* console.log(vidThumburl + " / " + vidThumbimg); */
+      $('#liCountId-'+liCountId2+'').append(vidThumbimg);
+   }
+
+    // Retrieve the next page of videos in the playlist.
+    function nextPage() {
+      requestVideoPlaylist(playlistId, nextPageToken);
+    }
+
+    // Retrieve the previous page of videos in the playlist.
+    function previousPage() {
+      requestVideoPlaylist(playlistId, prevPageToken);
+    }
+</script>
+<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
+ 
+<script type="text/javascript" src="layout/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="js/carousel/jquery.waterwheelCarousel.min.js"></script>
+
+
+
+
+
+
+</body>
 </html>
