@@ -12,7 +12,7 @@
  * for use with the jQuery JavaScript Framework
  * http://www.jquery.com
  */
-( function($) {
+(function($) {
   'use strict';
   
   console.log("aaaaaaaaaaaaaaaaaaaaaaaaa");
