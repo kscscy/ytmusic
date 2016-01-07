@@ -217,7 +217,7 @@ em {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="login()">Send message</button>
+            <button type="button" class="btn btn-primary" id="signup">Sign up</button>
           </div>
         </div>
       </div>
@@ -237,17 +237,17 @@ em {
             <form>
               <div class="form-group">
                 <label for="recipient-name" class="control-label">E-mail:</label>
-                <input type="text" class="form-control" id="email">
+                <input type="text" class="form-control" id="useremail">
               </div>
               <div class="form-group">
                 <label for="message-text" class="control-label">Password:</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="userpassword">
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
+            <button type="button" class="btn btn-primary" id="login">LOGIN</button>
           </div>
         </div>
       </div>
@@ -410,33 +410,9 @@ em {
                     });
             });
     }
-	function login() {
-    	var email = $('#email').val();
-    	var password = $('#password').val();
-    	var passwordConfirm = $('#password').val();
-    	
-    	$.post('ajax/login.do', {
-    		email: email,
-    		password: password
-    	}, function(resultObj) {
-    		var ajaxResult = resultObj.ajaxResult;
-    		if (ajaxResult.status == "success") {
-    		      var musicUrl = ajaxResult.data;
-    		      console.log("iii" +resultObj);
-    			  alert(musicUrl);
-  		    }
-    		console.log(musicUrl);
-    		
-    		
-    	    $("<tr>")
-    	      .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
-    				.appendTo(footer);
-    	  
-    	}, 'json');
-    	
-    	
-    	
-    }
+
+	 
+	
     function playMusic(vid) {
     	/* $.post('ajax/musicPlay.do', {
     		vid: vid
@@ -495,14 +471,48 @@ em {
     $('#myModal').click(function () {
 	    $('.modal-body').empty();
     });
-    
-    
-    
-    
-    
  </script>
 
+<script>
 
+$('#login').click(
+  function(event) {
+  	
+  	$.post('../auth/login.do', {
+  		email: $('#useremail').val(),
+  		password: $('#userpassword').val()
+  		
+  	},
+     function(resultObj) {
+      var ajaxResult = resultObj.ajaxResult;
+      if (ajaxResult.status == "success") {
+        location.href = "../music/index5.html";
+      } else {
+        alert("로그인 실패.");
+      }
+    },'json');
+  });
+
+$('#signup').click(
+	  function(event) {
+	  	
+	  	$.post('../member/add.do', {
+	  		email: $('#email').val(),
+	  		password: $('#password').val()
+	  		
+	  	},
+	     function(resultObj) {
+	      var ajaxResult = resultObj.ajaxResult;
+	      if (ajaxResult.status == "success") {
+	        location.href = "../music/index5.html";
+	      } else {
+	        alert("로그인 실패.");
+	      }
+	    },'json');
+	  });
+
+
+</script>
 
 
 

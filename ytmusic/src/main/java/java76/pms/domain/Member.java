@@ -8,8 +8,6 @@ public class Member implements Serializable {
   protected String email;
   protected String password;
   
-  
-  
   public String getEmail() {
     return email;
   }

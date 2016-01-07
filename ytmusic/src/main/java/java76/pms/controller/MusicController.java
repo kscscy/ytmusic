@@ -1,4 +1,4 @@
-package java76.pms.controller.ajax;
+package java76.pms.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
