@@ -33,7 +33,7 @@ public class AuthController {
       HttpServletResponse response, 
       HttpSession session) {
 
-  	
+  	log.debug(saveEmail);
     Cookie emailCookie = null;
     if (saveEmail != null) { // 이메일 저장을 체크했으면,
       emailCookie = new Cookie("email", email);
@@ -51,7 +51,7 @@ public class AuthController {
     }
 
     session.setAttribute("loginUser", member);
-    return new AjaxResult("success", null);
+    return new AjaxResult("success", member);
   }
   
   @RequestMapping("logout")

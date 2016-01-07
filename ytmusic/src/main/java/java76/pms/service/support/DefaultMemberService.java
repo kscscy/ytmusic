@@ -34,19 +34,19 @@ public class DefaultMemberService implements MemberService {
     return memberDao.selectList(paramMap);
   }
 
-  public void register(Member member) {
+  public int register(Member member) {
     log.debug("register() 호출됨");
-    memberDao.insert(member);
+    return memberDao.insert(member);
   }
 
-  public void remove(String email) {
+  public int remove(String email) {
     log.debug("remove() 호출됨");
-    memberDao.delete(email);
+    return memberDao.delete(email);
   }
   
-  public void change(Member member) {
+  public int change(Member member) {
     log.debug("change() 호출됨");
-    memberDao.update(member);
+    return memberDao.update(member);
   }
 
   public Member retrieve(String email) {

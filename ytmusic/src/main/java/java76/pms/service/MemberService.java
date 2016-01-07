@@ -10,9 +10,9 @@ public interface MemberService {
       int pageSize, 
       String keyword, 
       String align);
-  void register(Member member);
-  void remove(String email);
-  void change(Member member);
+  int register(Member member);
+  int remove(String email);
+  int change(Member member);
   Member retrieve(String email);
   Member retrieve(String email, String password);
 }
