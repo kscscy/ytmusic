@@ -496,7 +496,7 @@ $('#login').click(
       	emailsession = ajaxResult.data.email;
       	//console.log(emailsession);
       	sessionStorage.setItem("emailsession", emailsession);
-      	location.href = "main.html";
+      	location.href = "../music/index5.html";
       	
       } else {
         alert("이메일 또는 비밀번호를 확인하세요.");
@@ -508,7 +508,7 @@ $('#signup').click(
 		
 
 	  function(event) {
-	  	console.log("세션테스트 : " + sessionStorage.getItem("test"));
+	  	//console.log("세션테스트 : " + sessionStorage.getItem("emailsession"));
 	  	var email = $('#email').val();
 	  	var password = $('#password').val();
 	  	var passwordcheck = $('#passwordcheck').val();
