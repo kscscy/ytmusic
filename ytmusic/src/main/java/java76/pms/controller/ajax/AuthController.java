@@ -32,8 +32,8 @@ public class AuthController {
       String saveEmail,
       HttpServletResponse response, 
       HttpSession session) {
-
-  	log.debug(saveEmail);
+  	log.debug(email);
+  	//log.debug(saveEmail);
     Cookie emailCookie = null;
     if (saveEmail != null) { // 이메일 저장을 체크했으면,
       emailCookie = new Cookie("email", email);
@@ -49,7 +49,8 @@ public class AuthController {
       session.invalidate(); // 세션을 무효화시킴. => 새로 세션 객체 생성!
       return new AjaxResult("failure", null);
     }
-
+    log.debug(member);
+    log.debug(member.getEmail());
     session.setAttribute("loginUser", member);
     return new AjaxResult("success", member);
   }

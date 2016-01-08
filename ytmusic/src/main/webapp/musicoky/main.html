@@ -479,8 +479,8 @@ em {
 
 $('#login').click(
   function(event) {
-  	var email = $('#email').val();
-  	var password = $('#password').val();
+  	var email = $('#useremail').val();
+  	var password = $('#userpassword').val();
   	//var checkValue = $('input:checkbox[name=saveEmail]').is(':checked'));
 		
   	$.post('../auth/login.do', {
@@ -491,9 +491,11 @@ $('#login').click(
   	
      function(resultObj) {
       var ajaxResult = resultObj.ajaxResult;
-			
+			console.log(ajaxResult);
 			if (ajaxResult.status == "success") {
-      sessionStorage.setItem("test", ajaxResult);
+				console.log(ajaxResult.data("email"));
+      	sessionStorage.setItem("test", ajaxResult);
+      	
 				console.log("세션테스트 : " + sessionStorage.getItem("test"));
 
       	location.href = "#";
