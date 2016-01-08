@@ -1,4 +1,3 @@
-  <script>
   
   
 //Define some variables used to remember state.
@@ -46,12 +45,12 @@
 
       var playlistItems = response.result.items;
       if (playlistItems) {
-    	  $('#resultTableRow').empty();
+    	  $('#containers').empty();
         $.each(playlistItems, function(index, item) {
           displayResult(item.snippet);
         });
       } else {
-        $('#resultTableRow').append('Sorry you have no uploaded videos');
+        $('#containers').append('Sorry you have no uploaded videos');
       }
     });
   }
@@ -63,7 +62,7 @@
     vidThumburl =  videoSnippet.thumbnails.default.url;
     vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
     
-    $('#resultTableRow').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+    $('#containers').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
     
     
   }
@@ -124,7 +123,7 @@
             request.execute(function(response) {
                     var str = JSON.stringify(response.result);
                     //$('#search-container').html('<pre>' + str + '</pre>');
-                    $('#resultTableRow').empty();
+                    $('#containers').empty();
                     
                     var resultItems = response.result.items;
                     //console.log(resultItems);
@@ -136,7 +135,7 @@
                       vidThumburl =  item.snippet.thumbnails.default.url;
                       vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
                       
-                      $('#resultTableRow').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+                      $('#containers').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
                       i++;
                     });
             });
@@ -202,4 +201,3 @@
     $('#myModal').click(function () {
 	    $('.modal-body').empty();
     });
- </script>

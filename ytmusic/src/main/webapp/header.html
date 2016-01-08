@@ -1,18 +1,23 @@
-
-<div class="logo">
-	<a href="#section01">Y-MUSIC</a>
-
-</div>
-<div id="buttons" style="padding: 15px 150px 0 400px;">
-	<span style="padding: 0px 150px 0 0px;&gt;
-        &lt;label id="searchBox" >
-		<input id="query" value='' type="text" placeholder="  검색어 입력" />
-		<button id="search-button" onclick="keyWordsearch()">Search</button> </label>
-	</span>
-	<button type="button" class="btn btn-primary" data-toggle="modal"
-		data-target="#signInModal" data-whatever="@mdo"style:"padding:">로그인</button>
-	<button type="button" class="btn btn-primary" data-toggle="modal"
-		data-target="#signUpModal" data-whatever="@fat">회원가입</button>
+<div class="header2">
+   <div class="logo">
+      <a href="#section01">Y-MUSIC</a>
+   
+   </div>
+   <!-- <div id="buttons" style="padding: 15px 150px 0 400px;"> -->
+   <div id="buttons" style=" margin:15px 0 0 300px">
+      <div style="float:left;>
+         <span id="searchBox">
+         <input id="query" value='' style="width:300px;" type="text" placeholder="  검색어 입력" />
+         <button id="search-button" onclick="keyWordsearch()" class="btn btn-primary">Search</button> </label>
+         </span>
+      </div>
+      <div style="float:right;">
+         <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#signInModal" data-whatever="@mdo"style:"padding:">로그인</button>
+         <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#signUpModal" data-whatever="@fat">회원가입</button>
+      </div>
+   </div>
 </div>
    <!-- Modal -->
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -84,4 +89,5 @@
      </div>
    </div>
 <script src="js/auth/auth.js"></script>   
+<!-- <script src="js/search/search.js"></script> -->
    

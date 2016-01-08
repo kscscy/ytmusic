@@ -16,7 +16,7 @@ img{margin:0; padding:0; border:none;}
 /* ----------------------------------------------Wrapper------------------------------------- */
 
 div.wrapper{
-	border: 1px red solid;
+	/* border: 1px red solid; */
 	display:block;
 	width:100%;
 	margin:0;
