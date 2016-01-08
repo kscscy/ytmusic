@@ -491,17 +491,13 @@ $('#login').click(
   	
      function(resultObj) {
       var ajaxResult = resultObj.ajaxResult;
-			console.log(ajaxResult);
+			var testemail;
 			if (ajaxResult.status == "success") {
-				console.log(ajaxResult.data("email"));
-      	sessionStorage.setItem("test", ajaxResult);
+      	emailsession = ajaxResult.data.email;
+      	//console.log(emailsession);
+      	sessionStorage.setItem("emailsession", emailsession);
+      	location.href = "main.html";
       	
-				console.log("세션테스트 : " + sessionStorage.getItem("test"));
-
-      	location.href = "#";
-      	
-      console.log(document.cookie);
-      console.log(document.session);
       } else {
         alert("이메일 또는 비밀번호를 확인하세요.");
       }
@@ -512,6 +508,7 @@ $('#signup').click(
 		
 
 	  function(event) {
+	  	console.log("세션테스트 : " + sessionStorage.getItem("test"));
 	  	var email = $('#email').val();
 	  	var password = $('#password').val();
 	  	var passwordcheck = $('#passwordcheck').val();
