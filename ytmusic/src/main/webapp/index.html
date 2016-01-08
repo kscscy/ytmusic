@@ -1,243 +1,167 @@
-<!DOCTYPE>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Y-Music</title>
+<title>Untitled Document</title>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<!-- <link rel="stylesheet" href="css/footer.css"> -->
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/tst_section2.css">
+<link rel="stylesheet" href="css/tst_section3.css">
+<link rel="stylesheet" href="css/tst_section4.css">
+<link rel="stylesheet" href="css/tst_section5.css">
+
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
-<link ref="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-<link ref="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
-<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/wow.min.js"></script>
 
+<!-- main slider -->
+<link rel="stylesheet" href="css/mainslider/mainslider.css">
 
-<link rel="stylesheet" href="css/ft_player.css">
+<!-- list slider  -->
 <link rel="stylesheet" href="css/carousel/sl_layout.css" type="text/css">
 <link rel="stylesheet" href="css/slider/layout.css" type="text/css" />
 
-<style>
-#containers {
-    top: 58px;
-    position: absolute;
-    left: 0;
-    right: 0;
-}
+<!--footer  -->
+<link href='css/ft_player/ft_player.css' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/ft_player/font-awesome-4.3.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="image/ft_player/favicon.ico" type="image/x-icon" />
 
-div {
-    display: block;
-}
+<!-- bootstrap  -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-body {
-
-}
-
-.co13 {
-  padding:
-}
-
-</style>
- 
 </head>
-<body>
 
-	<div id="containers">
-<!-- 		<div id="leftContainer"></div> -->
-  <!-- 최신 음악 메인슬라이더 -->
+<body style="background-img: 'image/background-2.jpg'">
+	<div id="header" class="header"></div>
+  <div id="containers"></div>
+	<div id="footer"></div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-body"></div>`
+       </div>
+     </div>
+   </div>
+   
+   <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <h4 class="modal-title" id="exampleModalLabel">회원가입</h4>
+         </div>
+         <div class="modal-body">
+           <form>
+             <div class="form-group">
+               <label for="recipient-name" class="control-label">E-mail:</label>
+               <input type="text" class="form-control" id="email">
+             </div>
+             <div class="form-group">
+               <label for="message-text" class="control-label">Password:</label>
+               <input type="password" class="form-control" id="password" name=>
+             </div>
+             <div class="form-group">
+               <label for="message-text" class="control-label">Password Confirm:</label>
+               <input type="password" class="form-control" id="passwordcheck">
+             </div>
+           </form>
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-primary" id="signup">Sign up</button>
+         </div>
+       </div>
+     </div>
+   </div>
+   
+   
+   
+   
+   <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           <h4 class="modal-title" id="exampleModalLabel">Welcome!</h4>
+         </div>
+         <div class="modal-body">
+           <form id="form1">
+             <div class="form-group">
+               <label for="recipient-name" class="control-label">E-mail:</label>
+               <input type="text" class="form-control" id="useremail">
+             </div>
+             <div class="form-group">
+               <label for="message-text" class="control-label">Password:</label>
+               <input type="password" class="form-control" id="userpassword">
+             </div>
+             <input type="checkbox" name="saveEmail"> 
+             <label for="loginkeeping">save E-mail</label>
+           </form>
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-primary" id="login">LOGIN</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+	<script>
+
+		$(function() {
+			$("#header").load("header.html");
+		});
+		$(function() {
+			$("#containers").load("main.html");
+		});
+		$(function() {
+			$("#footer").load("footer.html");
+		});
+		/* 		$(function() {
+		 $("body").a("modal.html");
+		 }); */
+	</script>
+
+	<script>
+		$(function() {
+			$('a[href^=#]').click(function() {
+				var speed = 0;
+				var href = $(this).attr("href");
+				var target = $(href == "#" || href == "" ? 'html' : href);
+				var position = target.offset().top;
+				$('body,html').animate({
+					scrollTop : position
+				}, speed, 'swing');
+				return false;
+			});
+		});
+	</script>
+
+	<script	src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+	<script src="js/main.js"></script>
+	<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
+	<script type="text/javascript" src="js/slider/jquery.min.js"></script>
   
-		<div id="centerTopContents" class="mainContents">
-			<div class="wrapper col3">
-				<div id="waterwheelCarousel"></div>
-			</div>
-		</div>
-	<!-- 장르 슬라이더 -->
-		<div class="wrapper col1">
-			<div id="featured_slide">
-				<div id="slider">
-					<ul id="categories">
-					</ul>
-					<a class="prev disabled"></a> <a class="next disabled"></a>
-					<div style="clear: both"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-<script>
+  <script type="text/javascript" src="js/mainslider/jssor.slider.mini.js"></script>
   
-  var listUrl = 'PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp';
-  var count = 0;
-  var liCountId = 0;
-  var liCountId2 = 1;
-    function init() {
-      console.log("init 호출1");
-      gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
-      gapi.client.load('youtube', 'v3', function() {
-        requestVideoPlaylist(listUrl);
-      });
-    }
-    //Define some variables used to remember state.
-    var playlistId, nextPageToken, prevPageToken;
-
-    // After the API loads, call a function to get the uploads playlist ID.
-    function handleAPILoaded() {
-      requestUserUploadsPlaylistId();
-    }
-
-    // Call the Data API to retrieve the playlist ID that uniquely identifies the
-    // list of videos uploaded to the currently authenticated user's channel.
-    function requestUserUploadsPlaylistId() {
-      // See https://developers.google.com/youtube/v3/docs/channels/list
-      var request = gapi.client.youtube.channels.list({
-        mine : true,
-        part : 'contentDetails'
-      });
-      request
-          .execute(function(response) {
-            playlistId = response.result.items[0].contentDetails.relatedPlaylists.uploads;
-            requestVideoPlaylist(playlistId);
-          });
-    }
-
-    // Retrieve the list of videos in the specified playlist.
-    function requestVideoPlaylist(playlistId, pageToken) {
-      var requestOptions = {
-        playlistId : playlistId,
-        part : 'snippet',
-        maxResults : 30
-      };
-      if (pageToken) {
-        requestOptions.pageToken = pageToken;
-      }
-      var request = gapi.client.youtube.playlistItems
-          .list(requestOptions);
-        
-      count++;
-      if (count < 2) {
-
-        request.execute(function(response) {
-            // Only show pagination buttons if there is a pagination token for the
-            // next or previous page of results.
-            
-            nextPageToken = response.result.nextPageToken;
-            var nextVis = nextPageToken ? 'visible' : 'hidden';
-            $('#next-button').css('visibility', nextVis);
-            prevPageToken = response.result.prevPageToken
-            var prevVis = prevPageToken ? 'visible' : 'hidden';
-            $('#prev-button').css('visibility', prevVis);
-
-            var playlistItems = response.result.items;
-            if (playlistItems) {
-             $('#waterwheelCarousel').empty();
-             $.each(playlistItems, function(index, item) {
-                displayResult(item.snippet);
-            });
-
-
-            var s = document.createElement('script');
-            s.type = "text/javascript";
-            s.src = "js/carousel/jquery.waterwheelCarousel.setup.js";
-            document.body.appendChild(s);
-            console.log("11111111111111111111111111111");
-          
-            var s2 = document.createElement('script');
-            s2.type = "text/javascript";
-            s2.src = "js/carousel/jquery.waterwheelCarousel.js";
-            document.body.appendChild(s2);
-            console.log("222222222222222222222222222222");
-
-            listUrl = 'PLDcnymzs18LVXfO_x0Ei0R24qDbVtyy66';
-            var s3 = document.createElement('script');
-            s3.type = "text/javascript";
-            s3.src = "https://apis.google.com/js/client.js?onload=init";
-            document.body.appendChild(s3);
-            console.log("appended");
-          } else {
-          $('#waterwheelCarousel').append('Sorry you have no uploaded videos');
-          }
-        });
-      } else {
-        request.execute(function(response) {
-          var playlistItems = response.result.items;
-          if (playlistItems) {
-            $('#categories').empty();
-
-            $.each(playlistItems, function(index, item) {
-            	  console.log(liCountId2);
-	              if(liCountId == 0) {
-	            	  liCountId2 = liCountId;  
-	            	  li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
-	                $('#categories').append(li);
-	              } else if(liCountId % 10 == 0) {
-	            	  liCountId2 = liCountId;  
-	                li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
-	                $('#categories').append(li);
-	              }
-	              ++liCountId;
-	              displayResult2(item.snippet);
-             });
-            
-              var s4 = document.createElement('script');
-              s4.type = "text/javascript";
-              s4.src = "js/slider/jquery-photostack.js";
-              document.body.appendChild(s4);
-              console.log("appended s4");
-              
-           } else {
-          $('#categories').append('Sorry you have no uploaded videos');
-          }
-        });
-        count = 0;
-      }
-    }
-    
-    // Create a listing for a video.
-    function displayResult(videoSnippet) {
-      var title = videoSnippet.title;
-      var videoId = videoSnippet.resourceId.videoId;
-      console.log(videoId);
-      vidThumburl = videoSnippet.thumbnails.high.url;
-      /* console.log(title); */
-      vidThumbimg = '<img id='+videoId+' src="'+vidThumburl+'" style="width:450px;" title="'+title+'">';
-
-      /* console.log(vidThumburl); */
-      $('#waterwheelCarousel').append(vidThumbimg);
-    }
-    
-    function displayResult2(videoSnippet) {
-      var title = videoSnippet.title;
-      var videoId = videoSnippet.resourceId.videoId;
-      vidThumburl = videoSnippet.thumbnails.medium.url;
-
-      vidThumbimg = '<li><a href="#"><img src="'+vidThumburl+'" alt=""></a>'
-           + '<p class="readmore"><a href="#">'+title+'</a></p></li>';
-      $('#liCountId-'+liCountId2+'').append(vidThumbimg);
-   }
-
-    // Retrieve the next page of videos in the playlist.
-    function nextPage() {
-      requestVideoPlaylist(playlistId, nextPageToken);
-    }
-
-    // Retrieve the previous page of videos in the playlist.
-    function previousPage() {
-      requestVideoPlaylist(playlistId, prevPageToken);
-    }
-</script>
-
-<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
- 
-<script type="text/javascript" src="js/slider/jquery.min.js"></script>
-<script type="text/javascript" src="js/carousel/jquery.waterwheelCarousel.min.js"></script>
-
-
-
-
-
-
+  
+  <!--  footer  -->
+<!-- <script>
+  window.onload = function () {
+   alert(sessionStorage.getItem("emailsession"));
+   console.log(sessionStorage.getItem("emailsession"));
+  }
+</script> -->
+<script src="js/ft_player/id3-minimized.js"></script>
+<!-- <script src="http://wavesurfer-js.org/dist/wavesurfer.min.js"></script> -->
+<script src="js/ft_player/wavesurfer.min.js"></script>
+<script src="js/ft_player/ft_player.js"></script>
+<script src="js/auth/auth.js"></script>
 </body>
 </html>

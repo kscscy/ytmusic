@@ -17,11 +17,14 @@ $(function() {
      * number of categories available
      */
     var elems = $categories.children().length;
+    
     var $slider = $('#slider');
+    
     var $ulCountId0= $('#ulCountId-0');
     var $ulCountId10= $('#ulCountId-10');
     var $ulCountId20= $('#ulCountId-20');
     var viewUl = $ulCountId0;
+    
     var pos = 0;
     var ulPos = {
             '0': $ulCountId0,
@@ -58,7 +61,6 @@ $(function() {
         /*if (!$categories.children('ul:nth-child(' + parseInt(first + 5) + ')').length || !navR) return;*/
         disableNavRight();
         disableNavLeft();
-        
         moveRight();
     });
     /**
@@ -106,15 +108,9 @@ $(function() {
     * previous category
     */
     $slider.find('.prev').bind('click', function() {
-    	console.log("prev1");
-        
-        console.log("prev2");
         disableNavRight();
-        console.log("prev3");
         disableNavLeft();
-        console.log("prev4");
         moveLeft();
-        console.log("prev5");
     });
     
     function moveLeft() {
@@ -136,6 +132,9 @@ $(function() {
             	500,
         		function() {
         			pos--;
+    				if(pos < 0) {
+    					pos = 0;
+    				}
         			viewUl = ulPos[pos];
         			viewUl.animate({
     					'left' : 0 + 'px',

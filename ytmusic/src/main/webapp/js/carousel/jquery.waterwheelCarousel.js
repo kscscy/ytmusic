@@ -1,684 +1,450 @@
-/*!
- * Waterwheel Carousel
- * Version 2.3.0
- * http://www.bkosborne.com
- *
- * Copyright 2011-2013 Brian Osborne
- * Dual licensed under GPLv3 or MIT
- * Copies of the licenses have been distributed
- * with this plugin.
- *
- * Plugin written by Brian Osborne
- * for use with the jQuery JavaScript Framework
- * http://www.jquery.com
- */
-(function($) {
-  'use strict';
-  
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaa");
-  $.fn.waterwheelCarousel = function (startingOptions) {
-
-    // Adds support for intializing multiple carousels from the same selector group
-    if (this.length > 1) {
-      this.each(function() {
-        $(this).waterwheelCarousel(startingOptions);
-      });
-      return this; // allow chaining
-    }
-
-    var carousel = this;
-    var options = {};
-    var data = {};
-
-    function initializeCarouselData() {
-      data = {
-        itemsContainer:         $(carousel),
-        totalItems:             $(carousel).find('img').length,
-        containerWidth:         $(carousel).width(),
-        containerHeight:        $(carousel).height(),
-        currentCenterItem:      null,
-        previousCenterItem:     null,
-        items:                  [],
-        calculations:           [],
-        carouselRotationsLeft:  0,
-        currentlyMoving:        false,
-        itemsAnimating:         0,
-        currentSpeed:           options.speed,
-        intervalTimer:          null,
-        currentDirection:       'forward',
-        leftItemsCount:         0,
-        rightItemsCount:        0,
-        performingSetup:        true
-      };
-      data.itemsContainer.find('img').removeClass(options.activeClassName);
-    }
-
-    /**
-     * This function will set the autoplay for the carousel to
-     * automatically rotate it given the time in the options
-     * Can clear the autoplay by passing in true
-     */
-    function autoPlay(stop) {
-      // clear timer
-      clearTimeout(data.autoPlayTimer);
-      // as long as no stop command, and autoplay isn't zeroed...
-      if (!stop && options.autoPlay !== 0) {
-        // set timer...
-        data.autoPlayTimer = setTimeout(function () {
-          // to move the carousl in either direction...
-          if (options.autoPlay > 0) {
-            moveOnce('forward');
-          } else {
-            moveOnce('backward');
-          }
-        }, Math.abs(options.autoPlay));
-      }
-    }
-
-    /**
-     * This function will preload all the images in the carousel before
-     * calling the passed in callback function. This is only used so we can
-     * properly determine the width and height of the items. This is not needed
-     * if a user instead manually specifies that information.
-     */
-    function preload(callback) {
-      if (options.preloadImages === false) {
-        callback();
-        return;
-      }
-
-      var $imageElements = data.itemsContainer.find('img'), loadedImages = 0, totalImages = $imageElements.length;
-
-      $imageElements.each(function () {
-        $(this).bind('load', function () {
-          // Add to number of images loaded and see if they are all done yet
-          loadedImages += 1;
-          if (loadedImages === totalImages) {
-            // All done, perform callback
-            callback();
-            return;
-          }
-        });
-        // May need to manually reset the src to get the load event to fire
-        // http://stackoverflow.com/questions/7137737/ie9-problems-with-jquery-load-event-not-firing
-        $(this).attr('src', $(this).attr('src'));
-
-        // If browser has cached the images, it may not call trigger a load. Detect this and do it ourselves
-        if (this.complete) {
-          $(this).trigger('load');
-        }
-      });
-    }
-
-    /**
-     * Makes a record of the original width and height of all the items in the carousel.
-     * If we re-intialize the carousel, these values can be used to re-establish their
-     * original dimensions.
-     */
-    function setOriginalItemDimensions() {
-      data.itemsContainer.find('img').each(function () {
-        if ($(this).data('original_width') == undefined || options.forcedImageWidth > 0) {
-          $(this).data('original_width', $(this).width());
-        }
-        if ($(this).data('original_height') == undefined || options.forcedImageHeight > 0) {
-          $(this).data('original_height', $(this).height());
-        }
-      });
-    }
-
-    /**
-     * Users can pass in a specific width and height that should be applied to every image.
-     * While this option can be used in conjunction with the image preloader, the intended
-     * use case is for when the preloader is turned off and the images don't have defined
-     * dimensions in CSS. The carousel needs dimensions one way or another to work properly.
-     */
-    function forceImageDimensionsIfEnabled() {
-      if (options.forcedImageWidth && options.forcedImageHeight) {
-        data.itemsContainer.find('img').each(function () {
-          $(this).width(options.forcedImageWidth);
-          $(this).height(options.forcedImageHeight);
-        });
-      }
-    }
-
-    /**
-     * For each "visible" item slot (# of flanking items plus the middle),
-     * we pre-calculate all of the properties that the item should possess while
-     * occupying that slot. This saves us some time during the actual animation.
-     */
-    function preCalculatePositionProperties() {
-      // The 0 index is the center item in the carousel
-      var $firstItem = data.itemsContainer.find('img:first');
-
-      data.calculations[0] = {
-        distance: 0,
-        offset:   0,
-        opacity:  1
-      }
-
-      // Then, for each number of flanking items (plus one more, see below), we
-      // perform the calcations based on our user options
-      var horizonOffset = options.horizonOffset;
-      var separation = options.separation;
-      for (var i = 1; i <= options.flankingItems + 2; i++) {
-        if (i > 1) {
-          horizonOffset *= options.horizonOffsetMultiplier;
-          separation *= options.separationMultiplier;
-        }
-        data.calculations[i] = {
-          distance: data.calculations[i-1].distance + separation,
-          offset:   data.calculations[i-1].offset + horizonOffset,
-          opacity:  data.calculations[i-1].opacity * options.opacityMultiplier
-        }
-      }
-      // We performed 1 extra set of calculations above so that the items that
-      // are moving out of sight (based on # of flanking items) gracefully animate there
-      // However, we need them to animate to hidden, so we set the opacity to 0 for
-      // that last item
-      if (options.edgeFadeEnabled) {
-        data.calculations[options.flankingItems+1].opacity = 0;
-      } else {
-        data.calculations[options.flankingItems+1] = {
-          distance: 0,
-          offset: 0,
-          opacity: 0
-        }
-      }
-    }
-
-    /**
-     * Here we prep the carousel and its items, like setting default CSS
-     * attributes. All items start in the middle position by default
-     * and will "fan out" from there during the first animation
-     */
-    function setupCarousel() {
-      // Fill in a data array with jQuery objects of all the images
-      data.items = data.itemsContainer.find('img');
-      for (var i = 0; i < data.totalItems; i++) {
-        data.items[i] = $(data.items[i]);
-      }
-
-      // May need to set the horizon if it was set to auto
-      if (options.horizon === 0) {
-        if (options.orientation === 'horizontal') {
-          options.horizon = data.containerHeight / 2;
-        } else {
-          options.horizon = data.containerWidth / 2;
-        }
-      }
-
-      // Default all the items to the center position
-      data.itemsContainer
-        .css('position','relative')
-        .find('img')
-          .each(function () {
-            // Figure out where the top and left positions for center should be
-            var centerPosLeft, centerPosTop;
-            if (options.orientation === 'horizontal') {
-              centerPosLeft = (data.containerWidth / 2) - ($(this).data('original_width') / 2);
-              centerPosTop = options.horizon - ($(this).data('original_height') / 2);
-            } else {
-              centerPosLeft = options.horizon - ($(this).data('original_width') / 2);
-              centerPosTop = (data.containerHeight / 2) - ($(this).data('original_height') / 2);
-            }
-            $(this)
-              // Apply positioning and layering to the images
-              .css({
-                'left': centerPosLeft,
-                'top': centerPosTop,
-                'visibility': 'visible',
-                'position': 'absolute',
-                'z-index': 0,
-                'opacity': 0
-              })
-              // Give each image a data object so it remembers specific data about
-              // it's original form
-              .data({
-                top:             centerPosTop,
-                left:            centerPosLeft,
-                oldPosition:     0,
-                currentPosition: 0,
-                depth:           0,
-                opacity:         0
-              })
-              // The image has been setup... Now we can show it
-              .show();
-          });
-    }
-
-    /**
-     * All the items to the left and right of the center item need to be
-     * animated to their starting positions. This function will
-     * figure out what items go where and will animate them there
-     */
-    function setupStarterRotation() {
-      options.startingItem = (options.startingItem === 0) ? Math.round(data.totalItems / 2) : options.startingItem;
-
-      data.rightItemsCount = Math.ceil((data.totalItems-1) / 2);
-      data.leftItemsCount = Math.floor((data.totalItems-1) / 2);
-
-      // We are in effect rotating the carousel, so we need to set that
-      data.carouselRotationsLeft = 1;
-
-      // Center item
-      moveItem(data.items[options.startingItem-1], 0);
-      data.items[options.startingItem-1].css('opacity', 1);
-
-      // All the items to the right of center
-      var itemIndex = options.startingItem - 1;
-      for (var pos = 1; pos <= data.rightItemsCount; pos++) {
-        (itemIndex < data.totalItems - 1) ? itemIndex += 1 : itemIndex = 0;
-
-        data.items[itemIndex].css('opacity', 1);
-        moveItem(data.items[itemIndex], pos);
-      }
-
-      // All items to left of center
-      var itemIndex = options.startingItem - 1;
-      for (var pos = -1; pos >= data.leftItemsCount*-1; pos--) {
-        (itemIndex > 0) ? itemIndex -= 1 : itemIndex = data.totalItems - 1;
-
-        data.items[itemIndex].css('opacity', 1);
-        moveItem(data.items[itemIndex], pos);
-      }
-    }
-
-    /**
-     * Given the item and position, this function will calculate the new data
-     * for the item. One the calculations are done, it will store that data in
-     * the items data object
-     */
-    function performCalculations($item, newPosition) {
-      var newDistanceFromCenter = Math.abs(newPosition);
-
-      // Distance to the center
-      if (newDistanceFromCenter < options.flankingItems + 1) {
-        var calculations = data.calculations[newDistanceFromCenter];
-      } else {
-        var calculations = data.calculations[options.flankingItems + 1];
-      }
-
-      var distanceFactor = Math.pow(options.sizeMultiplier, newDistanceFromCenter)
-      var newWidth = distanceFactor * $item.data('original_width');
-      var newHeight = distanceFactor * $item.data('original_height');
-      var widthDifference = Math.abs($item.width() - newWidth);
-      var heightDifference = Math.abs($item.height() - newHeight);
-
-      var newOffset = calculations.offset
-      var newDistance = calculations.distance;
-      if (newPosition < 0) {
-        newDistance *= -1;
-      }
-
-      if (options.orientation == 'horizontal') {
-        var center = data.containerWidth / 2;
-        var newLeft = center + newDistance - (newWidth / 2);
-        var newTop = options.horizon - newOffset - (newHeight / 2);
-      } else {
-        var center = data.containerHeight / 2;
-        var newLeft = options.horizon - newOffset - (newWidth / 2);
-        var newTop = center + newDistance - (newHeight / 2);
-      }
-
-      var newOpacity;
-      if (newPosition === 0) {
-        newOpacity = 1;
-      } else {
-        newOpacity = calculations.opacity;
-      }
-
-      // Depth will be reverse distance from center
-      var newDepth = options.flankingItems + 2 - newDistanceFromCenter;
-
-      $item.data('width',newWidth);
-      $item.data('height',newHeight);
-      $item.data('top',newTop);
-      $item.data('left',newLeft);
-      $item.data('oldPosition',$item.data('currentPosition'));
-      $item.data('depth',newDepth);
-      $item.data('opacity',newOpacity);
-    }
-
-    function moveItem($item, newPosition) {
-      // Only want to physically move the item if it is within the boundaries
-      // or in the first position just outside either boundary
-      if (Math.abs(newPosition) <= options.flankingItems + 1) {
-        performCalculations($item, newPosition);
-
-        data.itemsAnimating++;
-
-        $item
-          .css('z-index',$item.data().depth)
-          // Animate the items to their new position values
-          .animate({
-            left:    $item.data().left,
-            width:   $item.data().width,
-            height:  $item.data().height,
-            top:     $item.data().top,
-            opacity: $item.data().opacity
-          }, data.currentSpeed, options.animationEasing, function () {
-            // Animation for the item has completed, call method
-            itemAnimationComplete($item, newPosition);
-          });
-
-      } else {
-        $item.data('currentPosition', newPosition)
-        // Move the item to the 'hidden' position if hasn't been moved yet
-        // This is for the intitial setup
-        if ($item.data('oldPosition') === 0) {
-          $item.css({
-            'left':    $item.data().left,
-            'width':   $item.data().width,
-            'height':  $item.data().height,
-            'top':     $item.data().top,
-            'opacity': $item.data().opacity,
-            'z-index': $item.data().depth
-          });
-        }
-      }
-
-    }
-
-    /**
-     * This function is called once an item has finished animating to its
-     * given position. Several different statements are executed here, such as
-     * dealing with the animation queue
-     */
-    function itemAnimationComplete($item, newPosition) {
-      data.itemsAnimating--;
-
-      $item.data('currentPosition', newPosition);
-
-      // Keep track of what items came and left the center position,
-      // so we can fire callbacks when all the rotations are completed
-      if (newPosition === 0) {
-        data.currentCenterItem = $item;
-      }
-
-      // all items have finished their rotation, lets clean up
-      if (data.itemsAnimating === 0) {
-        data.carouselRotationsLeft -= 1;
-        data.currentlyMoving = false;
-
-        // If there are still rotations left in the queue, rotate the carousel again
-        // we pass in zero because we don't want to add any additional rotations
-        if (data.carouselRotationsLeft > 0) {
-          rotateCarousel(0);
-        // Otherwise there are no more rotations and...
-        } else {
-          // Reset the speed of the carousel to original
-          data.currentSpeed = options.speed;
-
-          data.currentCenterItem.addClass(options.activeClassName);
-
-          if (data.performingSetup === false) {
-            options.movedToCenter(data.currentCenterItem);
-            options.movedFromCenter(data.previousCenterItem);
-          }
-
-          data.performingSetup = false;
-          // reset & initate the autoPlay
-          autoPlay();
-        }
-      }
-    }
-
-    /**
-     * Function called to rotate the carousel the given number of rotations
-     * in the given direciton. Will check to make sure the carousel should
-     * be able to move, and then adjust speed and move items
-     */
-    function rotateCarousel(rotations) {
-      // Check to see that a rotation is allowed
-      if (data.currentlyMoving === false) {
-
-        // Remove active class from the center item while we rotate
-        data.currentCenterItem.removeClass(options.activeClassName);
-
-        data.currentlyMoving = true;
-        data.itemsAnimating = 0;
-        data.carouselRotationsLeft += rotations;
-        
-        if (options.quickerForFurther === true) {
-          // Figure out how fast the carousel should rotate
-          if (rotations > 1) {
-            data.currentSpeed = options.speed / rotations;
-          }
-          // Assure the speed is above the minimum to avoid weird results
-          data.currentSpeed = (data.currentSpeed < 100) ? 100 : data.currentSpeed;
-        }
-
-        // Iterate thru each item and move it
-        for (var i = 0; i < data.totalItems; i++) {
-          var $item = $(data.items[i]);
-          var currentPosition = $item.data('currentPosition');
-
-          var newPosition;
-          if (data.currentDirection == 'forward') {
-            newPosition = currentPosition - 1;
-          } else {
-            newPosition = currentPosition + 1;
-          }
-          // We keep both sides as even as possible to allow circular rotation to work.
-          // We will "wrap" the item arround to the other side by negating its current position
-          var flankingAllowance = (newPosition > 0) ? data.rightItemsCount : data.leftItemsCount;
-          if (Math.abs(newPosition) > flankingAllowance) {
-            newPosition = currentPosition * -1;
-            // If there's an uneven number of "flanking" items, we need to compenstate for that
-            // when we have an item switch sides. The right side will always have 1 more in that case
-            if (data.totalItems % 2 == 0) {
-              newPosition += 1;
-            } 
-          }
-
-          moveItem($item, newPosition);
-        }
-      }
-    }
-
-    /**
-     * The event handler when an image within the carousel is clicked
-     * This function will rotate the carousel the correct number of rotations
-     * to get the clicked item to the center, or will fire the custom event
-     * the user passed in if the center item is clicked
-     */
-    $(this).find('img').bind("click", function () {
-      var itemPosition = $(this).data().currentPosition;
-
-      if (options.imageNav == false) {
-        return;
-      }
-      // Don't allow hidden items to be clicked
-      if (Math.abs(itemPosition) >= options.flankingItems + 1) {
-        return;
-      }
-      // Do nothing if the carousel is already moving
-      if (data.currentlyMoving) {
-        return;
-      }
-
-      data.previousCenterItem = data.currentCenterItem;
-
-      // Remove autoplay
-      autoPlay(true);
-      options.autoPlay = 0;
-      
-      var rotations = Math.abs(itemPosition);
-      if (itemPosition == 0) {
-        options.clickedCenter($(this));
-      } else {
-        // Fire the 'moving' callbacks
-        options.movingFromCenter(data.currentCenterItem);
-        options.movingToCenter($(this));
-        if (itemPosition < 0) {
-          data.currentDirection = 'backward';
-          rotateCarousel(rotations);
-        } else if (itemPosition > 0) {
-          data.currentDirection = 'forward';
-          rotateCarousel(rotations);
-        }
-      }
-    });
-
-
-    /**
-     * The user may choose to wrap the images is link tags. If they do this, we need to
-     * make sure that they aren't active for certain situations
-     */
-    $(this).find('a').bind("click", function (event) {
-      var isCenter = $(this).find('img').data('currentPosition') == 0;
-      // should we disable the links?
-      if (options.linkHandling === 1 || // turn off all links
-          (options.linkHandling === 2 && !isCenter)) // turn off all links except center
-      {
-        event.preventDefault();
-        return false;
-      }
-    });
-
-    function nextItemFromCenter() {
-      var $next = data.currentCenterItem.next();
-      if ($next.length <= 0) {
-        $next = data.currentCenterItem.parent().children().first();
-      }
-      return $next;
-    }
-
-    function prevItemFromCenter() {
-      var $prev = data.currentCenterItem.prev();
-      if ($prev.length <= 0) {
-        $prev = data.currentCenterItem.parent().children().last();
-      }
-      return $prev;
-    }
-
-    /**
-     * Intiate a move of the carousel in either direction. Takes care of firing
-     * the 'moving' callbacks
-     */
-    function moveOnce(direction) {
-      if (data.currentlyMoving === false) {
-        data.previousCenterItem = data.currentCenterItem;
-
-        options.movingFromCenter(data.currentCenterItem);
-        if (direction == 'backward') {
-          options.movingToCenter(prevItemFromCenter());
-          data.currentDirection = 'backward';
-        } else if (direction == 'forward') {
-          options.movingToCenter(nextItemFromCenter());
-          data.currentDirection = 'forward';
-        }
-      }
-
-      rotateCarousel(1);
-    }
-    
-    /**
-     * Navigation with arrow keys
-     */
-    $(document).keydown(function(e) {
-      if (options.keyboardNav) {
-        // arrow left or up
-        if ((e.which === 37 && options.orientation == 'horizontal') || (e.which === 38 && options.orientation == 'vertical')) {
-          autoPlay(true);
-          options.autoPlay = 0;
-          moveOnce('backward');
-        // arrow right or down
-        } else if ((e.which === 39 && options.orientation == 'horizontal') || (e.which === 40 && options.orientation == 'vertical')) {
-          autoPlay(true);
-          options.autoPlay = 0;
-          moveOnce('forward');
-        }
-        // should we override the normal functionality for the arrow keys?
-        if (options.keyboardNavOverride && (
-            (options.orientation == 'horizontal' && (e.which === 37 || e.which === 39)) ||
-            (options.orientation == 'vertical' && (e.which === 38 || e.which === 40))
-          )) {
-          e.preventDefault();
-          return false;
-        }
-      }
-    });
-
-    /**
-     * Public API methods
-     */
-    this.reload = function (newOptions) {
-      if (typeof newOptions === "object") {
-        var combineDefaultWith = newOptions;
-      } else {
-        var combineDefaultWith = {};
-      }
-      options = $.extend({}, $.fn.waterwheelCarousel.defaults, newOptions);
-
-      initializeCarouselData();
-      data.itemsContainer.find('img').hide();
-      forceImageDimensionsIfEnabled();
-
-      preload(function () {
-        setOriginalItemDimensions();
-        preCalculatePositionProperties();
-        setupCarousel();
-        setupStarterRotation();
-      });
-    }
-    
-    this.next = function() {
-      autoPlay(true);
-      options.autoPlay = 0;
-
-      moveOnce('forward');
-    }
-    this.prev = function () {
-      autoPlay(true);
-      options.autoPlay = 0;
-
-      moveOnce('backward');
-    }
-
-    this.reload(startingOptions);
-
-    return this;
-  };
-
-  $.fn.waterwheelCarousel.defaults = {
-    // number tweeks to change apperance
-    startingItem:               1,   // item to place in the center of the carousel. Set to 0 for auto
-    separation:                 175, // distance between items in carousel
-    separationMultiplier:       0.6, // multipled by separation distance to increase/decrease distance for each additional item
-    horizonOffset:              0,   // offset each item from the "horizon" by this amount (causes arching)
-    horizonOffsetMultiplier:    1,   // multipled by horizon offset to increase/decrease offset for each additional item
-    sizeMultiplier:             0.7, // determines how drastically the size of each item changes
-    opacityMultiplier:          0.8, // determines how drastically the opacity of each item changes
-    horizon:                    0,   // how "far in" the horizontal/vertical horizon should be set from the container wall. 0 for auto
-    flankingItems:              3,   // the number of items visible on either side of the center                  
-
-    // animation
-    speed:                      300,      // speed in milliseconds it will take to rotate from one to the next
-    animationEasing:            'linear', // the easing effect to use when animating
-    quickerForFurther:          true,     // set to true to make animations faster when clicking an item that is far away from the center
-    edgeFadeEnabled:            false,    // when true, items fade off into nothingness when reaching the edge. false to have them move behind the center image
-    
-    // misc
-    linkHandling:               2,                 // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
-    autoPlay:                   0,                 // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
-    orientation:                'horizontal',      // indicate if the carousel should be 'horizontal' or 'vertical'
-    activeClassName:            'carousel-center', // the name of the class given to the current item in the center
-    keyboardNav:                false,             // set to true to move the carousel with the arrow keys
-    keyboardNavOverride:        true,              // set to true to override the normal functionality of the arrow keys (prevents scrolling)
-    imageNav:                   true,              // clicking a non-center image will rotate that image to the center
-
-    // preloader
-    preloadImages:              true,  // disable/enable the image preloader. 
-    forcedImageWidth:           0,     // specify width of all images; otherwise the carousel tries to calculate it
-    forcedImageHeight:          0,     // specify height of all images; otherwise the carousel tries to calculate it
-
-    // callback functions
-    movingToCenter:             $.noop, // fired when an item is about to move to the center position
-    movedToCenter:              $.noop, // fired when an item has finished moving to the center
-    clickedCenter:              $.noop, // fired when the center item has been clicked
-    movingFromCenter:           $.noop, // fired when an item is about to leave the center position
-    movedFromCenter:            $.noop  // fired when an item has finished moving from the center
-  };
-
-})(jQuery);
+/*! ResponsiveSlides.js v1.54 
+2  * http://responsiveslides.com 
+3  * http://viljamis.com 
+4  * 
+5  * Copyright (c) 2011-2012 @viljamis 
+6  * Available under the MIT license 
+7  */ 
+8 
+ 
+9 /*jslint browser: true, sloppy: true, vars: true, plusplus: true, indent: 2 */ 
+10 
+ 
+11 (function ($, window, i) { 
+12   $.fn.responsiveSlides = function (options) { 
+13 
+ 
+14     // Default settings 
+15     var settings = $.extend({ 
+16       "auto": true,             // Boolean: Animate automatically, true or false 
+17       "speed": 500,             // Integer: Speed of the transition, in milliseconds 
+18       "timeout": 4000,          // Integer: Time between slide transitions, in milliseconds 
+19       "pager": false,           // Boolean: Show pager, true or false 
+20       "nav": false,             // Boolean: Show navigation, true or false 
+21       "random": false,          // Boolean: Randomize the order of the slides, true or false 
+22       "pause": false,           // Boolean: Pause on hover, true or false 
+23       "pauseControls": true,    // Boolean: Pause when hovering controls, true or false 
+24       "prevText": "Previous",   // String: Text for the "previous" button 
+25       "nextText": "Next",       // String: Text for the "next" button 
+26       "maxwidth": "",           // Integer: Max-width of the slideshow, in pixels 
+27       "navContainer": "",       // Selector: Where auto generated controls should be appended to, default is after the <ul> 
+28       "manualControls": "",     // Selector: Declare custom pager navigation 
+29       "namespace": "rslides",   // String: change the default namespace used 
+30       "before": $.noop,         // Function: Before callback 
+31       "after": $.noop           // Function: After callback 
+32     }, options); 
+33 
+ 
+34     return this.each(function () { 
+35 
+ 
+36       // Index for namespacing 
+37       i++; 
+38 
+ 
+39       var $this = $(this), 
+40 
+ 
+41         // Local variables 
+42         vendor, 
+43         selectTab, 
+44         startCycle, 
+45         restartCycle, 
+46         rotate, 
+47         $tabs, 
+48 
+ 
+49         // Helpers 
+50         index = 0, 
+51         $slide = $this.children(), 
+52         length = $slide.size(), 
+53         fadeTime = parseFloat(settings.speed), 
+54         waitTime = parseFloat(settings.timeout), 
+55         maxw = parseFloat(settings.maxwidth), 
+56 
+ 
+57         // Namespacing 
+58         namespace = settings.namespace, 
+59         namespaceIdx = namespace + i, 
+60 
+ 
+61         // Classes 
+62         navClass = namespace + "_nav " + namespaceIdx + "_nav", 
+63         activeClass = namespace + "_here", 
+64         visibleClass = namespaceIdx + "_on", 
+65         slideClassPrefix = namespaceIdx + "_s", 
+66 
+ 
+67         // Pager 
+68         $pager = $("<ul class='" + namespace + "_tabs " + namespaceIdx + "_tabs' />"), 
+69 
+ 
+70         // Styles for visible and hidden slides 
+71         visible = {"float": "left", "position": "relative", "opacity": 1, "zIndex": 2}, 
+72         hidden = {"float": "none", "position": "absolute", "opacity": 0, "zIndex": 1}, 
+73 
+ 
+74         // Detect transition support 
+75         supportsTransitions = (function () { 
+76           var docBody = document.body || document.documentElement; 
+77           var styles = docBody.style; 
+78           var prop = "transition"; 
+79           if (typeof styles[prop] === "string") { 
+80             return true; 
+81           } 
+82           // Tests for vendor specific prop 
+83           vendor = ["Moz", "Webkit", "Khtml", "O", "ms"]; 
+84           prop = prop.charAt(0).toUpperCase() + prop.substr(1); 
+85           var i; 
+86           for (i = 0; i < vendor.length; i++) { 
+87             if (typeof styles[vendor[i] + prop] === "string") { 
+88               return true; 
+89             } 
+90           } 
+91           return false; 
+92         })(), 
+93 
+ 
+94         // Fading animation 
+95         slideTo = function (idx) { 
+96           settings.before(idx); 
+97           // If CSS3 transitions are supported 
+98           if (supportsTransitions) { 
+99             $slide 
+100               .removeClass(visibleClass) 
+101               .css(hidden) 
+102               .eq(idx) 
+103               .addClass(visibleClass) 
+104               .css(visible); 
+105             index = idx; 
+106             setTimeout(function () { 
+107               settings.after(idx); 
+108             }, fadeTime); 
+109           // If not, use jQuery fallback 
+110           } else { 
+111             $slide 
+112               .stop() 
+113               .fadeOut(fadeTime, function () { 
+114                 $(this) 
+115                   .removeClass(visibleClass) 
+116                   .css(hidden) 
+117                   .css("opacity", 1); 
+118               }) 
+119               .eq(idx) 
+120               .fadeIn(fadeTime, function () { 
+121                 $(this) 
+122                   .addClass(visibleClass) 
+123                   .css(visible); 
+124                 settings.after(idx); 
+125                 index = idx; 
+126               }); 
+127           } 
+128         }; 
+129 
+ 
+130       // Random order 
+131       if (settings.random) { 
+132         $slide.sort(function () { 
+133           return (Math.round(Math.random()) - 0.5); 
+134         }); 
+135         $this 
+136           .empty() 
+137           .append($slide); 
+138       } 
+139 
+ 
+140       // Add ID's to each slide 
+141       $slide.each(function (i) { 
+142         this.id = slideClassPrefix + i; 
+143       }); 
+144 
+ 
+145       // Add max-width and classes 
+146       $this.addClass(namespace + " " + namespaceIdx); 
+147       if (options && options.maxwidth) { 
+148         $this.css("max-width", maxw); 
+149       } 
+150 
+ 
+151       // Hide all slides, then show first one 
+152       $slide 
+153         .hide() 
+154         .css(hidden) 
+155         .eq(0) 
+156         .addClass(visibleClass) 
+157         .css(visible) 
+158         .show(); 
+159 
+ 
+160       // CSS transitions 
+161       if (supportsTransitions) { 
+162         $slide 
+163           .show() 
+164           .css({ 
+165             // -ms prefix isn't needed as IE10 uses prefix free version 
+166             "-webkit-transition": "opacity " + fadeTime + "ms ease-in-out", 
+167             "-moz-transition": "opacity " + fadeTime + "ms ease-in-out", 
+168             "-o-transition": "opacity " + fadeTime + "ms ease-in-out", 
+169             "transition": "opacity " + fadeTime + "ms ease-in-out" 
+170           }); 
+171       } 
+172 
+ 
+173       // Only run if there's more than one slide 
+174       if ($slide.size() > 1) { 
+175 
+ 
+176         // Make sure the timeout is at least 100ms longer than the fade 
+177         if (waitTime < fadeTime + 100) { 
+178           return; 
+179         } 
+180 
+ 
+181         // Pager 
+182         if (settings.pager && !settings.manualControls) { 
+183           var tabMarkup = []; 
+184           $slide.each(function (i) { 
+185             var n = i + 1; 
+186             tabMarkup += 
+187               "<li>" + 
+188               "<a href='#' class='" + slideClassPrefix + n + "'>" + n + "</a>" + 
+189               "</li>"; 
+190           }); 
+191           $pager.append(tabMarkup); 
+192 
+ 
+193           // Inject pager 
+194           if (options.navContainer) { 
+195             $(settings.navContainer).append($pager); 
+196           } else { 
+197             $this.after($pager); 
+198           } 
+199         } 
+200 
+ 
+201         // Manual pager controls 
+202         if (settings.manualControls) { 
+203           $pager = $(settings.manualControls); 
+204           $pager.addClass(namespace + "_tabs " + namespaceIdx + "_tabs"); 
+205         } 
+206 
+ 
+207         // Add pager slide class prefixes 
+208         if (settings.pager || settings.manualControls) { 
+209           $pager.find('li').each(function (i) { 
+210             $(this).addClass(slideClassPrefix + (i + 1)); 
+211           }); 
+212         } 
+213 
+ 
+214         // If we have a pager, we need to set up the selectTab function 
+215         if (settings.pager || settings.manualControls) { 
+216           $tabs = $pager.find('a'); 
+217 
+ 
+218           // Select pager item 
+219           selectTab = function (idx) { 
+220             $tabs 
+221               .closest("li") 
+222               .removeClass(activeClass) 
+223               .eq(idx) 
+224               .addClass(activeClass); 
+225           }; 
+226         } 
+227 
+ 
+228         // Auto cycle 
+229         if (settings.auto) { 
+230 
+ 
+231           startCycle = function () { 
+232             rotate = setInterval(function () { 
+233 
+ 
+234               // Clear the event queue 
+235               $slide.stop(true, true); 
+236 
+ 
+237               var idx = index + 1 < length ? index + 1 : 0; 
+238 
+ 
+239               // Remove active state and set new if pager is set 
+240               if (settings.pager || settings.manualControls) { 
+241                 selectTab(idx); 
+242               } 
+243 
+ 
+244               slideTo(idx); 
+245             }, waitTime); 
+246           }; 
+247 
+ 
+248           // Init cycle 
+249           startCycle(); 
+250         } 
+251 
+ 
+252         // Restarting cycle 
+253         restartCycle = function () { 
+254           if (settings.auto) { 
+255             // Stop 
+256             clearInterval(rotate); 
+257             // Restart 
+258             startCycle(); 
+259           } 
+260         }; 
+261 
+ 
+262         // Pause on hover 
+263         if (settings.pause) { 
+264           $this.hover(function () { 
+265             clearInterval(rotate); 
+266           }, function () { 
+267             restartCycle(); 
+268           }); 
+269         } 
+270 
+ 
+271         // Pager click event handler 
+272         if (settings.pager || settings.manualControls) { 
+273           $tabs.bind("click", function (e) { 
+274             e.preventDefault(); 
+275 
+ 
+276             if (!settings.pauseControls) { 
+277               restartCycle(); 
+278             } 
+279 
+ 
+280             // Get index of clicked tab 
+281             var idx = $tabs.index(this); 
+282 
+ 
+283             // Break if element is already active or currently animated 
+284             if (index === idx || $("." + visibleClass).queue('fx').length) { 
+285               return; 
+286             } 
+287 
+ 
+288             // Remove active state from old tab and set new one 
+289             selectTab(idx); 
+290 
+ 
+291             // Do the animation 
+292             slideTo(idx); 
+293           }) 
+294             .eq(0) 
+295             .closest("li") 
+296             .addClass(activeClass); 
+297 
+ 
+298           // Pause when hovering pager 
+299           if (settings.pauseControls) { 
+300             $tabs.hover(function () { 
+301               clearInterval(rotate); 
+302             }, function () { 
+303               restartCycle(); 
+304             }); 
+305           } 
+306         } 
+307 
+ 
+308         // Navigation 
+309         if (settings.nav) { 
+310           var navMarkup = 
+311             "<a href='#' class='" + navClass + " prev'>" + settings.prevText + "</a>" + 
+312             "<a href='#' class='" + navClass + " next'>" + settings.nextText + "</a>"; 
+313 
+ 
+314           // Inject navigation 
+315           if (options.navContainer) { 
+316             $(settings.navContainer).append(navMarkup); 
+317           } else { 
+318             $this.after(navMarkup); 
+319           } 
+320 
+ 
+321           var $trigger = $("." + namespaceIdx + "_nav"), 
+322             $prev = $trigger.filter(".prev"); 
+323 
+ 
+324           // Click event handler 
+325           $trigger.bind("click", function (e) { 
+326             e.preventDefault(); 
+327 
+ 
+328             var $visibleClass = $("." + visibleClass); 
+329 
+ 
+330             // Prevent clicking if currently animated 
+331             if ($visibleClass.queue('fx').length) { 
+332               return; 
+333             } 
+334 
+ 
+335             //  Adds active class during slide animation 
+336             //  $(this) 
+337             //    .addClass(namespace + "_active") 
+338             //    .delay(fadeTime) 
+339             //    .queue(function (next) { 
+340             //      $(this).removeClass(namespace + "_active"); 
+341             //      next(); 
+342             //  }); 
+343 
+ 
+344             // Determine where to slide 
+345             var idx = $slide.index($visibleClass), 
+346               prevIdx = idx - 1, 
+347               nextIdx = idx + 1 < length ? index + 1 : 0; 
+348 
+ 
+349             // Go to slide 
+350             slideTo($(this)[0] === $prev[0] ? prevIdx : nextIdx); 
+351             if (settings.pager || settings.manualControls) { 
+352               selectTab($(this)[0] === $prev[0] ? prevIdx : nextIdx); 
+353             } 
+354 
+ 
+355             if (!settings.pauseControls) { 
+356               restartCycle(); 
+357             } 
+358           }); 
+359 
+ 
+360           // Pause when hovering navigation 
+361           if (settings.pauseControls) { 
+362             $trigger.hover(function () { 
+363               clearInterval(rotate); 
+364             }, function () { 
+365               restartCycle(); 
+366             }); 
+367           } 
+368         } 
+369 
+ 
+370       } 
+371 
+ 
+372       // Max-width fallback 
+373       if (typeof document.body.style.maxWidth === "undefined" && options.maxwidth) { 
+374         var widthSupport = function () { 
+375           $this.css("width", "100%"); 
+376           if ($this.width() > maxw) { 
+377             $this.css("width", maxw); 
+378           } 
+379         }; 
+380 
+ 
+381         // Init fallback 
+382         widthSupport(); 
+383         $(window).bind("resize", function () { 
+384           widthSupport(); 
+385         }); 
+386       } 
+387 
+ 
+388     }); 
+389 
+ 
+390   }; 
+391 })(jQuery, this, 0); 

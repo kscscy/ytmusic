@@ -1,82 +1,43 @@
-<div id="player" style="z-index: 100;">
-	<div class="player">
-		<div class="guide"></div>
-		<div id="playerWrap" style="width: 1379px;">
-			<div id="cover">
-				<a> <img width="72" height="72" title="앨범커버"
-					src="//image.soribada.com/image/v25/common/default_album.png">
-					<span class="glow"></span> <span class="tag" style="display: none"></span>
-				</a>
-			</div>
-			<div id="song-artist">
-				<div class="info">
-					<a id="pado_player" class="pado_player" title="파도"></a>
-					<p class="pado_tit_wrap">
-						<span id="adult" class="adult" style="display: none">19금</span> <strong>곡제목</strong>
-						<em class="slash"> / </em> <span>아티스트</span>
-					</p>
-				</div>
-			</div>
-			<div id="infomation">
-				<div id="_player_imfomation">
-					<div class="info-cont info-cont-type1">
-						<p class="txt">
-							<strong>현재 재생목록에 곡이 없습니다.</strong>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div id="progress">
-				<span id="time" class="disable"> <span class="now">00:00</span><em
-					class="slash">/</em><span class="total">00:00</span>
-				</span>
-				<div class="base"></div>
-				<div id="fill" style="width: 0px">
-					<div class="bar">
-						<div id="handle" class="disable" style="opacity: 0;"></div>
-					</div>
-				</div>
-			</div>
-			<div id="timeTool" style="display: none;">
-				<div>00:00</div>
-			</div>
-			<div id="controller">
-				<button id="prev" title="이전곡"></button>
-				<button id="play" title="재생" class="play"></button>
-				<button id="next" title="다음곡"></button>
-				<button id="loop" title="반복없음->전체반복" class="loop-off"></button>
-				<button id="shuffle" title="순차재생->랜덤재생"></button>
-			</div>
-			<div id="features">
-				<button id="favorite" class="dim" title="즐겨찾기"></button>
-				<button id="btn-lyrics" class="dim" title="가사보기"></button>
-				<button id="down" class="dim" title="다운로드"></button>
-				<div id="featuresTool"></div>
-			</div>
-			<div id="volume" title="볼륨">
-				<div class="volumeWrap" style="display: none;">
-					<div class="vol_base">
-						<div class="vol_fill" style="width: 100%;">
-							<div class="vol_bar">
-								<div class="vol_handle" style="left: 100px;"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="vol_btn"></div>
-			</div>
-		</div>
-		<div class="function">
-			<button id="list" title="재생목록">
-				<span id="cart-status02" class="badge" style="display: none"><span
-					class="num">0</span><span class="after"></span></span>
-			</button>
-			<button id="cart" title="다운로드">
-				<span id="cart-status" class="badge" style="display: none"><span
-					class="num">0</span><span class="after"></span></span>
-			</button>
-			<span id="tail" style="display: none"></span>
-			<div id="notify"></div>
-		</div>
-	</div>
-</div>
+  <div id="cover-art">
+    <div id="cover-art-big"></div>
+    <img id="cover-art-small" alt="cover-art-small" src="image/ft_player/default.png">
+    <!-- <div class="instructions">Drop your audio files here.</div> -->
+  </div>
+
+  <div id="wave"></div>
+  <div id="ss"></div><input id="seekslider" type="range" min="0" max="100" value="0" step="1"></div>
+  <div id="control-bar">
+
+    <div class="player-control">
+      <div id="previous-button" title="Previous"><i class="fa fa-fast-backward"></i></div>
+      <div id="play-button" title="Play"><i class="fa fa-play"></i></div>
+      <div id="pause-button" title="Pause"><i class="fa fa-pause"></i></div>
+      <div id="stop-button" title="Stop"><i class="fa fa-stop"></i></div>
+      <div id="next-button" title="Next"><i class="fa fa-fast-forward"></i></div>
+      <input id="volumeslider" type="range" min="0" max="100" value="100" step="1">
+      <div id="shuffle-button" title="Shuffle Off"><i class="fa fa-random"></i></div>
+      <div id="repeat-button" title="Repeat Off"><i class="fa fa-refresh"><span></span></i></div>
+    </div>
+
+    <div id="playlist">
+      <div id="track-details" title="Show playlist">
+        <i class="fa fa-sort"></i>
+        <p id="track-desc">There are no tracks loaded in the player.</p>
+        <p id="track-time">
+          <span id="current">-</span> / <span id="total">-</span>
+        </p>
+      </div>
+
+      <div id="expand-bar" class="hidden">
+
+        <form>
+          <label for="searchBox">Search</label><div><input id="searchBox" type="search" name="search"></div>
+        </form>
+        <ul id="list"></ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="drop-zone" class="hidden">Drag &amp; Drop Files Here</div>
