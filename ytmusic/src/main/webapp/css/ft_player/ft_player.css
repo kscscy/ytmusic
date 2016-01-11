@@ -125,6 +125,7 @@
 	flex:2;
 	display: -webkit-flex;
 	display: flex;
+	background-color: white;
 }
 
 .player-control div{
