@@ -36,6 +36,7 @@ dependencies {
   compile 'log4j:log4j:1.2.17'
   compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
   compile 'org.aspectj:aspectjweaver:1.8.7'
+	//compile 'org.webjars:jquery-cookie:1.4.1'
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }
 

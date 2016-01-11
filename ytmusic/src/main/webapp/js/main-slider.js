@@ -3,9 +3,9 @@ $(function() {
     
     var jssor_1_options = {
       $AutoPlay: true,
-      $SlideWidth: 600,
+      $SlideWidth: 700,
       $Cols: 2,
-      $Align: 100,
+      $Align: 162,
       $ArrowNavigatorOptions: {
         $Class: $JssorArrowNavigator$
       },
@@ -21,7 +21,7 @@ $(function() {
     function ScaleSlider() {
         var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
         if (refSize) {
-            refSize = Math.min(refSize, 800);
+            refSize = Math.min(refSize, 1024);
             jssor_1_slider.$ScaleWidth(refSize);
         }
         else {

@@ -2,36 +2,67 @@
 
 #featured_slide {
    display: block;
-   width: 960px;
+   width: 1024px;
    height: 380px;
    margin: 0 auto;
    padding: 0;
    font-size: 12px;
-   font-family: Georgia, "Times New Roman", Times, serif;
+   /* font-family: 나눔바른고딕, NanumBarunGothic, "NanumBarunGothic", "나눔바른고딕", "돋움", Dotum, "Apple SD Gothic Neo", sans-serif; */
+}
+
+#slider button {
+	
+}
+/* 리스트 슬라이더 tag */
+
+#list_tag{
+	margin: 0 auto;
+	padding-left: 20px;
+	margin-top: 10px;
+}
+.tag {
+	font-family: 나눔바른고딕, NanumBarunGothic, "NanumBarunGothic", "나눔바른고딕", "돋움", Dotum, "Apple SD Gothic Neo", sans-serif;
+	position: relative;
+	margin-left: 20px;
+	text-align: center;
+	opacity: 1;
+	background-color: ;
+	cursor: pointer;
+	border: 0px none;
+	background-color: transparent;
+  text-decoration: none;
+  font-size: 14px;	
+  color: black;
+  padding: 1px;
+}
+.tag:HOVER {
+  font-weight: bold;
+}
+input:FOCUS {
+	
 }
 
 /* ----------------------------------------------Main Category Slider------------------------------------- */
 #slider, #slider ul {
-   
    position: absolute;
-   width: 960px;
-   height: 450px;
+   width: 1024px;
+   height: 480px;
 }
 
 #slider ul {
    display: block;
    overflow: hidden;
-   margin: 0;
-   padding: 0 0 0 20px;
+   margin: 0 auto;
+   padding: 0 6px;
    list-style: none;
 }
 
 #slider li {
    position: absolute;
    top: 0;
-   width: 950px;
+   width: 1024px;
    height: 420px;
-   padding: 11px;
+   padding: 5px 11px 11px 11px;
    color: #9FA4AA; /* background-color:; */
    border: none;
    overflow: hidden;
@@ -45,11 +76,11 @@
 }
 
 #slider li img {
-   width: 150px;
+   width: 196px;
    height: 110px;
-   margin: 0 0 10px 0;
-   padding: 4px;
-   border: 1px solid #2B2B2B;
+   /* margin: 0 0 10px 0; */
+   /* padding: 4px; */
+   border: 1px solid lightgray;
 }
 
 #slider li h2 {
@@ -75,8 +106,7 @@
 
 #slider li p.readmore a {
    float:;
-   font-weight: bold;
-   line-height: normal;
+   /* font-weight: bold; */
    color: black; /* background-color:#2B2B2B; */
    text-decoration: none;
 }
@@ -89,7 +119,7 @@
    float: left;
    position: relative;
    top: 0;
-   width: 180px;
+   width: 196px;
    height: 180px;
 }
 
@@ -128,18 +158,18 @@
    cursor: pointer;
    outline: none;
    z-index: 0;
-   background: #161616 center center no-repeat;
+   background: lightgray center center no-repeat;
    border: 1px solid #464646;
 }
 
 #slider a.next {
-   right: -21px;
+   right: 0px;
    background-image: url("images/next.png");
    border-left-color: #2B2B2B;
 }
 
 #slider a.prev {
-   left: -21px;
+   left: 0px;
    background-image: url("images/prev.png");
    border-right-color: #2B2B2B;
 }

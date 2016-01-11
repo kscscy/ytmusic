@@ -1,3 +1,6 @@
+
+
+  
   
   
 //Define some variables used to remember state.
@@ -44,13 +47,25 @@
       $('#prev-button').css('visibility', prevVis);
 
       var playlistItems = response.result.items;
+       var i = 1;
       if (playlistItems) {
-    	  $('#containers').empty();
+      	$('#mainContainer').empty();
+      	
+         $('#resultTbody').empty();
+         $('#resultThead').empty();
+         $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>썸네일</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
         $.each(playlistItems, function(index, item) {
-          displayResult(item.snippet);
+          var title = item.snippet.title;
+          var videoId = item.snippet.resourceId.videoId;
+          vidThumburl =  item.snippet.thumbnails.default.url;
+          vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+
+          
+          $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
+          i++;
         });
       } else {
-        $('#containers').append('Sorry you have no uploaded videos');
+        $('#resultTbody').append('Sorry you have no uploaded videos');
       }
     });
   }
@@ -61,8 +76,9 @@
     var videoId = videoSnippet.resourceId.videoId;
     vidThumburl =  videoSnippet.thumbnails.default.url;
     vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+
     
-    $('#containers').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+    $('#resultTbody').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
     
     
   }
@@ -103,7 +119,7 @@
     function getChartList(chartListId){
             gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
             gapi.client.load('youtube', 'v3', function() {
-            	requestVideoPlaylist(chartListId);
+               requestVideoPlaylist(chartListId);
             });
     }
     
@@ -118,86 +134,94 @@
             var request = gapi.client.youtube.search.list({
                        q: q,
                     part: 'snippet',
-                  	maxResults: 30
+                     maxResults: 30
             });
             request.execute(function(response) {
                     var str = JSON.stringify(response.result);
                     //$('#search-container').html('<pre>' + str + '</pre>');
-                    $('#containers').empty();
+                    $('#mainContainer').empty();
+                    $('#resultTbody').empty();
+                    $('#resultThead').empty();
                     
                     var resultItems = response.result.items;
                     //console.log(resultItems);
                     var i = 1;
+                    $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>썸네일</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
                     $.each(resultItems, function(index, item) {
-                    	//displayResult(item.snippet);
+                       //displayResult(item.snippet);
                       title = item.snippet.title;
                       videoId = item.id.videoId;
                       vidThumburl =  item.snippet.thumbnails.default.url;
                       vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
                       
-                      $('#containers').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+                      $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
                       i++;
                     });
             });
     }
 
-	 
-	
+    
+   
     function playMusic(vid) {
-    	/* $.post('ajax/musicPlay.do', {
-    		vid: vid
-    	}, function(resultObj) {
-    		var ajaxResult = resultObj.ajaxResult;
-    		if (ajaxResult.status == "success") {
-    		      var musicUrl = ajaxResult.data;
-    		      console.log("iii" +resultObj);
-    			  alert(musicUrl);
-  		    }
-    		console.log(musicUrl);
-    		
-    		
-    	    $("<tr>")
-    	      .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
-    				.appendTo(footer);
-    	  
-    	}, 'json');  */
-    	
-    	
-    	
-    	 $.getJSON('ajax/musicPlay.do?vid='+vid, function(resultObj) {
-    		var ajaxResult = resultObj.ajaxResult;
-    		if (ajaxResult.status == "success") {
-    		      var musicUrl = ajaxResult.data;
-    		      //console.log("iii" +resultObj);
-    			  //alert(musicUrl);
-  		    }
-    		console.log(musicUrl);
-    		
-    		$(footer).empty();
-    	    $("<tr>")
-    	      .html('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>')
-    				.appendTo(footer);
-    	    $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
-    	  
-    	}); 
+       /* $.post('ajax/musicPlay.do', {
+          vid: vid
+       }, function(resultObj) {
+          var ajaxResult = resultObj.ajaxResult;
+          if (ajaxResult.status == "success") {
+                var musicUrl = ajaxResult.data;
+                console.log("iii" +resultObj);
+               alert(musicUrl);
+            }
+          console.log(musicUrl);
+          
+          
+           $("<tr>")
+             .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
+                .appendTo(footer);
+         
+       }, 'json');  */
+       
+       
+       
+        $.getJSON('music/ajax/musicPlay.do?vid='+vid, function(resultObj) {
+          var ajaxResult = resultObj.ajaxResult;
+          if (ajaxResult.status == "success") {
+                var musicUrl = ajaxResult.data;
+                //console.log("iii" +resultObj);
+               //alert(musicUrl);
+            }
+          console.log(musicUrl);
+          
+          $(footer).empty();
+           $("<tr>")
+             .html('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>')
+                .appendTo(footer);
+           $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
+         
+       }); 
     }
    
     function playVideo(vid) {
-    	 $.getJSON('ajax/videoPlay.do?vid='+vid, function(resultObj) {
-    		var ajaxResult = resultObj.ajaxResult;
-    		if (ajaxResult.status == "success") {
-    		      var videoUrl = ajaxResult.data;
-    		      //console.log("iii" +resultObj);
-    			  //alert(musicUrl);
-  		    }
-    		console.log(videoUrl);
+        $.getJSON('music/ajax/videoPlay.do?vid='+vid, function(resultObj) {
+          var ajaxResult = resultObj.ajaxResult;
+          if (ajaxResult.status == "success") {
+                var videoUrl = ajaxResult.data;
+                //console.log("iii" +resultObj);
+               //alert(musicUrl);
+            }
+          console.log(videoUrl);
 
-    		$(".modal-body").empty();
-    	    $(".modal-body").append('<video id="videoPlayer" controls="" autoplay="" name="media" width="100%"><source src='+videoUrl+' type="video/mp4"></video>');
-    	    $(".modal-body").append('<a href="'+videoUrl+'" download>다운로드</a>');
-    	}); 
+          $(".modal-body").empty();
+           $(".modal-body").append('<video id="videoPlayer" controls="" autoplay="" name="media" width="100%"><source src='+videoUrl+' type="video/mp4"></video>');
+           $(".modal-body").append('<a href="'+videoUrl+'" download>다운로드</a>');
+       }); 
     }
     
     $('#myModal').click(function () {
-	    $('.modal-body').empty();
+       $('.modal-body').empty();
     });
+
+  
+  
+  
+

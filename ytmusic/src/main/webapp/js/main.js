@@ -2,6 +2,18 @@
   var count = 0;
   var liCountId = 0;
   var liCountId2 = 1;
+ 
+  function callList(value) {
+	  console.log("callList 호출");
+	  count++;
+      gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
+      gapi.client.load('youtube', 'v3', function() {
+    	  requestVideoPlaylist(value);
+      });
+      
+	  console.log("callList 호출완료");
+  }
+  
     function init() {
       console.log("init 호출1");
       gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
@@ -49,7 +61,7 @@
       if (count < 2) {
 
         request.execute(function(response) {
-            listUrl = 'PLDcnymzs18LVXfO_x0Ei0R24qDbVtyy66';
+            listUrl = 'PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp';
             var s3 = document.createElement('script');
             s3.type = "text/javascript";
             s3.src = "https://apis.google.com/js/client.js?onload=init";
@@ -100,6 +112,8 @@
           $('#categories').append('Sorry you have no uploaded videos');
           }
         });
+        liCountId = 0;
+        liCountId2 = 1;
         count = 0;
       }
     }
