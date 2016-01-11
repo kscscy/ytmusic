@@ -20,7 +20,8 @@ body {
 	float:left;
 	left:0;
 	width:100%;
-	z-index: 11;
+	z-index: 12;
+	background-color: white;
 }
 #footer #ss {
 	background-color: white; 
