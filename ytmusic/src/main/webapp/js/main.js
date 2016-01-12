@@ -80,11 +80,11 @@
                 console.log(liCountId2);
                 if(liCountId == 0) {
                   liCountId2 = liCountId;  
-                  li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
+                  li = '<ul id=ulCountId-'+liCountId2+' style="padding-left:30px;"><li id=liCountId-'+liCountId2+'></li></ul>';
                   $('#categories').append(li);
                 } else if(liCountId % 10 == 0) {
                   liCountId2 = liCountId;  
-                  li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
+                  li = '<ul id=ulCountId-'+liCountId2+' style="padding-left:30px;"><li id=liCountId-'+liCountId2+'></li></ul>';
                   $('#categories').append(li);
                 }
                 ++liCountId;
@@ -122,13 +122,20 @@
       var title = videoSnippet.title;
       var videoId = videoSnippet.resourceId.videoId;
       vidThumburl = videoSnippet.thumbnails.medium.url;
-	    
-      vidThumbimg = '<li><a href="#"><img src="'+vidThumburl+'" alt=""></a>'
-      		+ '<p class="readmore"><a href="#">'+title+'</a></p></li>';
+      
+      vidThumbimg = '<li style="background: url('+vidThumburl+') no-repeat; background-size: 180px 110px;">'
+      		+'<div class="imgContainer" style="height:110px; width:180px;">'
+      	    +'<div class="buttonContainer" style="height:110px; width:180px;">'
+            +'<span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/>'
+            +'</div></div>'
+      		+ '<p class="readmore"><a href="#">'+title+'</a></p>';
+      
       $('#liCountId-'+liCountId2+'').append(vidThumbimg);
    }
-
-    // Retrieve the next page of videos in the playlist.
+    /*vidThumbimg = '<li style="background: url('+vidThumburl+') no-repeat; background-size: 180px 110px;">'
+		+ '<div class="slider_img" style="height:110px; width:180px;"><button class="glyphicon glyphicon-play-circle" aria-hidden="true"' 
+		+ 'style="display:inline; border:0 none; background-color:transparent; padding: 44px 78px; font-size:25px; cursor:pointer;"/></div>'
+		+ '<p class="readmore"><a href="#">'+title+'</a></p>';*/
     function nextPage() {
       requestVideoPlaylist(playlistId, nextPageToken);
     }
@@ -138,5 +145,5 @@
       requestVideoPlaylist(playlistId, prevPageToken);
     }
     
-    
+
     

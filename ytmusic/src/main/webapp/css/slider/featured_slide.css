@@ -62,11 +62,13 @@ input:FOCUS {
    top: 0;
    width: 1024px;
    height: 420px;
-   padding: 5px 11px 11px 11px;
+   margin-top: 5px;
    color: #9FA4AA; /* background-color:; */
    border: none;
    overflow: hidden;
 }
+
+
 
 #slider li img, #slider li h2, #slider li p {
    margin: 0;
@@ -100,8 +102,11 @@ input:FOCUS {
 }
 
 #slider li p.readmore {
-   margin: 0;
-   text-align: left;
+	width: 185px;
+	position: absolute;
+  top: 115px;
+  margin: 0;
+  text-align: left;
 }
 
 #slider li p.readmore a {
