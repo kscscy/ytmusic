@@ -124,8 +124,8 @@
       var title = videoSnippet.title;
       var videoId = videoSnippet.resourceId.videoId;
       vidThumburl = videoSnippet.thumbnails.medium.url;
-      vidThumbimg = '<li class="liCon_2" style="background: url('+vidThumburl+') no-repeat; background-size: 180px 110px;">'
-      		+'<div class="imgContainer" style="height:110px; width:180px;">'
+      vidThumbimg = '<li class="liCon_2" style="">'
+      		+'<div class="imgContainer" style="background: url('+vidThumburl+') no-repeat; background-size: 180px 110px; height:110px; width:180px;">'
       	    +'<div class="buttonContainer" style="height:110px; width:180px;">'
             +'<span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/>'
             +'</div></div>'
@@ -140,16 +140,6 @@
       $('#liCountId-'+liCountId2+'').append(vidThumbimg);
       songCount++;
    }
-
-    function nextPage() {
-      requestVideoPlaylist(playlistId, nextPageToken);
-    }
-
-    // Retrieve the previous page of videos in the playlist.
-    function previousPage() {
-      requestVideoPlaylist(playlistId, prevPageToken);
-    }
-    
 
     function dropdownsMenu(songId) {
     	console.log(songId);
@@ -167,15 +157,13 @@
         console.log(result);
         $('#'+result).append(content);
     }
-    /*
-    '<div class="dropdown">'
-    + '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Tutorials'
-    + '<span class="caret"></span></button>'
-    + '<ul class="dropdown-menu">'
-    + '<li><a href="#">동영상 보기</a></li>'
-    + '<li><a href="#">유투브 페이지</a></li>'
-    + '<li><a href="#">재생목록에 추가</a></li>'
-    + '<li class="divider"></li>'
-    + '<li><a href="#">내 앨범에 추가</a></li>'
-    + '</ul>'
-    +'</div>';*/
+    
+
+    function nextPage() {
+      requestVideoPlaylist(playlistId, nextPageToken);
+    }
+
+    // Retrieve the previous page of videos in the playlist.
+    function previousPage() {
+      requestVideoPlaylist(playlistId, prevPageToken);
+    }
