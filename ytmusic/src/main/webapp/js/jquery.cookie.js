@@ -51,9 +51,7 @@
 		var value = config.raw ? s : parseCookieValue(s);
 		return $.isFunction(converter) ? converter(value) : value;
 	}
- console.log("윗줄");
 	var config = $.cookie = function (key, value, options) {
-		console.log("아랫줄");
 
 		// Write
 

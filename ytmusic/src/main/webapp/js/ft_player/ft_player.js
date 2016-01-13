@@ -462,14 +462,15 @@ $('#repeat-button').on('click', function(){
 	}
 
 	else if(repeat==1){
-		that.find('span').show();
+		that.removeClass('active');
+		that.addClass('activecur');
 		that.attr('title', 'Repeat Current');
 		repeat = 2;
 	}
 
 	else if(repeat==2){
 		that.find('span').hide();
-		that.removeClass('active');
+		that.removeClass('activecur');
 		that.attr('title', 'Repeat Off');
 		repeat = 0;
 	}
