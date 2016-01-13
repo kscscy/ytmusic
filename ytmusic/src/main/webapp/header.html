@@ -1,16 +1,13 @@
 <div class="wrap_header">
-   
    <nav id="menu" class="left">
-      
-      <ul style="overflow-y:scroll; width:280px; height:100%; padding:2px">
+      <ul style="width:280px; height:100%; padding:2px">
          <li><a href="#" class="active"><i class="fa fa-home"></i>Home</a></li>
          <li><a href="#"><i class="fa fa-info-circle"></i>최신</a></li>
          <li><a href="#"><i class="fa fa-info-circle"></i>인기차트</a></li>
          <li><a href="#"><i class="fa fa-info-circle"></i>장르별</a></li>
          <li><a href="#">
-         <i class="fa fa-laptop"></i>플레이리스트 <i
-               class="fa fa-caret-down" ></i></a>
-            <ul style="overflow-y:scroll; width:280px; height:250px; padding:2px">
+         <i class="fa fa-laptop"></i>플레이리스트 <i class="fa fa-caret-down" ></i></a>
+            <ul style="overflow-y:scroll; width:280px; height:350px; padding:2px">
                <li><a href="#">나만의 재생목록 1</a></li>
                <li><a href="#">나만의 재생목록 2</a></li>
                <li><a href="#">나만의 재생목록 3</a></li>
@@ -31,7 +28,8 @@
                <li><a href="#">나만의 재생목록 8</a></li>
                <li><a href="#">나만의 재생목록 9</a></li>
                <li><a href="#">나만의 재생목록 10</a></li>
-            </ul></li>
+            </ul>
+         </li>
          <li>
 	          <a href="#">
 	            <i class="fa fa-phone"></i>저작권 <i class="fa fa-caret-down"></i>
@@ -182,7 +180,9 @@ $("#showmenu").click(function(e){
    -moz-transition: all 0.3s ease;
    transition: all 0.3s ease;
    opacity: 1;
-   font-family: 'Source Sans Pro', sans-serif;
+   /* font-family: 'Source Sans Pro', sans-serif; */
+   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+   
 }
 
 #menu ul {
@@ -229,7 +229,8 @@ $("#showmenu").click(function(e){
 }
 
 #menu ul a:hover i:first-child {
-   color: #FFCC33;
+   /* color: #FFCC33; */
+   color: white;
 }
 
 /* Submenu */
@@ -265,10 +266,10 @@ $("#showmenu").click(function(e){
 #showmenu {
    margin-left: 100%;
    position: absolute;
-   top: 0;
+   top: 300px;
    padding: 5px 10px 0px 20px;
-   font-size: 2.5em;
-   color: yellow;
+   font-size: 1.5em;
+   color: gray;
    -webkit-transition: all 0.3s ease;
    -moz-transition: all 0.3s ease;
    transition: all 0.3s ease;
