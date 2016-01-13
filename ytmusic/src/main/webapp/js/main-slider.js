@@ -3,9 +3,9 @@ $(function() {
     
     var jssor_1_options = {
       $AutoPlay: true,
-      $SlideWidth: 700,
+      $SlideWidth: 340,
       $Cols: 2,
-      $Align: 162,
+      $Align: 340,
       $ArrowNavigatorOptions: {
         $Class: $JssorArrowNavigator$
       },

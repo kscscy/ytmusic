@@ -3,6 +3,7 @@
   var liCountId = 0;
   var liCountId2 = 1;
   var songCount = 1;
+  var scriptCount = 1;
 
   function callList(value) {
 	  console.log("callList 호출");
@@ -92,23 +93,19 @@
                 displayResult2(item.snippet);
              });
             
+            /*if(scriptCount < 2) {*/
+            	/*scriptCount++;*/
               var s4 = document.createElement('script');
               s4.type = "text/javascript";
               s4.src = "js/slider/jquery-photostack.js";
               document.body.appendChild(s4);
-              //console.log("appended s4");
-              
               
               var s3 = document.createElement('script');
               s3.type = "text/javascript";
               s3.src = "js/main-slider.js";
               document.body.appendChild(s3);
-              
- /*             
-              var s5 = document.createElement('script');
-              s5.type = "text/javascript";
-              s5.src = "js/main-slider2.js";
-              document.body.appendChild(s5);*/
+            /*}*/
+
            } else {
           $('#categories').append('Sorry you have no uploaded videos');
           }
