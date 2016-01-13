@@ -595,7 +595,7 @@ $('#signup').click(
           vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
 
           
-          $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm"     onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
+          $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
           i++;
         });
       } else {
@@ -604,6 +604,18 @@ $('#signup').click(
     });
   }
 
+  // Create a listing for a video.
+  function displayResult(videoSnippet) {
+    var title = videoSnippet.title;
+    var videoId = videoSnippet.resourceId.videoId;
+    vidThumburl =  videoSnippet.thumbnails.default.url;
+    vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+
+    
+    $('#resultTbody').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+    
+    
+  }
 
   // Retrieve the next page of videos in the playlist.
   function nextPage() {
@@ -669,11 +681,13 @@ $('#signup').click(
                     var i = 1;
                     $('#resultThead').append('<tr><th>선택</th><th>썸네일</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
                     $.each(resultItems, function(index, item) {
+                    	//displayResult(item.snippet);
                       title = item.snippet.title;
                       videoId = item.id.videoId;
                       vidThumburl =  item.snippet.thumbnails.default.url;
                       vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
-                      $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm"     onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
+                      
+                      $('#resultTbody').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
                       i++;
                     });
             });
@@ -711,20 +725,12 @@ $('#signup').click(
   		    }
     		console.log(musicUrl);
     		
-    		//$(footer).empty();
-    		//$(footer).append('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>');
-    	    //$(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
-    	    
-    	    var song = [];
-    	    song["artist"] = "Unknown Artist";
-    	    song["title"] = "haha";
-    	    song["album"] = "";
-    	    song["picture"] = "assets/img/default.png";
-    	    song["audioTrack"] = musicUrl;
-    	    song["playing"] = false;
-    	    allTracks.push(song);                                                                                                                                                                                                                                
-			playlist.push(song);
-			$('#list').append($(returnTrackHTML(song,playlist.length-1)));
+    		$(footer).empty();
+    	    $("<tr>")
+    	      .html('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>')
+    				.appendTo(footer);
+    	    $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
+    	  
     	}); 
     }
    

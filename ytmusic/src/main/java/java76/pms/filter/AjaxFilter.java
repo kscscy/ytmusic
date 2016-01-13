@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebFilter("*.do")
-public class AuthFilter implements Filter {
+public class AjaxFilter implements Filter {
   
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {}
@@ -26,9 +26,11 @@ public class AuthFilter implements Filter {
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) resp;
     
-    
     response.setHeader("Access-Control-Allow-Origin", "*");
-    System.out.println("Access-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-OriginAccess-Control-Allow-Origin");
+    response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
+    response.setHeader("Access-Control-Max-Age", "3600");
+    response.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept");
+    System.out.println("ajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilterajaxfilter");
     chain.doFilter(request, response);
   }
 

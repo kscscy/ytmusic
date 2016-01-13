@@ -64,7 +64,7 @@ dropZone.on('drop', function(e) {
 		for(var j=0; j<files.length; j++){
 			if(files[j].type.match(/audio\/(mp3|mpeg)/)){
 
-				getID3Data(files[j], function (song) {
+				getID3Data(	files[j], function (song) {
 					allTracks.push(song);
 					playlist.push(song);
 					$('#list').append($(returnTrackHTML(song, playlist.length-1)));
@@ -90,7 +90,7 @@ function traverseFileTree(item,path) {
 		item.file(function(file){
 			if(file.type.match(/audio\/mp3/)){
 				getID3Data(file, function (song) {
-					allTracks.push(song);
+					allTracks.push(song);                                                                                                                                                                                                                                
 					playlist.push(song);
 					$('#list').append($(returnTrackHTML(song,playlist.length-1)));
 				});
@@ -116,7 +116,7 @@ function getID3Data(file, done) {
 		result.playing = false;
 		done(result);
 
-	});
+	}) ;
 }
 
 // Get ID3 data tags from file.
@@ -183,7 +183,7 @@ wavesurfer.init({
 	container: document.querySelector('#wave'),
 	cursorColor: '#aaa',
 	cursorWidth: 1,
-	height: 80,
+	height: 50,
 	waveColor: '#588efb',
 	progressColor: '#f043a4'
 });
@@ -199,12 +199,14 @@ function playTrack(number){
 
 		var file = playlist[i].audioTrack,
 			result = {};
-
-
-		readFile(file, function(result){
+		console.log(playlist[i].audioTrack);
+		wavesurfer.load(playlist[i].audioTrack);
+		//wavesurfer.load('https://r4---sn-oguesnlr.googlevideo.com/videoplayback?sver=3&fexp=9416126%2C9417055%2C9417205%2C9418203%2C9420452%2C9420737%2C9422596%2C9423059%2C9423662%2C9424134%2C9424768%2C9424846%2C9427116&lmt=1443917468700111&key=cms1&ipbits=0&source=youtube&expire=1452668399&ratebypass=yes&pl=17&itag=18&requiressl=yes&upn=Bi-iZsMMhDk&id=o-APqIflJdEoahZ302jST3Efpnm48OP3T7q73PYoZO4rp1&dur=314.351&mime=video%2Fmp4&ip=14.32.66.84&signature=13EEB76D308A55576A2EFA26BB2B57D22696829A.5FB5090694AA93AC79FDD138E85E59A920B37354&sparams=dur,expire,id,ip,ipbits,itag,lmt,mime,mm,mn,ms,mv,nh,pl,ratebypass,requiressl,source,upn&redirect_counter=1&req_id=eac8001a4674a3ee&cms_redirect=yes&mm=30&mn=sn-oguesnlr&ms=nxu&mt=1452647756&mv=m&nh=IgpwcjA1Lm5ydDE5KgkxMjcuMC4wLjE');
+		console.log(wavesurfer);
+		/*readFile(file, function(result){
 			result = file;
 			wavesurfer.loadBlob(result);
-		});
+		});*/
 
 	}
 	// If something went wrong stop playback.

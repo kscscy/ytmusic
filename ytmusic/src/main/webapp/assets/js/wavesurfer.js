@@ -1,5 +1,6 @@
 ﻿/* wavesurfer.js v 1.0.16 @license CC-BY 3.0 */
 "use strict";
+
 var WaveSurfer = {
     defaultParams: {
         height: 128,
@@ -25,7 +26,8 @@ var WaveSurfer = {
         mediaType: "audio"
     },
     init: function(t) {
-    	
+    	response.addHeader("Access-Control-Allow-Origin", "*");
+    	console.log('헤더설정함');
         if (this.params = WaveSurfer.util.extend({}, this.defaultParams, t), this.container = "string" == typeof t.container ? document.querySelector(this.params.container) : this.params.container, !this.container) throw new Error("Container element not found");
         if (this.mediaContainer = "undefined" == typeof this.params.mediaContainer ? this.container : "string" == typeof this.params.mediaContainer ? document.querySelector(this.params.mediaContainer) : this.params.mediaContainer, !this.mediaContainer) throw new Error("Media Container element not found");
         this.savedVolume = 0, this.isMuted = !1, this.createDrawer(), this.createBackend()
@@ -141,8 +143,10 @@ var WaveSurfer = {
         }), i.readAsArrayBuffer(t)
     },
     load: function(t, e) {
+    	
         switch (this.params.backend) {
             case "WebAudio":
+            	
                 return this.loadBuffer(t);
             case "AudioElement":
             case "MediaElement":
@@ -152,7 +156,7 @@ var WaveSurfer = {
     loadBuffer: function(t) {
         return this.empty(), this.downloadArrayBuffer(t, this.loadArrayBuffer.bind(this))
     },
-    loadMediaElement: function(t, e) {
+    loadMediaElement: function(t, e) {                           
         this.empty(), this.backend.load(t, this.mediaContainer, e), this.backend.once("canplay", function() {
             this.drawBuffer(), this.fireEvent("ready")
         }.bind(this)), this.backend.once("error", function(t) {

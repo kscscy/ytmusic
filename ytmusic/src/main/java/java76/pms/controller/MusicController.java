@@ -65,7 +65,7 @@ public class MusicController {
       System.out.println(System.getProperty("os.name"));
       if (System.getProperty("os.name").startsWith("Win")) {
         p = Runtime.getRuntime()
-            .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
+            .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 --add-header 'Access-Control-Allow-Origin':'*'; " + musicUrl);
       } else if (System.getProperty("os.name").startsWith("Mac")) {
       	System.out.println("durltlfgodehla");
         p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
