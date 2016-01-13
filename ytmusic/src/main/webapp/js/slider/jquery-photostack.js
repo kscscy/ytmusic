@@ -33,6 +33,7 @@ $(function() {
     }
     
     var hiddenRight1 = $(window).width() - $categories.offset().left;
+    console.log(hiddenRight1);
     $ulCountId10.css('left', hiddenRight1 + 1000 +'px');
     $ulCountId20.css('left', hiddenRight1 + 1000 +'px');
 
@@ -49,8 +50,8 @@ $(function() {
         //console.log("테스트 i : " + i);
         $elem.animate({
             'left': positions[i] + 'px',
-            'opacity': 1
-        }, 800, function() {
+/*            'opacity': 1*/
+            }, 800, function() {
             if (elems > 5) enableNavRight();
         });
     });

@@ -21,7 +21,8 @@
 	margin-top: 10px;
 }
 .tag {
-	font-family: 나눔바른고딕, NanumBarunGothic, "NanumBarunGothic", "나눔바른고딕", "돋움", Dotum, "Apple SD Gothic Neo", sans-serif;
+	/* font-family: 나눔바른고딕, NanumBarunGothic, "NanumBarunGothic", "나눔바른고딕", "돋움", Dotum, "Apple SD Gothic Neo", sans-serif; */
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 	position: relative;
 	margin-left: 20px;
 	text-align: center;
@@ -43,29 +44,49 @@ input:FOCUS {
 }
 
 /* ----------------------------------------------Main Category Slider------------------------------------- */
-#slider, #slider ul {
+#slider .sliderimage , #slider .sliderimage {
    position: absolute;
    width: 1024px;
    height: 480px;
 }
 
-#slider ul {
+#slider .sliderimage{
    display: block;
-   overflow: hidden;
+   /* overflow: hidden; */
    margin: 0 auto;
    padding: 0 6px;
    list-style: none;
 }
 
-#slider li {
+.liCon_1 {
+   float: left;
    position: absolute;
    top: 0;
    width: 1024px;
    height: 420px;
-   padding: 5px 11px 11px 11px;
-   color: #9FA4AA; /* background-color:; */
+   margin-top: 5px;
+   color: #9FA4AA; 
    border: none;
-   overflow: hidden;
+}
+/* #slider li {
+   position: absolute;
+   top: 0;
+   width: 1024px;
+   height: 420px;
+   margin-top: 5px;
+   color: #9FA4AA; 
+   border: none;
+} */
+
+.liCon_2 {
+	 margin-top: 5px;
+   color: #9FA4AA; 
+   border: none;
+   float: left;
+   position: relative;
+   top: 0;
+   width: 196px;
+   height: 180px;
 }
 
 #slider li img, #slider li h2, #slider li p {
@@ -76,12 +97,11 @@ input:FOCUS {
 }
 
 #slider li img {
-   width: 196px;
-   height: 110px;
-   /* margin: 0 0 10px 0; */
-   /* padding: 4px; */
-   border: 1px solid lightgray;
+   border: 2px solid lightgray;
 }
+
+
+
 
 #slider li h2 {
    margin-bottom: 10px;
@@ -96,16 +116,17 @@ input:FOCUS {
 
 #slider li p {
    line-height: 1.6em;
-   margin: 0 0 12px 0;
 }
 
 #slider li p.readmore {
-   margin: 0;
-   text-align: left;
+  text-align: left;
+	width: 155px;
+	position: absolute;
+  margin: 0;
 }
 
 #slider li p.readmore a {
-   float:;
+   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
    /* font-weight: bold; */
    color: black; /* background-color:#2B2B2B; */
    text-decoration: none;
@@ -115,19 +136,15 @@ input:FOCUS {
    float: left;
 }
 
-#slider li li {
-   float: left;
-   position: relative;
-   top: 0;
-   width: 196px;
-   height: 180px;
-}
+#ulCountId-0 {right: 0; opacity: 1;}
+#ulCountId-10 {opacity: 0;}
+#ulCountId-20 {opacity: 0;}
 
 #liCountId-0 {
    float: left;
    position: relative;
    top: 0;
-   width: 1240px;
+   width: 1024px;
    height: 180px;
    opacity: 1;
 }
@@ -136,23 +153,21 @@ input:FOCUS {
    float: left;
    position: relative;
    top: 0;
-   width: 1240px;
+   width: 1024px;
    height: 180px;
-   opacity: 1;
 }
 
 #liCountId-20 {
    float: left;
    position: relative;
    top: 0;
-   width: 1240px;
+   width: 1024px;
    height: 180px;
-   opacity: 1;
 }
 /* ----------------------------------------------Previous & Next Navigation------------------------------------- */
 #slider a.next, #slider a.prev {
    position: absolute;
-   top: 35%;
+   top: 45%;
    width: 20px;
    height: 30px;
    cursor: pointer;

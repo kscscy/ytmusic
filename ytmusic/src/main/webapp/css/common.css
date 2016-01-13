@@ -9,9 +9,8 @@
   user-select:none;
   /* border: 0.1px solid red; */
 }
-
+ 
 body {
-
 }
 
 #footer {
@@ -32,17 +31,26 @@ body {
 #container a{color:#0BBDB3; background-color:#F9F9F9;}
 #content{display:block; float:left; width:630px;}
 
-
-
-#containers {
-  /* padding-left: 200px; */
-  padding-top: 60px;
-  height: 800px;
-  background-color:;
-  /* background: white url() top center no-repeat; */
-    /*background-image: url("../image/background-2.jpg");*/ 
-  color: black;
+#containers-background {
+  width: 100%;
+  margin: 0 auto;
+  position: fixed;
 }
+#containers-background img {
+	width: 100%;
+	z-index: -5;
+}
+
+#containers  {
+	/* border: 1px gray solid; */
+	padding-top: 60px;
+	margin: auto;
+	width: 1024px;
+	/* background: white url() top center no-repeat; */
+	/*background-image: url("../image/background-2.jpg");*/
+	color: black;
+}
+
 
 #tst-section {
    width: contain;
