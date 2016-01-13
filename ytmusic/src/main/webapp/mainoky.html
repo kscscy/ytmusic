@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.css">
@@ -93,7 +94,7 @@ em {
   border-top: 1px solid #0067c4;
   border-bottom: 1px solid #278fe8;
   background: #0067c4;
-  z-index: 100000;
+  z-index: 10;
   background-color: lightskyblue;
   /* height: 110px; /*Height of top section*/
   min-width: 1024px;
@@ -112,7 +113,7 @@ em {
   left: 0;
   right: 0;
   top: 56px;
-  bottom: 72px;
+  bottom: 120px;
   z-index: 10;
   background: #fff;
   color: black;
@@ -123,7 +124,7 @@ em {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 185px;
+  width: 150px;
   padding: 0 !important;
   background: #f2f4f6;
   z-index: 10000;
@@ -135,6 +136,8 @@ em {
   min-width: 1024px;
   max-width: 1024px;
   margin: 0 auto;
+  overflow: auto;
+  height: 100%;
 }
 
 #contentcolumn {
@@ -159,17 +162,28 @@ em {
 #footer {
   clear: both;
   width: 100%;
-  height: 200px;
+  height: 120px;
   background: white;
   color: #FFF;
   text-align: center;
   padding: 0px 0;
   position: fixed;
   left: 0;
-  right: 0;
   bottom: 0;
-  min-width: 1024px;
-  z-index: 10000;
+  width:100%;
+  z-index: 12;
+}
+
+#expand-bar {
+z-index: 15;
+}
+
+#wave * {
+ left: 0px;
+}
+
+#canvas {
+ left: 0px;
 }
 
 #footer a {
@@ -209,7 +223,6 @@ em {
 </head>
 
 <body>
-  <div id="ymusicWrapper">
 
 
     <div id="header">
@@ -219,8 +232,7 @@ em {
         </div>
         <!-- <div id="buttons" style="padding: 15px 150px 0 400px;"> -->
         <div id="buttons" style="margin: 15px 0 0 300px">
-          <div style="float: left;&gt;
-             &lt;span id="searchBox">
+          <div style="float: left;&gt;&lt;span id="searchBox">
             <input id="query" value='' style="width: 300px;" type="text"
               placeholder="검색어 입력" />
 
@@ -230,7 +242,6 @@ em {
                 aria-hidden="true"></span>
             </button>
 
-            </span>
           </div>
           <div style="float: right;">
             <button type="button"
@@ -357,7 +368,6 @@ em {
 
     <div id="footer">
 
-      <div id="container" class="disabled">
 
         <!-- <div id="cover-art">
           <div id="cover-art-big"></div>
@@ -425,24 +435,19 @@ em {
 
       </div>
 
-    </div>
-
-
-  </div>
-
+ 
 
 
 
 
   <script src="lib/jquery/jquery.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.js" /></script>
-  <script
-    src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>
+  <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 
 
-  <script src="assets/js/id3-minimized.js"></script>
-  <script src="assets/js/wavesurfer.min.js"></script>
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/id3-minimized.js" charset="utf-8"></script>
+  <script src="assets/js/wavesurfer.min.js" charset="utf-8"></script>
+  <script src="assets/js/script.js" charset="utf-8"></script>
 
 
 
@@ -590,7 +595,7 @@ $('#signup').click(
           vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
 
           
-          $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
+          $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm"     onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
           i++;
         });
       } else {
@@ -599,18 +604,6 @@ $('#signup').click(
     });
   }
 
-  // Create a listing for a video.
-  function displayResult(videoSnippet) {
-    var title = videoSnippet.title;
-    var videoId = videoSnippet.resourceId.videoId;
-    vidThumburl =  videoSnippet.thumbnails.default.url;
-    vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
-
-    
-    $('#resultTbody').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
-    
-    
-  }
 
   // Retrieve the next page of videos in the playlist.
   function nextPage() {
@@ -676,13 +669,11 @@ $('#signup').click(
                     var i = 1;
                     $('#resultThead').append('<tr><th>선택</th><th>썸네일</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
                     $.each(resultItems, function(index, item) {
-                    	//displayResult(item.snippet);
                       title = item.snippet.title;
                       videoId = item.id.videoId;
                       vidThumburl =  item.snippet.thumbnails.default.url;
                       vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
-                      
-                      $('#resultTbody').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
+                      $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm"     onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
                       i++;
                     });
             });
@@ -720,12 +711,20 @@ $('#signup').click(
   		    }
     		console.log(musicUrl);
     		
-    		$(footer).empty();
-    	    $("<tr>")
-    	      .html('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>')
-    				.appendTo(footer);
-    	    $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
-    	  
+    		//$(footer).empty();
+    		//$(footer).append('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></audio>');
+    	    //$(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
+    	    
+    	    var song = [];
+    	    song["artist"] = "Unknown Artist";
+    	    song["title"] = "haha";
+    	    song["album"] = "";
+    	    song["picture"] = "assets/img/default.png";
+    	    song["audioTrack"] = musicUrl;
+    	    song["playing"] = false;
+    	    allTracks.push(song);                                                                                                                                                                                                                                
+			playlist.push(song);
+			$('#list').append($(returnTrackHTML(song,playlist.length-1)));
     	}); 
     }
    

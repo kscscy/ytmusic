@@ -46,7 +46,7 @@ $(function() {
      */
     $categories.children('ul:lt(3)').each(function(i) {
         var $elem = $(this);
-        console.log("테스트 i : " + i);
+        //console.log("테스트 i : " + i);
         $elem.animate({
             'left': positions[i] + 'px',
             'opacity': 1

@@ -15,7 +15,7 @@
   }
   
     function init() {
-      console.log("init 호출1");
+      //console.log("init 호출1");
       gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
       gapi.client.load('youtube', 'v3', function() {
         requestVideoPlaylist(listUrl);
@@ -66,7 +66,7 @@
             s3.type = "text/javascript";
             s3.src = "https://apis.google.com/js/client.js?onload=init";
             document.body.appendChild(s3);
-            console.log("appended");
+            //console.log("appended");
         });
       } else {
         request.execute(function(response) {
@@ -77,7 +77,7 @@
             $('#categories').empty();
 
             $.each(playlistItems, function(index, item) {
-                console.log(liCountId2);
+               // console.log(liCountId2);
                 if(liCountId == 0) {
                   liCountId2 = liCountId;  
                   li = '<ul id=ulCountId-'+liCountId2+'><li id=liCountId-'+liCountId2+'></li></ul>';
@@ -95,7 +95,7 @@
               s4.type = "text/javascript";
               s4.src = "js/slider/jquery-photostack.js";
               document.body.appendChild(s4);
-              console.log("appended s4");
+              //console.log("appended s4");
               
               
               var s3 = document.createElement('script');

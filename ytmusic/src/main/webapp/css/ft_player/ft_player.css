@@ -126,6 +126,7 @@
 	display: -webkit-flex;
 	display: flex;
 	background-color: white;
+	height:60px;
 }
 
 .player-control div{
@@ -133,36 +134,90 @@
 	flex: 1;
 	background-color: #fff;
 	text-align: center;
-	line-height: 60px;
+	line-height: 40px;
 	height: 100%;
 	cursor: pointer;
+}
+
+#play-button {
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/playbtn.png");
+}
+
+#pause-button {
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/pause.png");
+}
+
+#previous-button {
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/prebtn.png");
+}
+
+#next-button {
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/nextbtn.png");
+}
+
+#stop-button {
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/stopbtn.png");
 }
 
 #container.disabled .player-control div{
 	color: #758389;
 }
 
-#shuffle-button,
-#repeat-button{
-	line-height: 60px;
+#shuffle-button{
 	color: #758389;
 	position: relative;
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/shuffleoff.png");
 }
 
-#shuffle-button.active,
-#repeat-button.active{
-	line-height: 60px;
+#shuffle-button.active{
 	color: #000;
+	margin:10px 0 0 10px;  
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/shuffleon.png");
 }
 
-#repeat-button i span{
+#repeat-button{
+	color: #000;
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/repeatoff.png");
+}
+
+
+#repeat-button.active{
+	color: #000;
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/repeatall.png");
+}
+
+#repeat-button.activecur{
+	color: #000;
+	margin:10px 0 0 10px;
+	background-repeat: no-repeat;
+	background-image: url("../ft_player/image/repeatone.png");
+}
+
+/* #repeat-button i span{
 	display: none;
 	position: absolute;
 	font: bold 12px sans-serif;
 	color: rgb(71, 91, 118);
 	top: 6px;
 	left: 13px;
-}
+} */
 
 /*---------------------------
 		Playlist
