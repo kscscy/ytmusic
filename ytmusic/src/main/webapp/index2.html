@@ -4,11 +4,18 @@
 <meta charset="utf-8">
 <title>와이 뮤직</title>
 
+<script>
+	$(function() {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		alert('헤더설정함');
+	});
+</script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 
+
 <!-- bootstrap  -->
-<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- <link rel="stylesheet" href="css/footer.css"> -->
@@ -21,11 +28,6 @@
 
 <!-- main slider -->
 <link rel="stylesheet" href="css/mainslider/mainslider.css">
-
-<!-- scroll-->
-<link rel="stylesheet" href="css/scroll/jquery.mCustomScrollbar.css">
-<script src="js/scroll/jquery.mCustomScrollbar.concat.min.js"></script>
-
 
 <!-- list slider  -->
 <!-- <link rel="stylesheet" href="css/carousel/sl_layout.css" type="text/css"> -->
@@ -79,12 +81,11 @@
 	</script>
 <script src="js/search/search.js"></script>
 
-<script src="js/melon/planetxsdk.js"></script>
-<script src="js/melon/melon.js"></script>
 
 <script src="js/main.js"></script>
 <script	src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
+<script type="text/javascript" src="js/slider/jquery.min.js"></script>
 <script type="text/javascript" src="js/mainslider/jssor.slider.mini.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script src="js/jquery.session.js"></script>

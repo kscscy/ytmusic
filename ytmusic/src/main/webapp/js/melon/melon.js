@@ -56,12 +56,3 @@ function userProfile_callback(data) {
 	    });
   });
 }
-
-function keyWordsearch(keyword){
-   
-}
-
-function makeRequest(keyword) {
-    
-
-}

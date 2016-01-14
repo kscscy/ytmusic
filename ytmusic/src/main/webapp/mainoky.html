@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -261,7 +262,7 @@ z-index: 15;
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body"></div>
-            `
+            
           </div>
         </div>
       </div>
@@ -457,24 +458,6 @@ z-index: 15;
 
 $('#login').click(
   function(event) {
-<<<<<<< HEAD
-  	var email = $('#useremail').val();
-  	var password = $('#userpassword').val();
-  	//var checkValue = $('input:checkbox[name=saveEmail]').is(':checked'));
-  	$.post('../auth/login.do', {
-  		email: email,
-  		password: password
-  	},
-     function(resultObj) {
-      var ajaxResult = resultObj.ajaxResult;
-			var testemail;
-			if (ajaxResult.status == "success") {
-      	emailsession = ajaxResult.data.email;
-      	//console.log(emailsession);
-      	sessionStorage.setItem("emailsession", emailsession);
-      	location.href = "../music/index5.html";
-      	
-=======
      var email = $('#useremail').val();
      var password = $('#userpassword').val();
      //var checkValue = $('input:checkbox[name=saveEmail]').is(':checked'));
@@ -491,66 +474,12 @@ $('#login').click(
          sessionStorage.setItem("emailsession", emailsession);
          location.href = "../music/index5.html";
          
->>>>>>> 356791490f1a2e53ee45be1cbd7500a3c25a2289
       } else {
         alert("이메일 또는 비밀번호를 확인하세요.");
       }
     },'json');
   });
 $('#signup').click(
-<<<<<<< HEAD
-	  function(event) {
-	  	//console.log("세션테스트 : " + sessionStorage.getItem("emailsession"));
-	  	var email = $('#email').val();
-	  	var password = $('#password').val();
-	  	var passwordcheck = $('#passwordcheck').val();
-	  	var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-	  	
-	  	if (email == '' || email == null) {
-				alert('email을 입력하세요');
-				$("input[id=email]").focus();
-				return false;
-			}
-	  	if(!regEmail.test(email)) {
-        alert('유효하지 않은 email입니다');
-        $("input[id=email]").focus();
-        return false;
-  		}
- 			if (password == '' || password == null) {
-				alert('비밀번호를 입력하세요');
-				$("input[id=password]").focus();
-				focus.password;
-				return false;
-			}
-			
-			if (passwordcheck == '' || passwordcheck == null) {
-				alert('비밀번호확인란을 입력하세요');
-				$("input[id=passwordcheck]").focus();
-				return false;
-			}
-			
-			/*비밀번호와 비밀번호확인란 같은지 확인*/
-			if (password != passwordcheck){
-				alert("비밀번호와 비밀번호 확인란이 다릅니다.");
-				$("input[id=password]").focus();
-				return false;
-			} 
-	  	
-	  	$.post('../member/add.do', {
-	  		email: email,
-	  		password: $('#password').val()
-	  		
-	  	},
-	     function(resultObj) {
-	      var ajaxResult = resultObj.ajaxResult;
-	      if (ajaxResult.status == "success") {
-	        location.href = "main.html";
-	      } else {
-	        alert("회원가입실패");
-	      }
-	    },'json');
-	  });
-=======
      function(event) {
         //console.log("세션테스트 : " + sessionStorage.getItem("emailsession"));
         var email = $('#email').val();
@@ -602,7 +531,6 @@ $('#signup').click(
          }
        },'json');
      });
->>>>>>> 356791490f1a2e53ee45be1cbd7500a3c25a2289
 
 
 </script>
@@ -656,19 +584,11 @@ $('#signup').click(
       $('#prev-button').css('visibility', prevVis);
 
       var playlistItems = response.result.items;
-<<<<<<< HEAD
-  	  var i = 1;
-      if (playlistItems) {
-    	  $('#resultTbody').empty();
-    	  $('#resultThead').empty();
-    	  $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>썸네일</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
-=======
        var i = 1;
       if (playlistItems) {
          $('#resultTbody').empty();
          $('#resultThead').empty();
          $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>썸네일</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
->>>>>>> 356791490f1a2e53ee45be1cbd7500a3c25a2289
         $.each(playlistItems, function(index, item) {
           var title = item.snippet.title;
           var videoId = item.snippet.resourceId.videoId;
@@ -722,11 +642,6 @@ $('#signup').click(
     function getChartList(chartListId){
             gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
             gapi.client.load('youtube', 'v3', function() {
-<<<<<<< HEAD
-            	requestVideoPlaylist(chartListId);
-            });
-    }
-=======
                requestVideoPlaylist(chartListId);
             });
     }
@@ -765,7 +680,6 @@ $('#signup').click(
             });
     }
 
->>>>>>> 356791490f1a2e53ee45be1cbd7500a3c25a2289
     
    
     function playMusic(vid) {
@@ -786,7 +700,6 @@ $('#signup').click(
                 .appendTo(footer);
          
        }, 'json');  */
-       
        
        
         $.getJSON('music/ajax/musicPlay.do?vid='+vid, function(resultObj) {
@@ -842,8 +755,6 @@ $('#signup').click(
   
   
   </script>
-
-
 
 
 </body>

@@ -137,25 +137,31 @@
       $('#liCountId-'+liCountId2+'').append(vidThumbimg);
       songCount++;
    }
-
+/*    $('#subinfoDropmenu').modal({
+    	  backdrop: 'static',
+    	  keyboard: true
+    	   class="modal hide fade" data-keyboard="false" data-backdrop="static"
+    });*/
+    
     function dropdownsMenu(songId) {
+/*    	var songIdvalue = songId;
+    	$("#"+songIdvalue).empty();*/
+        var result = songId;
+    	
     	console.log(songId);
     	var content =
-    	'<ul class="dropdown-menu">'
+    	'<ul  class="dropdown-menu">'
         + '<li><a href="#">동영상 보기</a></li>'
         + '<li><a href="#">유투브 페이지</a></li>'
         + '<li><a href="#">재생목록에 추가</a></li>'
         + '<li class="divider"></li>'
         + '<li><a href="#">내 앨범에 추가</a></li>'
         + '</ul>'
-    
-    	
-        var result = songId;
+
         console.log(result);
         $('#'+result).append(content);
     }
     
-
     function nextPage() {
       requestVideoPlaylist(playlistId, nextPageToken);
     }
@@ -165,29 +171,3 @@
       requestVideoPlaylist(playlistId, prevPageToken);
     }
     
-   /* *//**
-     * @설명 : Melon 최신곡
-     * @RequestURI : http://apis.skplanetx.com/melon/newreleases/songs
-     *//*
-    //Querystring Parameters
-    Map < String, Object > map = new HashMap < String, Object >();
-    map.put("page", 0);   //조회할 목록의 페이지를 지정합니다
-    map.put("count", 10); //페이지당 출력되는 곡 수를 지정합니다
-    //Bundle 생성
-    RequestBundle bundle = AsyncRequester.make_GET_DELTE_bundle(context, "http://apis.skplanetx.com/melon/newreleases/songs" , map);
-     
-    try {
-        //API 호출
-        AsyncRequester.request(context, bundle, HttpMethod.GET, new EntityParserHandler(new EntityMelonNewMusic(), 
-              new OnEntityParseComplete() {
-     
-        @Override
-        public void onParsingComplete(Object entityArray) { 
-                                                   
-                                      ......
-                     
-                }));
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-*/

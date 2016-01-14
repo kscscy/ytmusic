@@ -13,6 +13,23 @@
 body {
 }
 
+
+.scroll {
+    overflow: auto;
+    position: relative;
+    /* padding: 20px; */
+    /* background: #333; */
+    /* margin: 10px; */
+    /* left: 0; */
+    /* border: 1px solid red; */
+    width: 1060px;
+    /* max-width: 97%; */
+    height: 685px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 #footer {
 	bottom: 0px;
 	position:fixed;
@@ -64,17 +81,17 @@ body {
    position: fixed;
    height: 60px;
    width: 100%;
-   background: black;
+   /* background: black; */
    /* border-bottom: 1px solid #ddd; */
    z-index:10;
    max-height: 60px;
 }
 
 #mainHeader {
-  color: darkgrey;
+  color: dimgrey;
   padding-top: 10px;
   /* border: 1px solid red; */
-  font-weight: 600;
+  font-weight: 300;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: x-large;
   text-align: center;
@@ -102,7 +119,7 @@ body {
    font-size: 25px;
    /* padding: 0 0 0 35px; */
    float: left;
-   color: white;
+   color: black;
    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
    text-decoration: none;
   /*  margin-top: 8px; */
