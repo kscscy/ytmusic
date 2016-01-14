@@ -6,6 +6,10 @@
         .jssorb01 .av:hover     (active mouseover)
         .jssorb01 .dn           (mousedown)
         */
+#slider1 {
+  border-radius: 10px;
+}
+
 .jssorb01 {
 	position: absolute;
 }

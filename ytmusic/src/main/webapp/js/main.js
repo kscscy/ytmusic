@@ -164,3 +164,30 @@
     function previousPage() {
       requestVideoPlaylist(playlistId, prevPageToken);
     }
+    
+   /* *//**
+     * @설명 : Melon 최신곡
+     * @RequestURI : http://apis.skplanetx.com/melon/newreleases/songs
+     *//*
+    //Querystring Parameters
+    Map < String, Object > map = new HashMap < String, Object >();
+    map.put("page", 0);   //조회할 목록의 페이지를 지정합니다
+    map.put("count", 10); //페이지당 출력되는 곡 수를 지정합니다
+    //Bundle 생성
+    RequestBundle bundle = AsyncRequester.make_GET_DELTE_bundle(context, "http://apis.skplanetx.com/melon/newreleases/songs" , map);
+     
+    try {
+        //API 호출
+        AsyncRequester.request(context, bundle, HttpMethod.GET, new EntityParserHandler(new EntityMelonNewMusic(), 
+              new OnEntityParseComplete() {
+     
+        @Override
+        public void onParsingComplete(Object entityArray) { 
+                                                   
+                                      ......
+                     
+                }));
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+*/

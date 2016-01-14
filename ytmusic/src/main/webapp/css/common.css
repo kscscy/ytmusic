@@ -70,6 +70,16 @@ body {
    max-height: 60px;
 }
 
+#mainHeader {
+  color: darkgrey;
+  padding-top: 10px;
+  /* border: 1px solid red; */
+  font-weight: 600;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: x-large;
+  text-align: center;
+}
+
 .wrap_header {
    display: table;
  /*   max-width: 1024px; */

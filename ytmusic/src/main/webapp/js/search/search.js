@@ -93,29 +93,7 @@
     requestVideoPlaylist(playlistId, prevPageToken);
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
     function getChartList(chartListId){
             gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
             gapi.client.load('youtube', 'v3', function() {
@@ -136,6 +114,7 @@
                     part: 'snippet',
                      maxResults: 30
             });
+            
             request.execute(function(response) {
                     var str = JSON.stringify(response.result);
                     //$('#search-container').html('<pre>' + str + '</pre>');
