@@ -98,13 +98,6 @@
 	display;
 }
 
-/* #wave{
-	display: none;
-} */
-/*---------------------------
-	Player Control Bar
-----------------------------*/
-
 #control-bar{
 	display: -webkit-flex;
 	display: flex;
