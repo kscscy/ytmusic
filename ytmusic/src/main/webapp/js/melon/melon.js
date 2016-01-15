@@ -41,8 +41,11 @@ function userProfile_callback(data) {
 	                  videoId = item.id.videoId;
 	                  vidThumburl =  item.snippet.thumbnails.high.url;
 	                  vidThumbimg =
-	                	  '<div data-p="112.50" style="display: none; height:300px; overflow: hidden;">'
-	                	  +'<img data-u="image" src="'+vidThumburl+'" style="height:300px;">'
+	                	  '<div class="mainSliderImg" data-p="112.50" style="display: none; height:300px; overflow: hidden;">'
+	                	  +'<img class="mainimg" data-u="image" src="'+vidThumburl+'" style="height:300px; z-index: -1; position:;">'
+	                	  +'<div class="mainSliderDiv" style="">'
+	                      +'<span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/>'
+	                	  +'</div>'
 	                	  +'<div style="background-color: black; opacity: 0.7; width: 100%; height: 50px; bottom: 0; position: absolute;">'
 	                	  +'<p class="mainSliderImg" style="width: 341px; position: absolute; margin: 0 auto; bottom: 30px; padding: 0px 20px; overflow: hidden; text-align:center;"><a style="color:white;">'+albumName+'</a></p>'
 	                	  +'<p class="mainSliderImg" style="width: 341px; position: absolute; margin: 0 auto; bottom: 0; padding: 0px 20px 2px 20px; overflow: hidden; text-align:center;"><a style="color:white;">'+artistName+'</a></p>'
@@ -56,3 +59,11 @@ function userProfile_callback(data) {
 	    });
   });
 }
+/*'<div data-p="112.50" style="display: none; height:300px; overflow: hidden;">'
++'<img class="mainSliderImg" data-u="image" src="'+vidThumburl+'" style="height:300px;">'
++'<div style="background-color: black; opacity: 0.7; width: 100%; height: 50px; bottom: 0; position: absolute;">'
+
++'<p class="mainSliderImg" style="width: 341px; position: absolute; margin: 0 auto; bottom: 30px; padding: 0px 20px; overflow: hidden; text-align:center;"><a style="color:white;">'+albumName+'</a></p>'
++'<p class="mainSliderImg" style="width: 341px; position: absolute; margin: 0 auto; bottom: 0; padding: 0px 20px 2px 20px; overflow: hidden; text-align:center;"><a style="color:white;">'+artistName+'</a></p>'
++'</div>'
++'</div>';*/

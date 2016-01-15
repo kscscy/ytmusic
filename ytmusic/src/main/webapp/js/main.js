@@ -7,11 +7,12 @@
 
   function callList(value) {
 	  console.log("callList 호출");
+
 	  count++;
-      gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
-      gapi.client.load('youtube', 'v3', function() {
-    	  requestVideoPlaylist(value);
-      });
+	  gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
+	  gapi.client.load('youtube', 'v3', function() {
+		  requestVideoPlaylist(value);
+	  });
       
 	  console.log("callList 호출완료");
   }

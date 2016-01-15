@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+.tapMenu {
+	color: black;
+}
+
 #featured_slide {
    display: block;
    width: 1024px;
@@ -32,8 +36,9 @@
 	background-color: transparent;
   text-decoration: none;
   font-size: 14px;	
-  color: black;
+  color: gray;
   padding: 1px;
+  font-weight: bold;
 }
 .tag:HOVER {
   font-weight: bold;
@@ -46,7 +51,7 @@ input:FOCUS {
 #slider .sliderimage , #slider .sliderimage {
    position: absolute;
    width: 1024px;
-   height: 480px;
+   height: 380px;
 }
 
 #slider .sliderimage{
@@ -58,11 +63,6 @@ input:FOCUS {
 }
 
 .liCon_1 {
-   float: left;
-   position: absolute;
-   top: 0;
-   width: 980px;
-   height: 420px;
    margin-top: 5px;
    color: #9FA4AA; 
    border: none;

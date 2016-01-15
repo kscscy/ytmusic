@@ -3,8 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- bootstrap  -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/chartList/chartList.css">
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-
+	<table class="table table-hover" style="width:600px;">
+		<caption>곡 목록</caption>
+		<colgroup>
+			<col width="40px">
+			<col width="55px">
+			<col width="*">
+			<col width="19%">
+			<col width="34px">
+			<col width="34px">
+			<col width="21px">
+		</colgroup>
+		<thead>
+<!-- 			<tr>
+				<th scope="col"><span>순위</span></th>
+				<th scope="col"><span>등락</span></th>
+				<th scope="col"><span>곡</span></th>
+				<th scope="col"><span>아티스트</span></th>
+				<th scope="col"><span>듣기</span></th>
+				<th scope="col"><span>재생목록</span></th>
+				<th scope="col"><span>기타</span></th>
+			</tr> -->
+		</thead>
+		
+		<tbody class="chartTbody">
+			<tr>
+				<td class="ranking" style="vertical-align: middle;"><strong class="num1">1</strong></td>
+				
+				<td class="ranking" >
+					<p class="change up">
+						<span class="arrow"></span> <em>1</em> <span><!-- 계단 상승 --></span>
+					</p>
+				</td>
+				
+				
+				<!-- 곡 -->
+				<th scope="row" class="">
+<!-- 				  <a href="http://music.bugs.co.kr/album/20017094?wl_ref=M_contents_03_02" class="thumbnail?"
+				    title="잘 지내고 있니 -페이지 이동" style="width: 50px; height: 50px; position: absolute;"> <span class="mask"></span>
+						<img src="https://i.ytimg.com/vi/A8QJ0ZnNX0E/hqdefault.jpg" style="width:50px; height:50px;" alt="잘 지내고 있니 앨범 대표이미지">
+				  </a> -->
+					<p class="title" style="position: relative; float: left; left: 60px;">
+						<a href="javascript:void(bugs.music.listen('30123636',true));bugs.wiselog.area('M_contents_03_03');" title="잘 지내고 있니 -페이지 이동">잘 지내고 있니</a>
+					</p>
+				</th>
+				
+				<!-- 아티스트 -->
+				<td class="left">
+					<p class="artist">
+						<!-- a tag title -->
+						<a href="" title="t윤미래">t윤미래</a>
+						<!-- a tag link -->
+<!-- 						<a href="javascript:void(0);" name="atag_martist_list"
+							class="more" title="아티스트 전체보기"
+							onclick="">
+							t윤미래, 펀치(Punch)
+						</a> -->
+					</p>
+				</td>
+				
+				<!-- 재생 -->
+				<td><a href="javascript:;" onclick=""	style="font-weight: bold;" class="glyphicon glyphicon-play-circle" title="잘 지내고 있니 듣기"></a></td>
+				
+				<!-- 목록 -->
+				<td><a href="javascript:;" onclick=""	class="glyphicon glyphicon-plus" title="재생목록에 잘 지내고 있니 추가"></a></td>
+				
+				<!-- 기타 -->
+				<td><a href="javascript:;" onclick=""	track_title="잘 지내고 있니" artist_disp_nm="t 윤미래 &amp; 펀치(Punch)"
+					class="glyphicon glyphicon-option-vertical" title="잘 지내고 있니의 기타 기능"></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<style type="text/css">
+  .chartList_a {
+    color: black;
+  }
+  a {
+    color:black;
+    font-size:;
+    font-weight: normal;
+  }
+  td, th, a{
+    vertical-align: middle;
+  }
+  </style>
 </body>
 </html>
