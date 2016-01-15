@@ -120,6 +120,20 @@
    
     function displayResult2(videoSnippet) {
       var title = videoSnippet.title;
+      var titleSplit = title.split('-');
+      var artistName = " ";
+      var songName = " ";
+      if(titleSplit.length == 2) {
+    	  artistName = titleSplit[0];
+    	  songName = titleSplit[1];
+      } else {
+    	  var titleSplit = title.split('_');
+    	  artistName = titleSplit[0];
+    	  songName = titleSplit[1];
+      }
+      console.log("artistName : " + artistName);
+      console.log("songName : " + songName);
+      
       var videoId = videoSnippet.resourceId.videoId;
       vidThumburl = videoSnippet.thumbnails.medium.url;
       vidThumbimg = '<li class="liCon_2" style="">'
@@ -129,7 +143,8 @@
             +'</div></div>'
             + '<div id="slide_wrapper">'
       		+ '<div class="suvInfoContainer">'
-      		+ '<p class="readmore"><a href="#">'+title+'</a></p>'
+      		+ '<p class="readmore2"><a href="#">'+artistName+'</a></p>'
+      		+ '<p class="readmore"><a href="#">'+songName+'</a></p>'
       		+ '</div>'
       		+ '<div id="subInfo'+songCount+'" class="suvButtonContainer">'
       		+ '<button type="button" data-toggle="dropdown" class="glyphicon glyphicon-option-vertical" onclick=dropdownsMenu("subInfo'+songCount+'")></button>'

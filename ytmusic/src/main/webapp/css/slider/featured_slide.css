@@ -122,8 +122,20 @@ input:FOCUS {
 #slider li p.readmore {
   text-align: left;
 	width: 155px;
-	position: absolute;
+	position: relative;
   margin: 0;
+  height: 38px;
+  overflow: hidden;
+}
+
+#slider li p.readmore2 {
+  text-align: left;
+  width: 155px;
+  position: relative;
+  margin: 0;
+  height: 19px;
+  color: gray;
+  overflow: hidden;
 }
 
 #slider li p.readmore a {

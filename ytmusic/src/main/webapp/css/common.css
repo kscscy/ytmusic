@@ -68,22 +68,13 @@ body {
 	color: black;
 }
 
-
-#tst-section {
-   width: contain;
-   margin: 0px auto;
-   border: 1px solid #bcbcbc;
-   min-width: 1024px;
-   background:;
-}
-
 .header {
    position: fixed;
    height: 60px;
    width: 100%;
    /* background: black; */
    /* border-bottom: 1px solid #ddd; */
-   z-index:10;
+   z-index:50;
    max-height: 60px;
 }
 
@@ -104,6 +95,7 @@ body {
    margin-left: auto;
    margin-right: auto;
    max-height: 60px;
+   background-color: white;
 }
 
 .header #query:focus {
@@ -126,25 +118,6 @@ body {
 }
 #a1:HOVER{
 	text-decoration: none;
-	color: white;
+	color: red;
 }
 
-#left_box {
-  position: fixed;
-  top: 60px;
-  bottom: 0;
-  width: 200px;
-  border-right: 1px solid #ddd;
-}
-
-#genre_ul li {
-  position:relative;
-  padding: 50px 0px 25px 25px;
-}
-
-#genre_ul li a {
-  outline:none;
-  text-decoration:none;
-  color:black;
-  font-size: 20px;
-}
