@@ -12,7 +12,7 @@
 
 </head>
 <body>
-	<table class="table table-hover" style="width:600px;">
+	<table id="chartTable" class="table table-hover" style="width:600px;">
 		<caption>곡 목록</caption>
 		<colgroup>
 			<col width="40px">
@@ -36,52 +36,57 @@
 		</thead>
 		
 		<tbody class="chartTbody">
-			<tr>
-				<td class="ranking" style="vertical-align: middle;"><strong class="num1">1</strong></td>
-				
-				<td class="ranking" >
-					<p class="change up">
-						<span class="arrow"></span> <em>1</em> <span><!-- 계단 상승 --></span>
-					</p>
-				</td>
-				
-				
-				<!-- 곡 -->
-				<th scope="row" class="">
-<!-- 				  <a href="http://music.bugs.co.kr/album/20017094?wl_ref=M_contents_03_02" class="thumbnail?"
-				    title="잘 지내고 있니 -페이지 이동" style="width: 50px; height: 50px; position: absolute;"> <span class="mask"></span>
-						<img src="https://i.ytimg.com/vi/A8QJ0ZnNX0E/hqdefault.jpg" style="width:50px; height:50px;" alt="잘 지내고 있니 앨범 대표이미지">
-				  </a> -->
-					<p class="title" style="position: relative; float: left; left: 60px;">
-						<a href="javascript:void(bugs.music.listen('30123636',true));bugs.wiselog.area('M_contents_03_03');" title="잘 지내고 있니 -페이지 이동">잘 지내고 있니</a>
-					</p>
-				</th>
-				
-				<!-- 아티스트 -->
-				<td class="left">
-					<p class="artist">
-						<!-- a tag title -->
-						<a href="" title="t윤미래">t윤미래</a>
-						<!-- a tag link -->
-<!-- 						<a href="javascript:void(0);" name="atag_martist_list"
-							class="more" title="아티스트 전체보기"
-							onclick="">
-							t윤미래, 펀치(Punch)
-						</a> -->
-					</p>
-				</td>
-				
-				<!-- 재생 -->
-				<td><a href="javascript:;" onclick=""	style="font-weight: bold;" class="glyphicon glyphicon-play-circle" title="잘 지내고 있니 듣기"></a></td>
-				
-				<!-- 목록 -->
-				<td><a href="javascript:;" onclick=""	class="glyphicon glyphicon-plus" title="재생목록에 잘 지내고 있니 추가"></a></td>
-				
-				<!-- 기타 -->
-				<td><a href="javascript:;" onclick=""	track_title="잘 지내고 있니" artist_disp_nm="t 윤미래 &amp; 펀치(Punch)"
-					class="glyphicon glyphicon-option-vertical" title="잘 지내고 있니의 기타 기능"></a>
-				</td>
-			</tr>
+      <tr class="chart">
+        <td class="ranking" ><strong class="num1">1</strong></td>
+        
+        <td class="ranking" >
+          <p class="change up" >
+            <span class="arrow"></span> <em>1</em> <span><!-- 계단 상승 --></span>
+          </p>
+        </td>
+        
+        
+        <!-- 곡 -->
+        <th scope="row" class="chartImgTitle">
+        <div class="chartImg">
+          <a href=""
+            title="잘 지내고 있니 -페이지 이동" style="width: 50px; height: 50px; position: relative; float: left;"> <span class="mask"></span>
+            <img src="https://i.ytimg.com/vi/A8QJ0ZnNX0E/hqdefault.jpg" style="width:50px; height:50px;" alt="잘 지내고 있니 앨범 대표이미지">
+          </a>
+          <p class="" style=" position: relative; float: left; left: 10px; top: 14px;">
+            <a href="javascript:void(bugs.music.listen('30123636',true));bugs.wiselog.area('M_contents_03_03');" title="잘 지내고 있니 -페이지 이동">잘 지내고 있니</a>
+          </p>
+        </div>
+        <p class="chartTitle" style="relative; float: left; left: 10px; top: 0px;">
+          <a href="javascript:void(bugs.music.listen('30123636',true));bugs.wiselog.area('M_contents_03_03');" title="잘 지내고 있니 -페이지 이동">잘 지내고 있니</a>
+        </p>
+        </th>
+        
+        <!-- 아티스트 -->
+        <td class="left">
+          <p class="artist" >
+            <!-- a tag title -->
+            <a href="" title="t윤미래">t윤미래</a>
+            <!-- a tag link -->
+<!--            <a href="javascript:void(0);" name="atag_martist_list"
+              class="more" title="아티스트 전체보기"
+              onclick="">
+              t윤미래, 펀치(Punch)
+            </a> -->
+          </p>
+        </td>
+        
+        <!-- 재생 -->
+        <td><a href="javascript:;" onclick="" style="font-weight: bold;" class="glyphicon glyphicon-play-circle" title="잘 지내고 있니 듣기"></a></td>
+        
+        <!-- 목록 -->
+        <td><a href="javascript:;" onclick="" class="glyphicon glyphicon-plus" title="재생목록에 잘 지내고 있니 추가"></a></td>
+        
+        <!-- 기타 -->
+        <td><a href="javascript:;" onclick="" track_title="잘 지내고 있니" artist_disp_nm="t 윤미래 &amp; 펀치(Punch)"
+          class="glyphicon glyphicon-option-vertical" title="잘 지내고 있니의 기타 기능"></a>
+        </td>
+      </tr>
 		</tbody>
 	</table>
 	
@@ -94,9 +99,33 @@
     font-size:;
     font-weight: normal;
   }
-  td, th, a{
+  
+  .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
     vertical-align: middle;
-  }
+    border-top: 1px solid #ddd;
+    }
+    
+    p {
+      margin: 0 0px;
+    }
+    
+    .chartImg {
+      display: none;
+    }
+    
+    .chart:HOVER .chartImg {
+      display: inline;
+    }
+    
+    .chartTitle {
+      display: inline;
+    }
+    .chart:HOVER .chartTitle {
+      display: none;
+    }
+
   </style>
 </body>
 </html>
