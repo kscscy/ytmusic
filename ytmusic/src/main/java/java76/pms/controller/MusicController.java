@@ -83,16 +83,18 @@ public class MusicController {
     
     Music music = musicDao.selectOne(object.getId());
     if(music != null) {
-      System.out.println("저장된 music 존재");
+      music.setCount(music.getCount() + 1);
+      musicDao.updateCount(music);
+      System.out.println("저장된 music 존재. 조회수 : " + ((int)music.getCount()+1));
       long expire = music.getExpire();
-      System.out.println("유효기간 : " + (expire - currentTime)); 
+      System.out.println("유효기간 : " + (expire - currentTime)/1000/60); 
       // 9000초가 넘었다면 youtube-dl 실행해서 audio url 업데이트
       if (expire < currentTime) {
-        
-        String url = getUrl(musicUrl);
-        long newExpire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
+        System.out.println("유효기간 지남 -> music 업데이트");
+        String newUrl = getUrl(musicUrl);
+        long newExpire = Long.parseLong(newUrl.split("expire=")[1].substring(0,10))*1000;
         music.setExpire(newExpire);
-        music.setAudioUrl(url);
+        music.setAudioUrl(newUrl);
         musicDao.update(music);
         System.out.println();
         return new AjaxResult("success", music.getAudioUrl());
@@ -101,13 +103,13 @@ public class MusicController {
       System.out.println();
       return new AjaxResult("success", music.getAudioUrl());
     }
-    
+    System.out.println("music 저장");
     String url = getUrl(musicUrl);
     long expire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
     music = new Music();
     music.setId(object.getId());
     music.setImage(object.getImage());
-    music.setCount(object.getCount());
+    music.setCount(1);
     music.setTitle(object.getTitle());
     music.setViews(object.getViews());
     music.setExpire(expire);

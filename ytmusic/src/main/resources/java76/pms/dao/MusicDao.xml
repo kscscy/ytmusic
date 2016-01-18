@@ -57,6 +57,12 @@
     where id=#{id}
   </update>
   
+  <update id="updateCount" parameterType="music">
+    update music set
+    count=#{count}
+    where id=#{id}
+  </update>
+  
   <select id="selectOne" resultMap="musicMap" parameterType="string">
     select 
     id, title, a_url, v_url, img, count, views, expire 
