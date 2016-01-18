@@ -26,8 +26,11 @@ function userprofile3() {
 
 //main slider
 function mainSlider_today(data) {
+	
   var array = data.melon.albums.album;
-  console.log(array);
+  
+/*  console.log(array);
+*/  
   $.each(array, function(index,item){
 	  var albumName = item.albumName;
 	  var artistName = item.repArtists.artist[0].artistName;
@@ -41,15 +44,13 @@ function mainSlider_today(data) {
 	            maxResults: 1
 	        });
 	        request.execute(function(response) {
-	                $('#').empty();
-	                
 	                var resultItems = response.result.items;
 	                var i = 1;
 	                $.each(resultItems, function(index, item) {
 	                  title = item.snippet.title;
 	                  videoId = item.id.videoId;
 	                  vidThumburl =  item.snippet.thumbnails.high.url;
-	                  vidThumbimg =
+	                  result =
 	                	  '<div class="mainSliderImg" data-p="112.50" style="display: none; height:300px; overflow: hidden;">'
 	                	  +'<img class="mainimg" data-u="image" src="'+vidThumburl+'" style="height:300px; z-index: -1; position:;">'
 	                	  +'<div class="mainSliderDiv" style="">'
@@ -61,7 +62,7 @@ function mainSlider_today(data) {
 	                	  +'</div>'
 	                	  +'</div>';
 	                  
-	                  $('#slider1').append(vidThumbimg);
+	                  $('#slider1').append(result);
 	                  i++;
 	              });
 	        });
@@ -72,10 +73,10 @@ function mainSlider_today(data) {
 function melonchart(data) {
 	  var i = 1;
 	  var array = data.melon.songs.song;
-	  console.log(array);
-	  $.each(array, function(index,item){
-		  console.log("index : " + index);
-		  var artists = item.artists.artist;
+/*	  console.log(array);
+*/	  $.each(array, function(index,item){
+/*		  console.log("index : " + index);
+*/		  var artists = item.artists.artist;
 		  var artistN = " "; /*item.artists.artist[0].artistName; console.log("artistName : " + artistN);*/
 		  var artistFN = item.artists.artist[0].artistName;
 		  $.each(artists, function(index,i) {
@@ -151,9 +152,9 @@ function melonchart(data) {
 function melonchart2(data) {
 	  var i = 1;
 	  var array = data.melon.songs.song;
-	  console.log(array);
+	  /*console.log(array);*/
 	  $.each(array, function(index,item){
-		  console.log("index : " + index);
+		  /*console.log("index : " + index);*/
 		  var artists = item.artists.artist;
 		  var artistN = " "; /*item.artists.artist[0].artistName; console.log("artistName : " + artistN);*/
 		  var artistFN = item.artists.artist[0].artistName;

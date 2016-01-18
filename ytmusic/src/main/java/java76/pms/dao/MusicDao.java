@@ -8,13 +8,15 @@ import java76.pms.domain.Music;
 public interface MusicDao {
   List<Music> selectList(Map<String,Object> paramMap);
   
-  int insert(Music music);
-  
-  int delete(Map<String,Object> paramMap);
+  Music selectOne(String id);
   
   int update(Music music);
 
-  Music selectOne(int no);
+  int insert(Music music);
+  
+  /*int delete(Map<String,Object> paramMap);*/
+  
+
 }
 
 

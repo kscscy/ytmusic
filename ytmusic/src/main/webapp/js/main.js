@@ -90,8 +90,10 @@
                   li = '<ul class="sliderimage" id=ulCountId-'+liCountId2+' style="padding-left:30px; right:0px;"><li class="liCon_1" id=liCountId-'+liCountId2+'></li></ul>';
                   $('#categories').append(li);
                 }
+                
                 ++liCountId;
-                displayResult2(item.snippet);
+                displayResult(item.snippet);
+                
              });
             
             /*if(scriptCount < 2) {*/
@@ -118,7 +120,7 @@
       }
     }
    
-    function displayResult2(videoSnippet) {
+    function displayResult(videoSnippet) {
       var title = videoSnippet.title;
       var titleSplit = title.split('-');
       var artistName = " ";
@@ -131,16 +133,21 @@
     	  artistName = titleSplit[0];
     	  songName = titleSplit[1];
       }
-      console.log("artistName : " + artistName);
-      console.log("songName : " + songName);
+/*      console.log("artistName : " + artistName);
+      console.log("songName : " + songName);*/
       
       var videoId = videoSnippet.resourceId.videoId;
+      
+      var result = title + "?" + videoId; 
+      
       vidThumburl = videoSnippet.thumbnails.medium.url;
       vidThumbimg = '<li class="liCon_2" style="">'
       		+'<div class="imgContainer" style="background: url('+vidThumburl+') no-repeat; background-size: 180px 110px; height:110px; width:180px;">'
       	    +'<div class="buttonContainer" style="height:110px; width:180px;">'
-            +'<span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/>'
-            +'</div></div>'
+      	    +'<span id="pMusicBtn'+videoId+'" class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""></span>'
+      	    +'</div></div>'
+            /*+'<a href="javascript:playMusic('+result+');"><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/></a>'*/
+      	    /*+'<a href="#" onclick=playMusic('+result+')><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/></a>'*/
             + '<div id="slide_wrapper">'
       		+ '<div class="suvInfoContainer">'
       		+ '<p class="readmore2"><a href="#">'+artistName+'</a></p>'
@@ -149,8 +156,14 @@
       		+ '<div id="subInfo'+songCount+'" class="suvButtonContainer">'
       		+ '<button type="button" data-toggle="dropdown" class="glyphicon glyphicon-option-vertical" onclick=dropdownsMenu("subInfo'+songCount+'")></button>'
       		+ '</div>'
-      		+ '</div>';
-      $('#liCountId-'+liCountId2+'').append(vidThumbimg);
+      		+ '</div>'; 
+
+      $('#liCountId-'+liCountId2).append(vidThumbimg);
+      
+      $('#pMusicBtn'+videoId).click(function() {
+      	console.log("function click!!");
+      	playMusic(videoSnippet);
+      });
       songCount++;
    }
 /*    $('#subinfoDropmenu').modal({
@@ -160,23 +173,24 @@
     });*/
     
     function dropdownsMenu(songId) {
-/*    	var songIdvalue = songId;
-    	$("#"+songIdvalue).empty();*/
+    	$(".dropdown-menu").remove();
+    	
         var result = songId;
     	
     	console.log(songId);
     	var content =
-    	'<ul  class="dropdown-menu">'
+    	  '<ul  class="dropdown-menu">'
         + '<li><a href="#">동영상 보기</a></li>'
         + '<li><a href="#">유투브 페이지</a></li>'
         + '<li><a href="#">재생목록에 추가</a></li>'
         + '<li class="divider"></li>'
-        + '<li><a href="#">내 앨범에 추가</a></li>'
+        + '<li><a href="#">내 앨범에 추가 '+result+'</a></li>'
         + '</ul>'
 
         console.log(result);
         $('#'+result).append(content);
     }
+    
     
     function nextPage() {
       requestVideoPlaylist(playlistId, nextPageToken);
@@ -187,3 +201,63 @@
       requestVideoPlaylist(playlistId, prevPageToken);
     }
     
+    function playMusic(item) {
+    	$(footer).empty();
+    	console.log(item);
+    	var title = item.title;
+    	var vid = item.resourceId.videoId;
+    	/*var musicUrl = "audio/" + vid + ".m4a";*/
+    	$.getJSON('music/ajax/musicPlay.do?id='+vid+'&title='+title, function(resultObj) {
+            var ajaxResult = resultObj.ajaxResult;
+            console.log(ajaxResult);
+            if (ajaxResult.status == "success") {
+                $(footer).append('<audio controls="" autoplay="" name="media"><source src = '+ajaxResult.data+' type="audio/webm"></audio>');
+                $(footer).append('<a href="'+ajaxResult+'" download="aaac.aac">다운로드</a>');
+                console.log(ajaxResult);
+                console.log("playMusic : 완료");
+		    	/*setTimeout(createMusic(musicUrl), 2500);*/
+            }
+    	}); 
+    }
+    
+    function createMusic(musicUrl) {
+    	$(footer).empty();
+        $(footer).append('<audio controls="" autoplay="" name="media"><source src = '+musicUrl+' type="audio/webm"></audio>');
+        $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
+        console.log("playMusic : 완료");
+    }
+    
+/*    function makeRequest() {
+        var q = $('#query').val();
+        var request = gapi.client.youtube.search.list({
+                   q: q,
+                part: 'snippet',
+                 maxResults: 30
+        });
+        request.execute(function(response) {
+                var str = JSON.stringify(response.result);
+                //$('#search-container').html('<pre>' + str + '</pre>');
+                $('#resultTbody').empty();
+                $('#resultThead').empty();
+                
+                var resultItems = response.result.items;
+                //console.log(resultItems);
+                var i = 1;
+                $('#resultThead').append('<tr><th>선택</th><th>썸네일</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
+                $.each(resultItems, function(index, item) {
+                  title = item.snippet.title;
+                  videoId = item.id.videoId;
+                  vidThumburl =  item.snippet.thumbnails.default.url;
+                  vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+                  $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="musicBtn-'+videoId+'" type="button" class="btn btn-default btn-sm")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+'<td><button id="videoBtn-'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
+                  
+                  $('#musicBtn-'+videoId).click(function() {
+                     playMusic(item);
+                  });
+                  $('#videoBtn-'+videoId).click(function() {
+                     playVideo(item); 
+                  });
+                  i++;
+                });
+        });
+    */
