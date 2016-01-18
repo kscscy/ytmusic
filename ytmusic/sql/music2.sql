@@ -1,9 +1,9 @@
 -- 음악
-ALTER TABLE MUSIC
-  DROP CONSTRAINT PK_MUSIC; -- 음악 기본키
+DROP TABLE MUSIC;
 
 -- 음악
-DROP TABLE MUSIC;
+ALTER TABLE MUSIC
+  DROP CONSTRAINT PK_MUSIC; -- 음악 기본키
 
 -- 음악
 CREATE TABLE MUSIC (
@@ -15,12 +15,12 @@ CREATE TABLE MUSIC (
   V_URL  VARCHAR(1000) NULL,     -- 음악비디오URL
   COUNT  INTEGER       NULL,     -- 음악재생횟수
   VIEWS  INTEGER       NULL,     -- 음악조회수
-  S_DATE BIGINT        NULL      -- 저장날짜
+  EXPIRE BIGINT        NULL      -- 유효기간
 );
 
 -- 음악 기본키
 CREATE UNIQUE INDEX PK_MUSIC
-  ON MY_SCHEMA.MUSIC ( -- 음악
+  ON MUSIC ( -- 음악
     MU_NO ASC -- 음악번호
   );
 
@@ -32,4 +32,4 @@ ALTER TABLE MUSIC
       MU_NO -- 음악번호
     );
     
-    alter table music modify column mu_no int auto_increment;
+alter table music modify column mu_no int auto_increment;

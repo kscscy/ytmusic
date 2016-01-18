@@ -7,7 +7,6 @@
   
   <resultMap type="music" id="musicMap">
     <id 		column="mu_no" 		property="no"/>
-    <result column="s_date" 		property="savedDate"/>
     <result column="img"     property="image"/>
     <result column="a_url"     property="audioUrl"/>
     <result column="v_url"     property="videoUrl"/>
@@ -42,8 +41,8 @@
    int       views;
    int       savedDate; -->
   <insert id="insert" parameterType="music">
-    insert into music(id,title,a_url,v_url,img,count,views,s_date) 
-    values(#{id},#{title},#{audioUrl},#{videoUrl},#{image},#{count},#{views},#{savedDate})
+    insert into music(id,title,a_url,v_url,img,count,views,expire) 
+    values(#{id},#{title},#{audioUrl},#{videoUrl},#{image},#{count},#{views},#{expire})
   </insert>
   
 <!--   <delete id="delete" parameterType="map">
@@ -54,13 +53,13 @@
   <update id="update" parameterType="music">
     update music set
     a_url=#{audioUrl},
-    s_date=#{savedDate}
+    expire=#{expire}
     where id=#{id}
   </update>
   
   <select id="selectOne" resultMap="musicMap" parameterType="string">
     select 
-    id, title, a_url, v_url, img, count, views, s_date 
+    id, title, a_url, v_url, img, count, views, expire 
     from music
     where id=#{id}
   </select>

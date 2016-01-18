@@ -78,38 +78,44 @@ public class MusicController {
   
   @RequestMapping("musicPlay")
   public Object musicPlay(Music object) throws Exception {
-
+    long currentTime = System.currentTimeMillis();
     String musicUrl = "https://www.youtube.com/watch?v="+object.getId();
     
     Music music = musicDao.selectOne(object.getId());
     if(music != null) {
       System.out.println("저장된 music 존재");
-      long dTime = ((System.currentTimeMillis() - music.getSavedDate())/1000);
-      System.out.println("현재 시간 : " + System.currentTimeMillis());
-      System.out.println("현재 시간 - 저장된 시간 : " + dTime); 
-      
+      long expire = music.getExpire();
+      System.out.println("유효기간 : " + (expire - currentTime)); 
       // 9000초가 넘었다면 youtube-dl 실행해서 audio url 업데이트
-      if (dTime >= 9000) {
-        music.setSavedDate((System.currentTimeMillis()));
-        music.setAudioUrl(getUrl(musicUrl));
+      if (expire < currentTime) {
+        
+        String url = getUrl(musicUrl);
+        long newExpire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
+        music.setExpire(newExpire);
+        music.setAudioUrl(url);
         musicDao.update(music);
+        System.out.println();
         return new AjaxResult("success", music.getAudioUrl());
       }
       System.out.println("audioUrl : " + music.getAudioUrl());
+      System.out.println();
       return new AjaxResult("success", music.getAudioUrl());
     }
     
+    String url = getUrl(musicUrl);
+    long expire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
     music = new Music();
     music.setId(object.getId());
     music.setImage(object.getImage());
     music.setCount(object.getCount());
     music.setTitle(object.getTitle());
     music.setViews(object.getViews());
-    music.setSavedDate(System.currentTimeMillis());
-    music.setAudioUrl(getUrl(musicUrl));
+    music.setExpire(expire);
+    music.setAudioUrl(url);
     /*music.setVideoUrl();*/
     musicDao.insert(music);
     
+    System.out.println();
     return new AjaxResult("success", music.getAudioUrl());
   }
 

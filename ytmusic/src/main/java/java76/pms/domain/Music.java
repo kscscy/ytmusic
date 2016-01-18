@@ -22,7 +22,7 @@ public class Music  implements Serializable {
   protected String    image;
   protected int       count;
   protected int       views;
-  protected long      savedDate;
+  protected long      expire;
   
   
   
@@ -101,15 +101,16 @@ public class Music  implements Serializable {
     this.views = views;
   }
 
-  public long getSavedDate() {
-    return savedDate;
+  public long getExpire() {
+    return expire;
   }
   
 
-  public void setSavedDate(long savedDate) {
-    this.savedDate = savedDate;
+  public void setExpire(long expire) {
+    this.expire = expire;
   }
   
+
 
 
   
