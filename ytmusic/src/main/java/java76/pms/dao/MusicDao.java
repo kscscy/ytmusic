@@ -3,6 +3,7 @@ package java76.pms.dao;
 import java.util.List;
 import java.util.Map;
 
+import java76.pms.domain.Album;
 import java76.pms.domain.Music;
 
 public interface MusicDao {

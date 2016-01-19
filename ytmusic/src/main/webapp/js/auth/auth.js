@@ -47,10 +47,13 @@ $(function() {
 					if (ajaxResult.status  == "success") {
 					
 						emailSession = ajaxResult.data.email;
-						$.session.set('loginSession',emailSession);
-						
+						noSession = ajaxResult.data.mem_no;
+					
+						sessionStorage.setItem('emailSession', emailSession);
+						sessionStorage.setItem('noSession', noSession);
+						//$.session.set('emailSession',emailSession);
+						//$.session.set('noSession',noSession);
 						//sessionStorage.setItem("emailsession", emailsession);
-						console.log($.session.get('loginSession'));
 						location.href = "index.html";
 						
 					} else {
@@ -124,7 +127,10 @@ $('#logoutbtn').click(
 	     function(resultObj) {
 	      var ajaxResult = resultObj.ajaxResult;
 	      if (ajaxResult.status == "success") {
-	      	$.session.remove('loginSession');
+	      	
+	      	$.session.clear();
+	      	$.session.remove('emailSession');
+	      	$.session.remove('noSession');
 	        location.href = "index.html";
 	      }
 	    },'json');

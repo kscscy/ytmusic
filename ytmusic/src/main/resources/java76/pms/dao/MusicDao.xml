@@ -6,7 +6,7 @@
 <mapper namespace="java76.pms.dao.MusicDao">
   
   <resultMap type="music" id="musicMap">
-    <id 		column="mu_no" 		property="no"/>
+    <id       column="mu_no"       property="no"/>
     <result column="img"     property="image"/>
     <result column="a_url"     property="audioUrl"/>
     <result column="v_url"     property="videoUrl"/>
@@ -48,7 +48,7 @@
   
 <!--   <delete id="delete" parameterType="map">
     delete from music 
-  	where bno=#{no} and (pwd is null or pwd=#{password})
+     where bno=#{no} and (pwd is null or pwd=#{password})
   </delete> -->
   
   <update id="update" parameterType="music">
@@ -72,7 +72,6 @@
     where id=#{id}
   </select>
 </mapper>
-
 
 
 

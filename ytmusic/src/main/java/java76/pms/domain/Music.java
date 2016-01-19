@@ -4,118 +4,64 @@ import java.io.Serializable;
 
 public class Music  implements Serializable {
   private static final long serialVersionUID = 1L;
-/*  MU_NO INTEGER      NOT NULL COMMENT '음악번호', -- 음악번호
-  ID    VARCHAR(50)  NOT NULL COMMENT '음악아이디', -- 음악아이디
-  TITLE VARCHAR(255) NOT NULL COMMENT '음악제목', -- 음악제목
-  IMG   VARCHAR(255) NULL     COMMENT '음악이미지', -- 음악이미지
-  COUNT INTEGER      NULL     COMMENT '음악재생횟수', -- 음악재생횟수
-  VIEWS INTEGER      NULL     COMMENT '음악조회수' -- 음악조회수
-  
-  V_URL VARCHAR(255) NULL     COMMENT '음악비디오URL', -- 음악비디오URL
-  A_URL VARCHAR(255) NULL     COMMENT '음악오디오URL', -- 음악오디오URL*/
-  
-  protected int       no;
-  protected String    id;
-  protected String    audioUrl;
-  protected String    videoUrl;
+
+  protected int       music_no;
+  protected String 		music_id;
   protected String    title;
-  protected String    image;
+  protected String    img;
+  protected String		audioURL;
+  protected String		videoURL;
   protected int       count;
   protected int       views;
-  protected long      expire;
+  protected long 			expire;
   
-  
-  
-  @Override
-  public String toString() {
-    return "Music [no=" + no + ", id=" + id + ", title=" + title + ", image=" + image + ", count=" + count + ", views="
-        + views + "]";
-  }
-
-  public int getNo() {
-    return no;
-  }
-  
-  public void setNo(int no) {
-    this.no = no;
-  }
-  
-  public String getId() {
-    return id;
-  }
-  
-  public void setId(String id) {
-    this.id = id;
-  }
-  
-  
-  public String getAudioUrl() {
-    return audioUrl;
-  }
-  
-
-  public void setAudioUrl(String audioUrl) {
-    this.audioUrl = audioUrl;
-  }
-  
-
-  public String getVideoUrl() {
-    return videoUrl;
-  }
-  
-
-  public void setVideoUrl(String videoUrl) {
-    this.videoUrl = videoUrl;
-  }
-  
-
-  public String getTitle() {
-    return title;
-  }
-  
-  public void setTitle(String title) {
-    this.title = title;
-  }
-  
-  public String getImage() {
-    return image;
-  }
-  
-  public void setImage(String image) {
-    this.image = image;
-  }
-  
-  public int getCount() {
-    return count;
-  }
-  
-  public void setCount(int count) {
-    this.count = count;
-  }
-  
-  public int getViews() {
-    return views;
-  }
-  
-  public void setViews(int views) {
-    this.views = views;
-  }
-
-  public long getExpire() {
-    return expire;
-  }
-  
-
-  public void setExpire(long expire) {
-    this.expire = expire;
-  }
-  
-
-
-
-  
-  
-  
-  
+	public int getMusic_no() {
+		return music_no;
+	}
+	public void setMusic_no(int music_no) {
+		this.music_no = music_no;
+	}
+	public String getMusic_id() {
+		return music_id;
+	}
+	public void setMusic_id(String music_id) {
+		this.music_id = music_id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public String getAudioURL() {
+		return audioURL;
+	}
+	public void setAudioURL(String audioURL) {
+		this.audioURL = audioURL;
+	}
+	public String getVideoURL() {
+		return videoURL;
+	}
+	public void setVideoURL(String videoURL) {
+		this.videoURL = videoURL;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getViews() {
+		return views;
+	}
+	public void setViews(int views) {
+		this.views = views;
+	}
   
 }

@@ -48,16 +48,16 @@ public class AuthController {
     Member member = memberService.retrieve(email, password);
 
     if (member == null) { // 로그인 실패!
-      session.invalidate(); // 세션을 무효화시킴. => 새로 세션 객체 생성!
+      //session.invalidate(); // 세션을 무효화시킴. => 새로 세션 객체 생성!
       return new AjaxResult("failure", null);
     }
-    session.setAttribute("loginUser", member);
+    //session.setAttribute("loginUser", member);
     return new AjaxResult("success", member);
   }
   
   @RequestMapping("logout")
   public AjaxResult logout(HttpSession session) {
-    session.invalidate();
+    //session.invalidate();
     return new AjaxResult("success", null);
   }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="java76.pms.dao.AlbumDao">
+
+  <!-- <resultMap type="music" id="musicMap">
+    <id 		column="bno" 		property="no"/>
+    <result column="cre_dt" 		property="createdDate"/>
+    <result column="afile" 		property="attachFile"/>
+  </resultMap> -->
+
+  <select id="selectList" resultType="map" parameterType="int">
+    select 
+    	a_no,
+      name
+    from album
+    where mem_no=#{member_no}
+    order by a_no
+    asc
+  </select>
+  
+  <select id="selectOne" resultType="map" parameterType="int">
+    select
+    	music.mu_no, 
+    	id,
+      title,
+      img,
+      a_url,
+      v_url,
+      count,
+      views
+    from music
+     inner join a_music
+     on music.mu_no = a_music.mu_no
+    where a_no=#{a_no} 
+    order by mu_no
+    asc
+  </select>
+  
+  <insert id="insertAlbum" parameterType="album">
+    insert into album (a_no,mem_no,name) 
+    values(#{a_no},#{mem_no},#{name})
+  </insert>
+  
+  <delete id="deleteAlbum" parameterType="map">
+    delete from album 
+  	where a_no=#{a_no} and mem_no=#{mem_no}
+  </delete>
+  
+  <update id="updateAlbum" parameterType="map">
+    update album
+      name=#{name}
+    where a_no=#{a_no} and mem_no=#{mem_no}
+  </update>
+  
+  <insert id="insertMusic" parameterType="map">
+  	insert into a_music(a_no, mu_no)
+		values(#{a_no},#{mu_no})  	
+  </insert>
+  
+  <delete id="deleteMusic" parameterType="map">
+  	delete from a_music
+  	where a_no=#{a_no} and mu_no=#{mu_no}
+  </delete>
+  
+</mapper>
+
+
+
+
+
+

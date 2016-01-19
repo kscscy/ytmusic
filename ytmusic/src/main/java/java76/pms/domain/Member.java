@@ -5,10 +5,17 @@ import java.io.Serializable;
 public class Member implements Serializable {
   private static final long serialVersionUID = 1L;
   
-  protected String email;
+  protected int		 mem_no;
+	protected String email;
   protected String password;
-  
-  public String getEmail() {
+	
+	public int getMem_no() {
+		return mem_no;
+	}
+	public void setMem_no(int mem_no) {
+		this.mem_no = mem_no;
+	}
+	public String getEmail() {
     return email;
   }
   public void setEmail(String email) {

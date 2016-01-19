@@ -1,14 +1,57 @@
-<style>
-.wrap {
-position: relative;
-}
-</style>
 <div class="wrap_header">
+   <nav id="menu" class="left">
+      <ul style="width:280px; height:100%; padding:2px">
+         <li><a href="#" class="active"><i class="fa fa-home"></i>Home</a></li>
+         <li><a href="#"><i class="fa fa-info-circle"></i>최신</a></li>
+         <li><a href="#"><i class="fa fa-info-circle"></i>인기차트</a></li>
+         <li><a href="#"><i class="fa fa-info-circle"></i>장르별</a></li>
+         <li><a href="#">
+         <i class="fa fa-laptop"></i>플레이리스트 <i class="fa fa-caret-down" ></i></a>
+            <ul style="overflow-y:scroll; width:280px; height:350px; padding:2px">
+               <li><a href="#">나만의 재생목록 1</a></li>
+               <li><a href="#">나만의 재생목록 2</a></li>
+               <li><a href="#">나만의 재생목록 3</a></li>
+               <li><a href="#">나만의 재생목록 4</a></li>
+               <li><a href="#">나만의 재생목록 5</a></li>
+               <li><a href="#">나만의 재생목록 6</a></li>
+               <li><a href="#">나만의 재생목록 7</a></li>
+               <li><a href="#">나만의 재생목록 8</a></li>
+               <li><a href="#">나만의 재생목록 9</a></li>
+               <li><a href="#">나만의 재생목록 10</a></li>
+               <li><a href="#">나만의 재생목록 1</a></li>
+               <li><a href="#">나만의 재생목록 2</a></li>
+               <li><a href="#">나만의 재생목록 3</a></li>
+               <li><a href="#">나만의 재생목록 4</a></li>
+               <li><a href="#">나만의 재생목록 5</a></li>
+               <li><a href="#">나만의 재생목록 6</a></li>
+               <li><a href="#">나만의 재생목록 7</a></li>
+               <li><a href="#">나만의 재생목록 8</a></li>
+               <li><a href="#">나만의 재생목록 9</a></li>
+               <li><a href="#">나만의 재생목록 10</a></li>
+            </ul>
+         </li>
+         <li>
+	          <a href="#">
+	            <i class="fa fa-phone"></i>저작권 <i class="fa fa-caret-down"></i>
+	          </a>
+            <ul>
+               <li><a href="#">강수철</a></li>
+               <li><a href="#">김장석</a></li>
+               <li><a href="#">오규영</a></li>
+               <li><a href="#">조기진</a></li>
+            </ul>
+        </li>
+         
+         
+      </ul>
+      <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i>
+      </a>
+   </nav>
   <div class="headerlogo">
       <a id="a1" href="./index.html">N E D A M U</a>
    </div>
    <!-- <div id="buttons" style="padding: 15px 150px 0 400px;"> -->
-   <div id="buttons" style=" margin:15px 0 0 360px">
+   <div id="buttons" style=" margin:15px 0 0 300px">
       <div style="float:left;>
          <span id="searchBox">
          <input id="query" value='' style="width:300px;" type="text" placeholder="  검색어 입력" />
@@ -16,16 +59,15 @@ position: relative;
          </span>
       </div>
       <div style="float:right;">
-			<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal" data-whatever="@mdo"
-				      id="loginbtn" style="background: white; font-size: 15px; color: black; font-family: sans-serif; text-decoration: none;">로그인</button>
-			<button style="display: none" id="logoutbtn" class="btn btn-default btn-xs">로그아웃</button>
-			<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signUpModal" data-whatever="@fat" 
-          		id="register" style="background: white; font-size: 15px; color: black; font-family: sans-serif; text-decoration: none;">회원가입</button>
-			<!-- <input style="display:none" id="test" value='' style="width:20px;" type="text" placeholder="" />    -->
+         <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
+            data-target="#signInModal" data-whatever="@mdo" id="loginbtn">로그인</button>
+         <button style="display:none" id="logoutbtn" class="btn btn-primary">로그아웃</button>    
+         <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
+            data-target="#signUpModal" data-whatever="@fat" id="register">회원가입</button>
+         <a style="display:none" href="myalbumlist.html"id="test">내 앨범</a>   
+         <!-- <input style="display:none" id="test" value='' style="width:20px;" type="text" placeholder="" /> -->   
       </div>
    </div>
-    
-   <div style="position: absolute; border-top: 1px solid gray; width: 1024px; bottom: 0; background-color:white;"></div>
 </div>
    <!-- Modal -->
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -235,15 +277,18 @@ $("#showmenu").click(function(e){
 }
 </style>   
 <script>
- if($.session.get('loginSession') != undefined) {
+ if(sessionStorage.getItem('emailSession') != undefined) {
+// if($.session.get('emailSession') != undefined) {
+		console.log("회원번호 : "+sessionStorage.getItem('noSession'));
 	 console.log("로그인세션있음");
+	// console.log($.session.get('emailSession'));
+	// console.log("회원번호 : "+$.session.get('noSession'));
 	 $("#logoutbtn").show();
 	 $("#loginbtn").hide();
 	 $("#register").hide();
 	 $("#test").show();
-	 $('#test').val($.session.get('loginSession'));
-	 
+	 //$('#test').val($.session.get('emailSession'));
  }
+
 </script>
 <script src="js/auth/auth.js"></script>   
-<!-- <script src="js/search/search.js"></script> -->
