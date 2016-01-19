@@ -30,23 +30,6 @@ public class MusicController {
   @Autowired ServletContext servletContext;
    
   private static final Logger log = Logger.getLogger(MusicController.class);  
-<<<<<<< HEAD
-=======
-//  
-//  @RequestMapping("detail")
-//  public Object detail(int no) throws Exception {
-//    Music music = musicDao.selectOne(no);
-//    return new AjaxResult("success", music);
-//  }
-//  
-  
-  protected int       no;
-  protected String    id;
-  protected String    title;
-  protected String    image;
-  protected int       count;
-  protected int       views;
->>>>>>> d5c8e01ce7c56190fcd66014fffdbb66d4157b4e
   
   String getUrl(String musicUrl) {
     String result = null;
