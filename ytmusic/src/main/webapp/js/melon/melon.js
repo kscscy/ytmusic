@@ -82,7 +82,7 @@ function playMusic2(item) {
 	var musicImage = item.snippet.thumbnails.medium.url;
 	
 	/*var musicUrl = "audio/" + vid + ".m4a";*/
-	$.getJSON('music/ajax/musicPlay.do?id='+vid+'&title='+title+'&image='+musicImage, function(resultObj) {
+	$.getJSON('music/ajax/musicPlay.do?music_id='+vid+'&title='+title+'&img='+musicImage, function(resultObj) {
         var ajaxResult = resultObj.ajaxResult;
         if (ajaxResult.status == "success") {
             $(footer).append('<audio controls="" autoplay="" name="media"><source src = '+ajaxResult.data+' type="audio/webm"></audio>');
@@ -310,11 +310,11 @@ function playMusic3(item) {
 	$(footer).empty();
 	console.log(item);
 	var title = item.title;
-	var vid = item.id;
-	var musicImage = item.image;
+	var vid = item.music_id;
+	var musicImage = item.img;
 	
 	/*var musicUrl = "audio/" + vid + ".m4a";*/
-	$.getJSON('music/ajax/musicPlay.do?id='+vid+'&title='+title+'&image='+musicImage, function(resultObj) {
+	$.getJSON('music/ajax/musicPlay.do?music_id='+vid+'&title='+title+'&img='+musicImage, function(resultObj) {
         var ajaxResult = resultObj.ajaxResult;
         console.log(ajaxResult);
         if (ajaxResult.status == "success") {

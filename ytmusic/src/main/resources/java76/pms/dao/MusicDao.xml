@@ -6,10 +6,10 @@
 <mapper namespace="java76.pms.dao.MusicDao">
   
   <resultMap type="music" id="musicMap">
-    <id       column="mu_no"       property="no"/>
-    <result column="img"     property="image"/>
-    <result column="a_url"     property="audioUrl"/>
-    <result column="v_url"     property="videoUrl"/>
+    <id       column="mu_no"       property="music_no"/>
+    <result column="id"     property="music_id"/>
+    <result column="a_url"     property="audioURL"/>
+    <result column="v_url"     property="videoURL"/>
   </resultMap>
 
   <select id="selectList" resultMap="musicMap" parameterType="map">
@@ -43,7 +43,7 @@
    int       savedDate; -->
   <insert id="insert" parameterType="music">
     insert into music(id,title,a_url,v_url,img,count,views,expire) 
-    values(#{id},#{title},#{audioUrl},#{videoUrl},#{image},#{count},#{views},#{expire})
+    values(#{music_id},#{title},#{audioURL},#{videoURL},#{img},#{count},#{views},#{expire})
   </insert>
   
 <!--   <delete id="delete" parameterType="map">
@@ -54,22 +54,22 @@
   <update id="update" parameterType="music">
     update music set
     <!-- img=#{image}, -->
-    a_url=#{audioUrl},
+    a_url=#{audioURL},
     expire=#{expire}
-    where id=#{id}
+    where id=#{music_id}
   </update>
   
   <update id="updateCount" parameterType="music">
     update music set
     count=#{count}
-    where id=#{id}
+    where id=#{music_id}
   </update>
   
   <select id="selectOne" resultMap="musicMap" parameterType="string">
     select 
     id, title, a_url, v_url, img, count, views, expire 
     from music
-    where id=#{id}
+    where id=#{music_id}
   </select>
 </mapper>
 

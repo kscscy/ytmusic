@@ -207,9 +207,10 @@
     	var title = item.title;
     	var vid = item.resourceId.videoId;
     	var musicImage = item.thumbnails.medium.url;
-    	
+    	console.log("vid : " + vid);
+    	console.log("musicImage : " + musicImage);
     	/*var musicUrl = "audio/" + vid + ".m4a";*/
-    	$.getJSON('music/ajax/musicPlay.do?id='+vid+'&title='+title+'&image='+musicImage, function(resultObj) {
+    	$.getJSON('music/ajax/musicPlay.do?music_id='+vid+'&title='+title+'&img='+musicImage, function(resultObj) {
             var ajaxResult = resultObj.ajaxResult;
             console.log(ajaxResult);
             if (ajaxResult.status == "success") {

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java76.pms.controller.ajax.AuthController;
 import java76.pms.dao.MusicDao;
 import java76.pms.domain.AjaxResult;
 import java76.pms.domain.Music;
@@ -66,9 +65,9 @@ public class MusicController {
   @RequestMapping("musicPlay")
   public Object musicPlay(Music object) throws Exception {
     long currentTime = System.currentTimeMillis();
-    String musicUrl = "https://www.youtube.com/watch?v="+object.getId();
+    String musicUrl = "https://www.youtube.com/watch?v="+object.getMusic_id();
     
-    Music music = musicDao.selectOne(object.getId());
+    Music music = musicDao.selectOne(object.getMusic_id());
     if(music != null) {
       music.setCount(music.getCount() + 1);
       musicDao.updateCount(music);
@@ -82,32 +81,32 @@ public class MusicController {
         long newExpire = Long.parseLong(newUrl.split("expire=")[1].substring(0,10))*1000;
         music.setExpire(newExpire);
         /*music.setImage(object.getImage());*/
-        music.setAudioUrl(newUrl);
+        music.setAudioURL(newUrl);
         
         musicDao.update(music);
         
-        return new AjaxResult("success", music.getAudioUrl());
+        return new AjaxResult("success", music.getAudioURL());
       }
-      log.debug("audioUrl : " + music.getAudioUrl());
+      log.debug("audioUrl : " + music.getAudioURL());
       log.debug("");
-      return new AjaxResult("success", music.getAudioUrl());
+      return new AjaxResult("success", music.getAudioURL());
     }
     log.debug("music 저장");
     String url = getUrl(musicUrl);
     long expire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
     music = new Music();
-    music.setId(object.getId());
-    music.setImage(object.getImage());
+    music.setMusic_id(object.getMusic_id());
+    music.setImg(object.getImg());
     music.setCount(1);
     music.setTitle(object.getTitle());
     music.setViews(object.getViews());
     music.setExpire(expire);
-    music.setAudioUrl(url);
+    music.setAudioURL(url);
     /*music.setVideoUrl();*/
     musicDao.insert(music);
     
     log.debug("");
-    return new AjaxResult("success", music.getAudioUrl());
+    return new AjaxResult("success", music.getAudioURL());
   }
 
   

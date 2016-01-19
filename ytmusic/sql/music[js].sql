@@ -33,3 +33,5 @@ ALTER TABLE MUSIC
     );
     
 alter table music modify column mu_no int auto_increment;
+
+alter table member modify column mem_no int auto_increment;
