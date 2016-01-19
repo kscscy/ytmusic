@@ -54,7 +54,7 @@ function mainSlider_today(data) {
 	                	  '<div class="mainSliderImg" data-p="112.50" style="display: none; height:300px; overflow: hidden;">'
 	                	  +'<img class="mainimg" data-u="image" src="'+vidThumburl+'" style="height:300px; z-index: -1; position:;">'
 	                	  +'<div class="mainSliderDiv" style="">'
-	                      +'<span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/>'
+	                      +'<span id="pMusicBtn2'+videoId+'" class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/>'
 	                	  +'</div>'
 	                	  +'<div style="background-color: black; opacity: 0.7; width: 100%; height: 50px; bottom: 0; position: absolute;">'
 	                	  +'<p class="mainSliderImg" style="width: 341px; position: absolute; margin: 0 auto; bottom: 30px; padding: 0px 20px; overflow: hidden; text-align:center;"><a style="color:white;">'+albumName+'</a></p>'
@@ -63,13 +63,35 @@ function mainSlider_today(data) {
 	                	  +'</div>';
 	                  
 	                  $('#slider1').append(result);
+	                  
+	                  $('#pMusicBtn2'+videoId).click(function() {
+	                    	console.log("function click!!");
+	                    	playMusic2(item);
+	                    });
 	                  i++;
 	              });
 	        });
 	    });
   });
 }
-
+function playMusic2(item) {
+	$(footer).empty();
+	console.log(item);
+	var title = item.title;
+	var vid = item.id.videoId;
+	var musicImage = item.snippet.thumbnails.medium.url;
+	
+	/*var musicUrl = "audio/" + vid + ".m4a";*/
+	$.getJSON('music/ajax/musicPlay.do?id='+vid+'&title='+title+'&image='+musicImage, function(resultObj) {
+        var ajaxResult = resultObj.ajaxResult;
+        if (ajaxResult.status == "success") {
+            $(footer).append('<audio controls="" autoplay="" name="media"><source src = '+ajaxResult.data+' type="audio/webm"></audio>');
+            $(footer).append('<a href="'+ajaxResult+'" download="aaac.aac">다운로드</a>');
+            console.log("playMusic : 완료");
+	    	/*setTimeout(createMusic(musicUrl), 2500);*/
+        }
+	}); 
+}
 function melonchart(data) {
 	  var i = 1;
 	  var array = data.melon.songs.song;
@@ -133,15 +155,20 @@ function melonchart(data) {
 		                	  +'</p>'
 		                	  +'</td>'
 		                	  +'<!-- 재생 -->'
-		                	  +'<td><a href="javascript:;" onclick="" style="font-weight: bold;" class="glyphicon glyphicon-play-circle" title="'+songN+' 듣기"></a></td>'
+		                	  +'<td><span id="melonBtn'+videoId+'" style="font-weight: bold;" class="glyphicon glyphicon-play-circle" title="'+songN+' 듣기"></span></td>'
 		                	  +'<!-- 목록 -->'
-		                	  +'<td><a href="javascript:;" onclick="" class="glyphicon glyphicon-plus" title="'+songN+' 추가 하기"></a></td>'
+		                	  +'<td><span href="javascript:;" onclick="" class="glyphicon glyphicon-plus" title="'+songN+' 추가 하기"></span></td>'
 		                	  +'<!-- 기타 -->'
-		                	  +'<td><a href="javascript:;" onclick=""'
-		                	  +'class="glyphicon glyphicon-option-vertical" title="'+songN+' 기타 기능"></a>'
+		                	  +'<td><span href="javascript:;" onclick=""'
+		                	  +'class="glyphicon glyphicon-option-vertical" title="'+songN+' 기타 기능"></span>'
 		                	  +'</td>'
 		                	  +'</tr>';
 		                  $('#mchart').append(result);
+		                  
+		                  $('#melonBtn'+videoId).click(function() {
+		                    	console.log("melon click");
+		                    	playMusic2(item);
+		                    });
 		                  i++;
 		              });
 		        });
@@ -149,14 +176,166 @@ function melonchart(data) {
 	  });
 	}
 
+
+/*String.prototype.byteLength = function() {
+    var l= 0;
+     
+    for(var idx=0; idx < this.length; idx++) {
+        var c = escape(this.charAt(idx));
+         
+        if( c.length==1 ) l ++;
+        else if( c.indexOf("%u")!=-1 ) l += 2;
+        else if( c.indexOf("%")!=-1 ) l += c.length/3;
+    }
+     
+    return l;
+};*/
+
+function byteLength(obj) {
+   var str = obj;
+   var _byte = 0;
+   console.log("str : " + str);
+   if(str.length != 0) {
+	  for (var i=0; i < str.length; i++) {
+	      var str2 = str.charAt(i);
+	      console.log("--> " + escape(str2).length);
+	      if(escape(str2).length > 4) {
+             _byte += 3;
+	      } else {
+	    	 _byte++;
+	      }
+	  }
+   }
+   console.log(" ");
+   return _byte;
+}
+
 function melonchart2(data) {
+/*	console.log("AAA".prototype + " - " + "AAA".byteLength());
+	console.log("aaa".prototype + " - " + "aaa".byteLength());
+	console.log("가나다".prototype + " - " + "가나다".byteLength());*/
+	var result;
+	var i = 0;
+	$.getJSON('music/ajax/list.do', function(resultObj) {
+		console.log(resultObj);
+		result = resultObj.data;
+		console.log(result);
+	    if (resultObj.status == "success") {
+	    	$.each(result, function(index, item) {
+	    		i++;
+	          var title = item.title;
+	          var titleSplit = title.split('-');
+	          var artistN = "";
+	          var songN = "";
+	          if(titleSplit.length == 2) {
+	        	  artistN = titleSplit[0];
+	        	  songN += titleSplit[1];
+	          } else {
+	        	  var titleSplit = title.split('_');
+	        	  artistN = titleSplit[0];
+	        	  songN += titleSplit[1];
+	          }
+	          var songN2;
+	          var songN3;
+        	  
+	          /*if(songN.byteLength() > 30) {*/
+	          if(byteLength(songN) > 30) {
+	        	  songN2 = songN.substring(0, 30) + "..";
+	        	  songN3 = songN.substring(0, 20) + "..";
+	        	  console.log(byteLength(songN) );
+	          } else {
+	        	  songN2 = songN;
+	        	  songN3 = songN;
+	          }
+	          
+	          var artistN2;
+	          /*if(artistN.byteLength() > 12) {*/
+	          if(byteLength(artistN) > 10) {
+	        	  artistN2 = artistN.substring(0, 10) + "..";
+		          console.log(byteLength(songN));
+	          } else {
+	        	  artistN2 = artistN;
+	          }
+	          console.log(artistN2);
+
+	          
+	          
+	          var videoId = item.id;
+	          var vidThumburl = item.image;
+	    	  var result =  '<tr class="chart">'
+	    		  +'<td class="ranking" ><strong class="num1">'+i+'</strong></td>'
+	    		  +'<!-- 곡 -->'
+	    		  +'<th scope="row" class="chartImgTitle">'
+	    		  +'<div class="chartImg">'
+	    		  +'<a href=""'
+	    		  +'title="'+songN+'" style="width: 50px; height: 50px; position: relative; float: left;"> <span class="mask"></span>'
+	    		  +'<img src="'+vidThumburl+'" style="width:50px; height:50px;" alt="'+songN+'">'
+	    		  +'</a>'
+	    		  +'<p class="" style=" position: relative; float: left; left: 10px; top: 14px;">'
+	    		  +'<a href="" title="'+songN+'">'+songN3+'</a>'
+	    		  +'</p>'
+	    		  +'</div>'
+	    		  +'<p class="chartTitle" style="relative; float: left; left: 10px; top: 0px;">'
+	    		  +'<a href="" title="'+songN+'">'+songN2+'</a>'
+	    		  +'</p>'
+	    		  +'</th>'
+	    		  +'<!-- 아티스트 -->'
+	    		  +'<td class="left">'
+	    		  +'<p class="artist" >'
+	    		  +'<a href="" title="'+artistN+'">'+artistN2+'</a>'
+	    		  +'</p>'
+	    		  +'</td>'
+	    		  +'<!-- 재생 -->'
+	        	  +'<td><span id="nedamuBtn'+videoId+'" style="font-weight: bold;" class="glyphicon glyphicon-play-circle" title="'+songN+' 듣기"></span></td>'
+	        	  +'<!-- 목록 -->'
+	        	  +'<td><span href="javascript:;" onclick="" class="glyphicon glyphicon-plus" title="'+songN+' 추가 하기"></span></td>'
+	        	  +'<!-- 기타 -->'
+	        	  +'<td><span href="javascript:;" onclick=""'
+	        	  +'class="glyphicon glyphicon-option-vertical" title="'+songN+' 기타 기능"></span>'
+	        	  +'</td>'
+	        	  +'</tr>';
+	    	  $('#mchart2').append(result);
+	          
+	          $('#nedamuBtn'+videoId).click(function() {
+	            	console.log("melon click");
+	            	playMusic3(item);
+	            });
+	    	});
+	    }
+	}); 
+
+}
+
+function playMusic3(item) {
+	$(footer).empty();
+	console.log(item);
+	var title = item.title;
+	var vid = item.id;
+	var musicImage = item.image;
+	
+	/*var musicUrl = "audio/" + vid + ".m4a";*/
+	$.getJSON('music/ajax/musicPlay.do?id='+vid+'&title='+title+'&image='+musicImage, function(resultObj) {
+        var ajaxResult = resultObj.ajaxResult;
+        console.log(ajaxResult);
+        if (ajaxResult.status == "success") {
+            $(footer).append('<audio controls="" autoplay="" name="media"><source src = '+ajaxResult.data+' type="audio/webm"></audio>');
+            $(footer).append('<a href="'+ajaxResult+'" download="aaac.aac">다운로드</a>');
+            console.log("playMusic : 완료");
+	    	/*setTimeout(createMusic(musicUrl), 2500);*/
+        }
+	}); 
+}
+
+
+
+/*function melonchart2(data) {
 	  var i = 1;
 	  var array = data.melon.songs.song;
-	  /*console.log(array);*/
+	  console.log(array);
 	  $.each(array, function(index,item){
-		  /*console.log("index : " + index);*/
+		  console.log("index : " + index);
 		  var artists = item.artists.artist;
-		  var artistN = " "; /*item.artists.artist[0].artistName; console.log("artistName : " + artistN);*/
+		  var artistN = " "; item.artists.artist[0].artistName; console.log("artistName : " + artistN);
 		  var artistFN = item.artists.artist[0].artistName;
 		  $.each(artists, function(index,i) {
 			  artistN += i.artistName + " ";
@@ -185,11 +364,11 @@ function melonchart2(data) {
 		                  vidThumburl =  item.snippet.thumbnails.default.url;
 		                  var result =  '<tr class="chart">'
 		                	  +'<td class="ranking" ><strong class="num1">'+i+'</strong></td>'
-		                	  /*+'<td class="ranking" >'
+		                	  +'<td class="ranking" >'
 		                	  +'<p class="change up" >'
 		                	  +'<span class="arrow"></span> <em></em> <span><!-- 계단 상승 --></span>'
 		                	  +'</p>'
-		                	  +'</td>'*/
+		                	  +'</td>'
 		                	  +'<!-- 곡 -->'
 		                	  +'<th scope="row" class="chartImgTitle">'
 		                	  +'<div class="chartImg">'
@@ -226,4 +405,4 @@ function melonchart2(data) {
 		        });
 		    });
 	  });
-	}
+	}*/

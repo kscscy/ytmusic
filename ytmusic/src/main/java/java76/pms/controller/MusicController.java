@@ -89,14 +89,17 @@ public class MusicController {
       long expire = music.getExpire();
       System.out.println("유효기간 : " + (expire - currentTime)/1000/60); 
       // 9000초가 넘었다면 youtube-dl 실행해서 audio url 업데이트
+      /*if (expire < currentTime || music.getImage() == null) {*/
       if (expire < currentTime) {
         System.out.println("유효기간 지남 -> music 업데이트");
         String newUrl = getUrl(musicUrl);
         long newExpire = Long.parseLong(newUrl.split("expire=")[1].substring(0,10))*1000;
         music.setExpire(newExpire);
+        /*music.setImage(object.getImage());*/
         music.setAudioUrl(newUrl);
+        
         musicDao.update(music);
-        System.out.println();
+        
         return new AjaxResult("success", music.getAudioUrl());
       }
       System.out.println("audioUrl : " + music.getAudioUrl());
@@ -177,7 +180,7 @@ public class MusicController {
   public Object list(
       @RequestParam(defaultValue="1") int pageNo,
       @RequestParam(defaultValue="10") int pageSize,
-      @RequestParam(defaultValue="no") String keyword,
+      @RequestParam(defaultValue="count") String keyword,
       @RequestParam(defaultValue="desc") String align) throws Exception {
     
     HashMap<String,Object> paramMap = new HashMap<>();
@@ -191,7 +194,6 @@ public class MusicController {
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("status", "success");
     resultMap.put("data", musics);
-    
     return resultMap;
   }
   /*

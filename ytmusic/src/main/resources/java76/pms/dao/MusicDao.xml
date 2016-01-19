@@ -13,23 +13,24 @@
   </resultMap>
 
   <select id="selectList" resultMap="musicMap" parameterType="map">
-<!--     select 
-      bno,
+    select 
       title,
-      views,
-      cre_dt 
+      id,
+      count,
+      img,
+      a_url
     from music
     order by 
     <choose>
       <when test="keyword == 'title'">title </when>
       <when test="keyword == 'views'">views </when>
-      <otherwise>bno </otherwise>
+      <otherwise>count </otherwise>
     </choose>
     <choose>
       <when test="align == 'asc'">asc</when>
       <otherwise>desc</otherwise>
     </choose>
-    limit #{startIndex}, #{length} -->
+    limit #{startIndex}, #{length}
   </select>
 <!--   int       no;
    String    id;
@@ -52,6 +53,7 @@
   
   <update id="update" parameterType="music">
     update music set
+    <!-- img=#{image}, -->
     a_url=#{audioUrl},
     expire=#{expire}
     where id=#{id}
