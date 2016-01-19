@@ -63,5 +63,11 @@ public class Music  implements Serializable {
 	public void setViews(int views) {
 		this.views = views;
 	}
+	public long getExpire() {
+		return expire;
+	}
+	public void setExpire(long expire) {
+		this.expire = expire;
+	}
   
 }
