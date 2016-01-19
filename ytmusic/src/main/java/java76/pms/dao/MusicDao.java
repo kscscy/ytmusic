@@ -15,6 +15,7 @@ public interface MusicDao {
   int insert(Music music);
   
   void updateCount(Music music);
+  
   /*int delete(Map<String,Object> paramMap);*/
   
 

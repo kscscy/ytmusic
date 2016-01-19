@@ -8,11 +8,13 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java76.pms.controller.ajax.AuthController;
 import java76.pms.dao.MusicDao;
 import java76.pms.domain.AjaxResult;
 import java76.pms.domain.Music;
@@ -27,28 +29,13 @@ public class MusicController {
   @Autowired MusicDao musicDao;
   @Autowired ServletContext servletContext;
    
-  
-  
-//  
-//  @RequestMapping("detail")
-//  public Object detail(int no) throws Exception {
-//    Music music = musicDao.selectOne(no);
-//    return new AjaxResult("success", music);
-//  }
-//  
-  
-  protected int       no;
-  protected String    id;
-  protected String    title;
-  protected String    image;
-  protected int       count;
-  protected int       views;
+  private static final Logger log = Logger.getLogger(MusicController.class);  
   
   String getUrl(String musicUrl) {
     String result = null;
     try {
         Process p = null;
-        System.out.println(System.getProperty("os.name"));
+        log.debug(System.getProperty("os.name"));
         if (System.getProperty("os.name").startsWith("Win")) {
           p = Runtime.getRuntime()
               .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 --add-header 'Access-Control-Allow-Origin':'*'; " + musicUrl);
@@ -61,15 +48,15 @@ public class MusicController {
         BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
         while ((musicUrl = stdInput.readLine()) != null) {
-            System.out.println("musicUrl : " + musicUrl);
-            result = musicUrl;
+          log.debug("musicUrl : " + musicUrl);
+          result = musicUrl;
         }
         while ((musicUrl = stdError.readLine()) != null) {
-          System.out.println("musicUrl : " + musicUrl);
+          log.debug("musicUrl : " + musicUrl);
         }
          
     } catch (IOException e) {
-        System.out.println("exception happened - here's what I know: ");
+        log.debug("exception happened - here's what I know: ");
         e.printStackTrace();
     }
     
@@ -85,13 +72,12 @@ public class MusicController {
     if(music != null) {
       music.setCount(music.getCount() + 1);
       musicDao.updateCount(music);
-      System.out.println("저장된 music 존재. 조회수 : " + ((int)music.getCount()+1));
+      log.debug("저장된 music 존재. 조회수 : " + ((int)music.getCount()+1));
       long expire = music.getExpire();
-      System.out.println("유효기간 : " + (expire - currentTime)/1000/60); 
-      // 9000초가 넘었다면 youtube-dl 실행해서 audio url 업데이트
+      log.debug("유효기간 : " + (expire - currentTime)/1000/60); 
       /*if (expire < currentTime || music.getImage() == null) {*/
       if (expire < currentTime) {
-        System.out.println("유효기간 지남 -> music 업데이트");
+        log.debug("유효기간 지남 -> music 업데이트");
         String newUrl = getUrl(musicUrl);
         long newExpire = Long.parseLong(newUrl.split("expire=")[1].substring(0,10))*1000;
         music.setExpire(newExpire);
@@ -102,11 +88,11 @@ public class MusicController {
         
         return new AjaxResult("success", music.getAudioUrl());
       }
-      System.out.println("audioUrl : " + music.getAudioUrl());
-      System.out.println();
+      log.debug("audioUrl : " + music.getAudioUrl());
+      log.debug("");
       return new AjaxResult("success", music.getAudioUrl());
     }
-    System.out.println("music 저장");
+    log.debug("music 저장");
     String url = getUrl(musicUrl);
     long expire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
     music = new Music();
@@ -120,7 +106,7 @@ public class MusicController {
     /*music.setVideoUrl();*/
     musicDao.insert(music);
     
-    System.out.println();
+    log.debug("");
     return new AjaxResult("success", music.getAudioUrl());
   }
 
