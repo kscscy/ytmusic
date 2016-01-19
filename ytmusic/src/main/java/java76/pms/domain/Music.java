@@ -13,6 +13,7 @@ public class Music  implements Serializable {
   protected String		videoURL;
   protected int       count;
   protected int       views;
+  protected long 			expire;
   
 	public int getMusic_no() {
 		return music_no;
@@ -62,7 +63,5 @@ public class Music  implements Serializable {
 	public void setViews(int views) {
 		this.views = views;
 	}
-  
-  
   
 }

@@ -6,6 +6,44 @@
         .jssorb01 .av:hover     (active mouseover)
         .jssorb01 .dn           (mousedown)
         */
+
+.mainSliderImg:HOVER .mainimg {
+	opacity: 0.6;
+	background-color: black;
+}
+
+.mainSliderImg .mainSliderDiv{
+  display: none;
+	width:341px;
+  height:250px;
+  background-color: white;
+  position: absolute;
+  left: 0;
+}
+
+.mainSliderImg:HOVER .mainSliderDiv{
+  display: inline;
+  background-color: black;
+  opacity:0.6;
+  position: absolute;
+}        
+
+.mainSliderDiv {
+	
+} 
+.mainSliderDiv span {
+  padding: 108px 150px;
+  font-size: 45px;
+  cursor: pointer;
+  color: gray;
+}
+
+
+        
+#slider1 {
+  border-radius: 10px;
+}
+
 .jssorb01 {
 	position: absolute;
 }

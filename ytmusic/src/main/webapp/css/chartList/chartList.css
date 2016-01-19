@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+  .chartList_a {
+    color: black;
+  }
+  a {
+    color:black;
+    font-size:;
+    font-weight: normal;
+  }
+  
+  .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+    border-top: 1px solid #ddd;
+    }
+    
+    p {
+      margin: 0 0px;
+    }
+    
+    .chartImg {
+      display: none;
+    }
+    
+    .chart:HOVER .chartImg {
+      display: inline;
+    }
+    
+    .chartTitle {
+      display: inline;
+    }
+    .chart:HOVER .chartTitle {
+      display: none;
+    }
+
+
+  .chart {
+  font-size: 12px;
+  }

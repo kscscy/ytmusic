@@ -8,12 +8,13 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java76.pms.controller.ajax.AuthController;
 import java76.pms.dao.MusicDao;
 import java76.pms.domain.AjaxResult;
 import java76.pms.domain.Music;
@@ -23,17 +24,12 @@ import java76.pms.domain.Music2;
 @RequestMapping("/music/ajax/*")
 public class MusicController { 
   
-  public static final String SAVED_DIR = "/attachfile";
+  /*public static final String SAVED_DIR = "/attachfile";*/
   
   @Autowired MusicDao musicDao;
   @Autowired ServletContext servletContext;
-  
-  
-  
-  
-  
-  
-  
+   
+  private static final Logger log = Logger.getLogger(MusicController.class);  
 //  
 //  @RequestMapping("detail")
 //  public Object detail(int no) throws Exception {
@@ -42,65 +38,98 @@ public class MusicController {
 //  }
 //  
   
+  protected int       no;
+  protected String    id;
+  protected String    title;
+  protected String    image;
+  protected int       count;
+  protected int       views;
   
-  
-  
-  
-  
-  //@RequestMapping("musicPlay")
-  @RequestMapping(value="musicPlay/**", method=RequestMethod.GET,produces="Access-Control-Allow-Origin/*")
-  public Object musicPlay(Music2 vid) throws Exception {
-    System.out.println("vid : " + vid);
-    String musicUrl1=null;
-    String musicUrl = "https://www.youtube.com/watch?v="+vid.getVid();
-    System.out.println("musicUrl : " +musicUrl);
+  String getUrl(String musicUrl) {
+    String result = null;
     try {
-    // run the Unix "ps -ef" command
-        // using the Runtime exec method:
-      Process p = null;
-      System.out.println(System.getProperty("os.name"));
-      if (System.getProperty("os.name").startsWith("Win")) {
-        p = Runtime.getRuntime()
-            .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 --add-header 'Access-Control-Allow-Origin':'*'; " + musicUrl);
-      } else if (System.getProperty("os.name").startsWith("Mac")) {
-      	System.out.println("durltlfgodehla");
-        p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
-      }
+        Process p = null;
+        log.debug(System.getProperty("os.name"));
+        if (System.getProperty("os.name").startsWith("Win")) {
+          p = Runtime.getRuntime()
+              .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 --add-header 'Access-Control-Allow-Origin':'*'; " + musicUrl);
+        } else if (System.getProperty("os.name").startsWith("Mac")) {
+          p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
+        }
         
-        BufferedReader stdInput = new BufferedReader(new
-             InputStreamReader(p.getInputStream()));
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-        BufferedReader stdError = new BufferedReader(new
-             InputStreamReader(p.getErrorStream()));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
-        // read the output from the command
-        System.out.println("Here is the standard output of the command:\n");
         while ((musicUrl = stdInput.readLine()) != null) {
-            System.out.println(musicUrl);
-            musicUrl1=musicUrl;
-            
+          log.debug("musicUrl : " + musicUrl);
+          result = musicUrl;
         }
-         
-        // read any errors from the attempted command
-        System.out.println("Here is the standard error of the command (if any):\n");
         while ((musicUrl = stdError.readLine()) != null) {
-            System.out.println(musicUrl);
+          log.debug("musicUrl : " + musicUrl);
         }
          
-    }
-    catch (IOException e) {
-        System.out.println("exception happened - here's what I know: ");
+    } catch (IOException e) {
+        log.debug("exception happened - here's what I know: ");
         e.printStackTrace();
     }
-    System.out.println("보낼 musicUrl1" + musicUrl1);
-    System.out.println("개가튼거");
-    return new AjaxResult("success", musicUrl1);
+    
+    return result;
+  }
+  
+  @RequestMapping("musicPlay")
+  public Object musicPlay(Music object) throws Exception {
+    long currentTime = System.currentTimeMillis();
+    String musicUrl = "https://www.youtube.com/watch?v="+object.getId();
+    
+    Music music = musicDao.selectOne(object.getId());
+    if(music != null) {
+      music.setCount(music.getCount() + 1);
+      musicDao.updateCount(music);
+      log.debug("저장된 music 존재. 조회수 : " + ((int)music.getCount()+1));
+      long expire = music.getExpire();
+      log.debug("유효기간 : " + (expire - currentTime)/1000/60); 
+      /*if (expire < currentTime || music.getImage() == null) {*/
+      if (expire < currentTime) {
+        log.debug("유효기간 지남 -> music 업데이트");
+        String newUrl = getUrl(musicUrl);
+        long newExpire = Long.parseLong(newUrl.split("expire=")[1].substring(0,10))*1000;
+        music.setExpire(newExpire);
+        /*music.setImage(object.getImage());*/
+        music.setAudioUrl(newUrl);
+        
+        musicDao.update(music);
+        
+        return new AjaxResult("success", music.getAudioUrl());
+      }
+      log.debug("audioUrl : " + music.getAudioUrl());
+      log.debug("");
+      return new AjaxResult("success", music.getAudioUrl());
+    }
+    log.debug("music 저장");
+    String url = getUrl(musicUrl);
+    long expire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
+    music = new Music();
+    music.setId(object.getId());
+    music.setImage(object.getImage());
+    music.setCount(1);
+    music.setTitle(object.getTitle());
+    music.setViews(object.getViews());
+    music.setExpire(expire);
+    music.setAudioUrl(url);
+    /*music.setVideoUrl();*/
+    musicDao.insert(music);
+    
+    log.debug("");
+    return new AjaxResult("success", music.getAudioUrl());
   }
 
   
+  
+  
   @RequestMapping("videoPlay")
   public Object videoPlay(Music2 vid) throws Exception {
-  	System.out.println("vid : " + vid);
+    System.out.println(vid);
     String videoUrl1 = null;
     String videoUrl = "https://www.youtube.com/watch?v=" + vid.getVid();
     System.out.println(videoUrl);
@@ -139,15 +168,19 @@ public class MusicController {
       System.out.println("exception happened - here's what I know: ");
       e.printStackTrace();
     }
-    //System.out.println("보낼 videoUrl1" + videoUrl1);
+    System.out.println("보낼 videoUrl1" + videoUrl1);
     return new AjaxResult("success", videoUrl1);
   }
 
-/*  @RequestMapping("list")
+  
+  
+  
+  
+  @RequestMapping("list")
   public Object list(
       @RequestParam(defaultValue="1") int pageNo,
       @RequestParam(defaultValue="10") int pageSize,
-      @RequestParam(defaultValue="no") String keyword,
+      @RequestParam(defaultValue="count") String keyword,
       @RequestParam(defaultValue="desc") String align) throws Exception {
     
     HashMap<String,Object> paramMap = new HashMap<>();
@@ -161,10 +194,9 @@ public class MusicController {
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("status", "success");
     resultMap.put("data", musics);
-    
     return resultMap;
   }
-  
+  /*
   @RequestMapping(value="add", method=RequestMethod.GET)
   public String form() {
     return "music/MusicForm";
@@ -190,8 +222,8 @@ public class MusicController {
   public Object detail(int no) throws Exception {
     Music music = musicDao.selectOne(no);
     return new AjaxResult("success", music);
-  }
-
+  }*/
+/*
   @RequestMapping(value="update", method=RequestMethod.POST)
   public AjaxResult update(Music music, MultipartFile file) throws Exception {
     
@@ -225,5 +257,5 @@ public class MusicController {
     } 
 
     return new AjaxResult("success", null);
-  }
-*/}
+  }*/
+}

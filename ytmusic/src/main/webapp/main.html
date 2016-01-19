@@ -1,52 +1,272 @@
-<div class="bs-example" data-example-id="hoverable-table">
-	<table class="table table-hover">
-		<thead id="resultThead">
-		</thead>
-		<tbody id="resultTbody">
-		</tbody>
-	</table>
-</div>
-
+<div id="mainWrapper" class="wrap push slide" style="transition: left 100ms ease; left: 15.625em;">
+<div class="scroll mCustomScrollbar" data-mcs-theme="minimal">
 <div id="mainContainer">
-<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 1024px; height: 300px; overflow: hidden; visibility: hidden;">
-	 <!-- Loading Screen -->
-	<div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
-	    <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
-	    <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
-	</div>
-	<div id="slider1" data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1024px; height: 300px; overflow: hidden;">
-		<div data-p="112.50" style="display: none; height:300px;">
-			<img data-u="image" src="images/1.jpg"">
-		</div>
-		<div data-p="112.50" style="display: none; height:300px;">
-			<img data-u="image" src="images/3.jpg">
-		</div>
-		<div data-p="112.50" style="display: none; height:300px;">
-			<img data-u="image" src="images/4.jpg">
-		</div>
-	</div>
+<nav id="menu" class="left" role="navigation"
+            style="position: fixed; padding-top: 90px; top: 0px; bottom: 0px; left: 0px; width: 15.625em; height: 100%; transition: left 300ms ease;">
+            <ul style="width: 200px; height: 100%; padding: 2px; line-height: 2;">
+               <li><a href="#" class="active"><i class="fa fa-home "></i>Home</a></li>
+               <li><a href="#"><i class="fa fa-info-circle"></i>최신</a></li>
+               <li><a href="#"><i class="fa fa-list"></i>인기차트</a></li>
+               <li><a href="#"><i class="fa fa-file-text-o"></i>장르별</a></li>
+               <li><a href="#"><i class="fa fa-info-circle"></i>최신</a></li>
+               <li><a href="#"><i class="fa fa-play"></i>플레이리스트 <i class="fa fa-caret-down"></i></a>
+                  <ul style="overflow-y: scroll; width: 200px; height: 500px; padding: 1px">
+                     <li><a href="#">나만의 재생목록 1</a></li>
+                     <li><a href="#">나만의 재생목록 2</a></li>
+                     <li><a href="#">나만의 재생목록 3</a></li>
+                     <li><a href="#">나만의 재생목록 4</a></li>
+                     <li><a href="#">나만의 재생목록 5</a></li>
+                     <li><a href="#">나만의 재생목록 6</a></li>
+                     <li><a href="#">나만의 재생목록 7</a></li>
+                     <li><a href="#">나만의 재생목록 8</a></li>
+                     <li><a href="#">나만의 재생목록 9</a></li>
+                     <li><a href="#">나만의 재생목록 10</a></li>
+                  </ul>
+               </li>
+               <li><a href="#"><i class="fa fa-phone"></i>저작권 <i
+                     class="fa fa-caret-down"></i></a>
+                  <ul>
+                     <li><a href="#">강수철</a></li>
+                     <li><a href="#">김장석</a></li>
+                     <li><a href="#">오규영</a></li>
+                     <li><a href="#">조기진</a></li>
+                  </ul></li>
+            </ul>
+            <a href="#menu" class="menu-link" style="z-index: 10"><i
+               class="fa fa-headphones"></i></a>
+         </nav>
+<div id="mainHeader" style="width: 1024px; left:0;">T O D A Y</div>
+<div id="jssor_1" style="position: relative; /*margin: 0 auto;*/ top: 0px; left: 0px; width: 1023px; height: 240px; overflow: hidden; visibility: hidden;">
+   <!-- Loading Screen -->
+  <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+      <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+      <div style="position:absolute;display:block;background:url('img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+  </div>
+  <div id="slider1" data-u="slides" style="cursor: default; position: relative; top: -25px; left: 0px; width: 1023px; height: 250px; overflow: hidden;"></div>
 </div>
+</div>
+<div style="margin-top: 10px; border-top: 1px solid gray; width: 1024px; left:0;"></div>
 
-<div class="centered">
+
+<div id="centered" class="centered" style="height:400px;">
   <div class="wrapper col1">
-		<div id="featured_slide">
-		  <div>
-		    <ul id="list_tag">
-		      <button class="tag" onclick="callList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신</button>
-		      <button class="tag" onclick="callList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기</button>
-		      <button class="tag" onclick="callList('PLDcnymzs18LVXfO_x0Ei0R24qDbVtyy66')">팝</button>
-		      <button class="tag" onclick="callList('PLQog_FHUHAFVRsO4otlwzn0bZspSAefOl')">소울</button>
-		      <button class="tag" onclick="callList('PLH6pfBXQXHECUaIU3bu9rjG2L6Uhl5A2q')">힙합</button>
-		    </ul>
-		  </div>
-			<div id="slider">
-				<ul id="categories" class="sliderimage">
-				</ul>
-				<a class="prev disabled"></a> <a class="next disabled"></a>
-				<div style="clear: both"></div>
-			</div>
-		</div>
+    <div id="featured_slide">
+
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+						  <a class="tapMenu" href="#home"	aria-controls="home" role="tab" data-toggle="tab" onclick="callList('PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp')">최신</a></li>
+						<li role="presentation">
+						  <a class="tapMenu" href="" aria-controls="profile" role="tab" data-toggle="tab" onclick="callList('PLFgquLnL59alGJcdc0BEZJb2p7IgkL0Oe')">인기</a></li>
+						<li role="presentation">
+						  <a class="tapMenu" href="" aria-controls="messages" role="tab" data-toggle="tab" onclick="callList('PLDcnymzs18LVXfO_x0Ei0R24qDbVtyy66')">팝</a></li>
+						<li role="presentation">
+						  <a class="tapMenu" href="" aria-controls="settings" role="tab" data-toggle="tab" onclick="callList('PLQog_FHUHAFVRsO4otlwzn0bZspSAefOl')">소울</a></li>
+            <li role="presentation">
+              <a class="tapMenu" href="" aria-controls="settings" role="tab" data-toggle="tab" onclick="callList('PLH6pfBXQXHECUaIU3bu9rjG2L6Uhl5A2q')">힙합</a></li>
+					</ul>
+					<div id="slider">
+        <ul id="categories" class="sliderimage">
+        </ul>
+        <a class="prev disabled"></a> <a class="next disabled"></a>
+        <div style="clear: both"></div>
+      </div>
+    </div>
   </div>
 </div>
+<div style="margin-top: 10px; border-top: 1px solid gray; width: 1024px; left:0;"></div>
+
+
+<div id="chartSection" class="chartSection" style="width:1024px; height: 443px; border-top:10px; margin-top: 10px;">
+	<div style="position: relative; float:left; left: 0;">
+	  <table id="chartTable" class="table table-hover" style="width:490px;">
+	    <caption>Melon 차트</caption>
+	    <colgroup>
+	      <col width="40px">
+	      <!-- <col width="55px"> -->
+	      <col width="*">
+	      <col width="118px">
+	      <col width="34px">
+	      <col width="34px">
+	      <col width="21px">
+	    </colgroup>
+	    <thead>
+	<!--      <tr>
+	        <th scope="col"><span>순위</span></th>
+	        <th scope="col"><span>등락</span></th>
+	        <th scope="col"><span>곡</span></th>
+	        <th scope="col"><span>아티스트</span></th>
+	        <th scope="col"><span>듣기</span></th>
+	        <th scope="col"><span>재생목록</span></th>
+	        <th scope="col"><span>기타</span></th>
+	      </tr> -->
+	    </thead>
+	    <tbody id="mchart" class="chartTbody">
+	    </tbody>
+	  </table>
+	</div>
+	
+	<div style="position: relative; float:right; right: 0;">
+	  <table id="chartTable" class="table table-hover" style="width:490px; ">
+	    <caption>Nedamu 차트</caption>
+	    <colgroup>
+	      <col width="40px">
+	      <!-- <col width="55px"> -->
+	      <col width="*">
+	      <col width="118px">
+	      <col width="34px">
+	      <col width="34px">
+	      <col width="21px">
+	    </colgroup>
+	    <thead>
+	<!--      <tr>
+	        <th scope="col"><span>순위</span></th>
+	        <th scope="col"><span>등락</span></th>
+	        <th scope="col"><span>곡</span></th>
+	        <th scope="col"><span>아티스트</span></th>
+	        <th scope="col"><span>듣기</span></th>
+	        <th scope="col"><span>재생목록</span></th>
+	        <th scope="col"><span>기타</span></th>
+	      </tr> -->
+	    </thead>
+	    <tbody id="mchart2" class="chartTbody">
+	    </tbody>
+	  </table>
+	</div>
 </div>
+</div>
+</div>
+<link rel='stylesheet'  href="css/chartList/chartList.css" type='text/css'>
+
 <link rel='stylesheet'  href="css/slider/button.css" type='text/css'>
+
+<script src="js/bigSlide.js"></script>
+<script>
+   $(document).ready(function() {
+      $('.menu-link').bigSlide();
+   });
+
+   $("#menu a").click(
+         function(event) {
+            event.preventDefault();
+            if ($(this).next('ul').length) {
+               $(this).next().toggle('fast');
+               $(this).children('i:last-child').toggleClass(
+                     'fa-caret-down fa-caret-left');
+            }
+         });
+</script>
+<style>
+.menu-link {
+   margin-left: 100%;
+   position: absolute;
+   top: 300px;
+   padding: 5px 10px 0px 20px;
+   font-size: 2.5em;
+   color: red;
+   -webkit-transition: all 0.3s ease;
+   -moz-transition: all 0.3s ease;
+   transition: all 0.3s ease;
+}
+
+#menu {
+   position: fixed;
+   background-color: white;
+   height: 100%;
+   z-index: 10;
+   width: 200px;
+   color: #bbb;
+   top: 0;
+   -webkit-transition: all 0.3s ease;
+   -moz-transition: all 0.3s ease;
+   transition: all 0.3s ease;
+   opacity: 1;
+   /* font-family: 'Source Sans Pro', sans-serif; */
+   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+#menu ul {
+   list-style: none;
+   margin-top: 0;
+   padding: 0
+}
+
+#menu ul li {
+   
+}
+
+#menu>ul>li>a {
+   border-bottom: 1px solid black;
+}
+
+#menu ul li a {
+   color: black;
+   font-size: 16px;
+   display: block;
+   padding: 8px 0 8px 7px;
+   text-decoration: none;
+   -webkit-transition: all 0.3s ease;
+   -moz-transition: all 0.3s ease;
+   transition: all 0.3s ease;
+   font-weight: 600;
+}
+
+#menu ul a i {
+   margin-right: 10px;
+   font-size: 18px;
+   margin-top: 3px;
+   width: 20px;
+}
+
+#menu ul a i[class*='fa-caret'] {
+   float: right;
+}
+
+#menu ul a:hover, #menu ul a.active {
+   background-color: #111;
+   border-left-color: #FFCC33;
+   color: #FFCC33;
+}
+
+#menu ul a:hover i:first-child {
+   /* color: #FFCC33; */
+   color: white;
+}
+
+/* Submenu */
+#menu ul li a.active+ul {
+   display: block
+}
+
+#menu ul li ul {
+   margin-top: 0;
+   display: none;
+}
+
+#menu ul li ul li {
+   border-bottom: none;
+}
+
+#menu ul li ul li a {
+   padding-left: 30px;
+}
+
+#menu ul li ul li a:hover {
+   background-color: #1A1A1A;
+}
+
+.left {
+   left: -280px;
+}
+
+.show {
+   left: 0;
+}
+</style>
+<div class="bs-example" data-example-id="hoverable-table">
+  <table class="table table-hover">
+    <thead id="resultThead">
+    </thead>
+    <tbody id="resultTbody">
+    </tbody>
+  </table>
+</div>

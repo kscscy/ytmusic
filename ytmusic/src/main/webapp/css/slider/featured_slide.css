@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+.tapMenu {
+	color: black;
+}
+
 #featured_slide {
    display: block;
    width: 1024px;
@@ -7,7 +11,6 @@
    margin: 0 auto;
    padding: 0;
    font-size: 12px;
-   /* font-family: 나눔바른고딕, NanumBarunGothic, "NanumBarunGothic", "나눔바른고딕", "돋움", Dotum, "Apple SD Gothic Neo", sans-serif; */
 }
 
 #slider button {
@@ -21,8 +24,8 @@
 	margin-top: 10px;
 }
 .tag {
-	/* font-family: 나눔바른고딕, NanumBarunGothic, "NanumBarunGothic", "나눔바른고딕", "돋움", Dotum, "Apple SD Gothic Neo", sans-serif; */
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	 font-family: 나눔바른고딕, NanumBarunGothic, 'NanumBarunGothic', '나눔바른고딕', '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;
+  /* font-family: 'Open Sans', Arial, Helvetica, sans-serif; */
 	position: relative;
 	margin-left: 20px;
 	text-align: center;
@@ -33,8 +36,9 @@
 	background-color: transparent;
   text-decoration: none;
   font-size: 14px;	
-  color: black;
+  color: gray;
   padding: 1px;
+  font-weight: bold;
 }
 .tag:HOVER {
   font-weight: bold;
@@ -47,7 +51,7 @@ input:FOCUS {
 #slider .sliderimage , #slider .sliderimage {
    position: absolute;
    width: 1024px;
-   height: 480px;
+   height: 380px;
 }
 
 #slider .sliderimage{
@@ -59,14 +63,10 @@ input:FOCUS {
 }
 
 .liCon_1 {
-   float: left;
-   position: absolute;
-   top: 0;
-   width: 1024px;
-   height: 420px;
    margin-top: 5px;
    color: #9FA4AA; 
    border: none;
+      
 }
 /* #slider li {
    position: absolute;
@@ -79,13 +79,14 @@ input:FOCUS {
 } */
 
 .liCon_2 {
+	 margin: 0 7px;
 	 margin-top: 5px;
    color: #9FA4AA; 
    border: none;
    float: left;
    position: relative;
    top: 0;
-   width: 196px;
+   width: 180px;
    height: 180px;
 }
 
@@ -121,12 +122,25 @@ input:FOCUS {
 #slider li p.readmore {
   text-align: left;
 	width: 155px;
-	position: absolute;
+	position: relative;
   margin: 0;
+  height: 38px;
+  overflow: hidden;
+}
+
+#slider li p.readmore2 {
+  text-align: left;
+  width: 155px;
+  position: relative;
+  margin: 0;
+  height: 19px;
+  color: gray;
+  overflow: hidden;
 }
 
 #slider li p.readmore a {
-   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-family: 나눔바른고딕, NanumBarunGothic, 'NanumBarunGothic', '나눔바른고딕', '돋움', Dotum, 'Apple SD Gothic Neo', sans-serif;
+   /* font-family: 'Open Sans', Arial, Helvetica, sans-serif; */
    /* font-weight: bold; */
    color: black; /* background-color:#2B2B2B; */
    text-decoration: none;
@@ -144,7 +158,7 @@ input:FOCUS {
    float: left;
    position: relative;
    top: 0;
-   width: 1024px;
+   width: 980px;
    height: 180px;
    opacity: 1;
 }

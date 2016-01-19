@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table class="table table-hover">
+		<caption>곡 목록</caption>
+		<colgroup>
+			<col width="40px">
+			<col width="55px">
+			<col width="*">
+			<col width="19%">
+			<col width="34px">
+			<col width="34px">
+			<col width="21px">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col"><span>순위</span></th>
+				<th scope="col"><span>등락</span></th>
+				<th scope="col"><span>곡</span></th>
+				<th scope="col"><span>아티스트</span></th>
+				<th scope="col"><span>듣기</span></th>
+				<th scope="col"><span>재생목록</span></th>
+				<th scope="col"><span>기타</span></th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr>
+				<td class="ranking"><strong class="num1">1</strong></td>
+				
+				<td class="ranking">
+					<p class="change up">
+						<span class="arrow"></span> <em>1</em> <span>계단 상승</span>
+					</p>
+				</td>
+				
+				<!-- 곡 -->
+				<th scope="row" class="">
+				  <a href="http://music.bugs.co.kr/album/20017094?wl_ref=M_contents_03_02" class="thumbnail" title="잘 지내고 있니 -페이지 이동"> <span class="mask"></span>
+						<img src="" alt="잘 지내고 있니 앨범 대표이미지">
+				  </a>
+					<p class="title">
+						<a href="javascript:void(bugs.music.listen('30123636',true));bugs.wiselog.area('M_contents_03_03');" title="잘 지내고 있니 -페이지 이동">잘 지내고 있니</a>
+					</p>
+				</th>
+				
+				<!-- 아티스트 -->
+				<td class="left">
+					<p class="artist">
+						<!-- a tag title -->
+						<a href="" title="t윤미래">t윤미래</a>
+						<!-- a tag link -->
+						<a href="javascript:void(0);" name="atag_martist_list"
+							class="more" title="아티스트 전체보기"
+							onclick="">
+							t윤미래, 펀치(Punch)
+						</a>
+					</p>
+				</td>
+				
+				<!-- 듣기 -->
+				<td><a href="javascript:;"
+					onclick=""
+					class="btn play" title="잘 지내고 있니 듣기">잘 지내고 있니 듣기-새창</a></td>
+				
+				<!-- 재생 -->
+				<td><a href="javascript:;"
+					onclick=""
+					class="btn addPlaylist" title="재생목록에 잘 지내고 있니 추가">재생목록에 잘 지내고 있니 추가</a></td>
+				
+				<!-- 기타 -->
+				<td><a href="javascript:;"
+					onclick=""
+					track_title="잘 지내고 있니" artist_disp_nm="t 윤미래 &amp; 펀치(Punch)"
+					class="btnActions" title="잘 지내고 있니의 기타 기능">잘 지내고 있니의 기타 기능</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

@@ -4,25 +4,27 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="java76.pms.dao.MusicDao">
-
+  
   <resultMap type="music" id="musicMap">
-    <id 		column="bno" 		property="no"/>
-    <result column="cre_dt" 		property="createdDate"/>
-    <result column="afile" 		property="attachFile"/>
-  </resultMap> 
+    <id       column="mu_no"       property="no"/>
+    <result column="img"     property="image"/>
+    <result column="a_url"     property="audioUrl"/>
+    <result column="v_url"     property="videoUrl"/>
+  </resultMap>
 
   <select id="selectList" resultMap="musicMap" parameterType="map">
     select 
-    	mu_no,
       title,
-      views,
-      cre_dt 
+      id,
+      count,
+      img,
+      a_url
     from music
     order by 
     <choose>
       <when test="keyword == 'title'">title </when>
       <when test="keyword == 'views'">views </when>
-      <otherwise>bno </otherwise>
+      <otherwise>count </otherwise>
     </choose>
     <choose>
       <when test="align == 'asc'">asc</when>
@@ -30,39 +32,46 @@
     </choose>
     limit #{startIndex}, #{length}
   </select>
-  
+<!--   int       no;
+   String    id;
+   String    audioUrl;
+   String    videoUrl;
+   String    title;
+   String    image;
+   int       count;
+   int       views;
+   int       savedDate; -->
   <insert id="insert" parameterType="music">
-    insert into music(title,content,pwd,cre_dt,afile) 
-    values(#{title},#{content},#{password},now(),#{attachFile})
+    insert into music(id,title,a_url,v_url,img,count,views,expire) 
+    values(#{id},#{title},#{audioUrl},#{videoUrl},#{image},#{count},#{views},#{expire})
   </insert>
   
-  <delete id="delete" parameterType="map">
+<!--   <delete id="delete" parameterType="map">
     delete from music 
-  	where bno=#{no} and (pwd is null or pwd=#{password})
-  </delete>
+     where bno=#{no} and (pwd is null or pwd=#{password})
+  </delete> -->
   
   <update id="update" parameterType="music">
-    update music set 
-      title=#{title},
-      content=#{content},
-      cre_dt=now(),
-  	  afile=#{attachFile}
-    where bno=#{no} and (pwd is null or pwd=#{password})
+    update music set
+    <!-- img=#{image}, -->
+    a_url=#{audioUrl},
+    expire=#{expire}
+    where id=#{id}
   </update>
   
-  <select id="selectOne" resultMap="musicMap" parameterType="int">
+  <update id="updateCount" parameterType="music">
+    update music set
+    count=#{count}
+    where id=#{id}
+  </update>
+  
+  <select id="selectOne" resultMap="musicMap" parameterType="string">
     select 
-      bno,
-      title,
-  	  content,
-      views,
-      cre_dt,
-  	  afile 
+    id, title, a_url, v_url, img, count, views, expire 
     from music
-    where bno=#{no}
+    where id=#{id}
   </select>
 </mapper>
-
 
 
 

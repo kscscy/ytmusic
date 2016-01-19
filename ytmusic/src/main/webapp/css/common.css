@@ -13,6 +13,23 @@
 body {
 }
 
+
+.scroll {
+    overflow: auto;
+    position: relative;
+    /* padding: 20px; */
+    /* background: #333; */
+    /* margin: 10px; */
+    /* left: 0; */
+    /* border: 1px solid red; */
+    width: 1060px;
+    /* max-width: 97%; */
+    height: 685px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 #footer {
 	bottom: 0px;
 	position:fixed;
@@ -43,7 +60,7 @@ body {
 
 #containers  {
 	/* border: 1px gray solid; */
-	padding-top: 60px;
+	padding-top: 57px;
 	margin: auto;
 	width: 1024px;
 	/* background: white url() top center no-repeat; */
@@ -51,23 +68,24 @@ body {
 	color: black;
 }
 
-
-#tst-section {
-   width: contain;
-   margin: 0px auto;
-   border: 1px solid #bcbcbc;
-   min-width: 1024px;
-   background:;
-}
-
 .header {
    position: fixed;
    height: 60px;
    width: 100%;
-   background: black;
+   /* background: black; */
    /* border-bottom: 1px solid #ddd; */
-   z-index:10;
+   z-index:50;
    max-height: 60px;
+}
+
+#mainHeader {
+  color: dimgrey;
+  padding-top: 10px;
+  /* border: 1px solid red; */
+  font-weight: 300;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: x-large;
+  text-align: center;
 }
 
 .wrap_header {
@@ -77,6 +95,7 @@ body {
    margin-left: auto;
    margin-right: auto;
    max-height: 60px;
+   background-color: white;
 }
 
 .header #query:focus {
@@ -92,32 +111,13 @@ body {
    font-size: 25px;
    /* padding: 0 0 0 35px; */
    float: left;
-   color: white;
+   color: black;
    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
    text-decoration: none;
   /*  margin-top: 8px; */
 }
 #a1:HOVER{
 	text-decoration: none;
-	color: white;
+	color: red;
 }
 
-#left_box {
-  position: fixed;
-  top: 60px;
-  bottom: 0;
-  width: 200px;
-  border-right: 1px solid #ddd;
-}
-
-#genre_ul li {
-  position:relative;
-  padding: 50px 0px 25px 25px;
-}
-
-#genre_ul li a {
-  outline:none;
-  text-decoration:none;
-  color:black;
-  font-size: 20px;
-}
