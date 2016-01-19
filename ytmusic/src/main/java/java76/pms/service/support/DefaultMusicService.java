@@ -12,12 +12,12 @@ import java76.pms.domain.Music;
 import java76.pms.service.MusicService;
 
 @Service
-public class DefaultMusicService implements MusicService {
+public class DefaultMusicService /*implements MusicService*/ {
   private static Logger log = Logger.getLogger(DefaultMusicService.class);
   
   @Autowired MusicDao musicDao;
   
-  public List<Music> getMusicList(int pageNo, int pageSize, 
+  /*public List<Music> getMusicList(int pageNo, int pageSize, 
       String keyword, String align) {
     log.debug("getMusicList() 호출됨");
     
@@ -52,7 +52,7 @@ public class DefaultMusicService implements MusicService {
   public Music retieve(int no) {
     log.debug("retieve() 호출됨");
     return musicDao.selectOne(no);
-  }
+  }*/
 
 }
 

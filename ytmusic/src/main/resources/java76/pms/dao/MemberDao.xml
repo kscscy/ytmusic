@@ -5,7 +5,7 @@
 
 <mapper namespace="java76.pms.dao.MemberDao">
 	<sql id="select_inc">
-		select email, pwd 
+		select mem_no, email, pwd 
 	</sql>
 	
 	<select id="selectList" resultType="member" parameterType="map">

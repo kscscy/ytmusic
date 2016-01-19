@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <title>와이 뮤직</title>
 
-<script>
+<!-- <script>
 	$(function() {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		alert('헤더설정함');
 	});
-</script>
+</script> -->
 <script src="http://code.jquery.com/jquery.min.js"></script>
 
 
@@ -47,7 +47,7 @@
 
   <div id="containers">
   </div>
-
+  <div id="test"></div>
 	<div id="footer"></div>
 
 
@@ -57,9 +57,16 @@
 		$(function() {
 			$("#header").load("header.html");
 		});
+		/*
 		$(function() {
 			$("#containers").load("main.html");
 		});
+		*/
+		/*
+		$(function() {
+			$("#test").load("myalbumlist.html");
+		}); 
+		*/
 		$(function() {
 			$("#footer").load("footer.html");
 		});
@@ -80,7 +87,7 @@
 		});
 	</script>
 <script src="js/search/search.js"></script>
-
+<script src="js/album/albumlist.js"></script>   
 
 <script src="js/main.js"></script>
 <script	src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>

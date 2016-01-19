@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>내 앨범 목록</h1>
+  <table id="listTable" class="table table-hover table-responsive">
+    <thead>
+      <tr>
+      <th>
+				<input type="checkbox" id="allCheck"/>
+			</th>
+        <th>앨범번호</th>
+        <th>앨범명</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<script>
+/* if($.session.get('emailSession') != undefined) {
+	 console.log("앨범리스트 페이지"$.session.get('emailSession'));
+	 console.log("앨범리스트 페이지 회원번호 : "+$.session.get('noSession'));
+	 
+} */
+</script>
+
+<script type="text/javascript">
+	$(function(){
+	    //전체선택 체크박스 클릭
+		$("#allCheck").click(function(){
+			//만약 전체 선택 체크박스가 체크된상태일경우
+			if($("#allCheck").prop("checked")) {
+				//해당화면에 전체 checkbox들을 체크해준다
+				$("input[type=checkbox]").prop("checked",true);
+			// 전체선택 체크박스가 해제된 경우
+			} else {
+				//해당화면에 모든 checkbox들의 체크를해제시킨다.
+				$("input[type=checkbox]").prop("checked",false);
+			}
+		})
+	})
+</script>
+
+
+<script src="js/album/albumlist.js"></script>  
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</body>
+</html>

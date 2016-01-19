@@ -47,17 +47,13 @@ public class MusicController {
   
   
   
-  @RequestMapping("musicPlay")
+  //@RequestMapping("musicPlay")
+  @RequestMapping(value="musicPlay/**", method=RequestMethod.GET,produces="Access-Control-Allow-Origin/*")
   public Object musicPlay(Music2 vid) throws Exception {
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
-    System.out.println(vid);
+    System.out.println("vid : " + vid);
     String musicUrl1=null;
     String musicUrl = "https://www.youtube.com/watch?v="+vid.getVid();
-    System.out.println(musicUrl);
+    System.out.println("musicUrl : " +musicUrl);
     try {
     // run the Unix "ps -ef" command
         // using the Runtime exec method:
@@ -97,13 +93,14 @@ public class MusicController {
         e.printStackTrace();
     }
     System.out.println("보낼 musicUrl1" + musicUrl1);
+    System.out.println("개가튼거");
     return new AjaxResult("success", musicUrl1);
   }
 
   
   @RequestMapping("videoPlay")
   public Object videoPlay(Music2 vid) throws Exception {
-    System.out.println(vid);
+  	System.out.println("vid : " + vid);
     String videoUrl1 = null;
     String videoUrl = "https://www.youtube.com/watch?v=" + vid.getVid();
     System.out.println(videoUrl);
@@ -142,11 +139,11 @@ public class MusicController {
       System.out.println("exception happened - here's what I know: ");
       e.printStackTrace();
     }
-    System.out.println("보낼 videoUrl1" + videoUrl1);
+    //System.out.println("보낼 videoUrl1" + videoUrl1);
     return new AjaxResult("success", videoUrl1);
   }
 
-  @RequestMapping("list")
+/*  @RequestMapping("list")
   public Object list(
       @RequestParam(defaultValue="1") int pageNo,
       @RequestParam(defaultValue="10") int pageSize,
@@ -174,8 +171,8 @@ public class MusicController {
   }
       
   @RequestMapping(value="add", method=RequestMethod.POST)
-  public AjaxResult add(Music music/*, MultipartFile file*/) throws Exception {
-    /*
+  public AjaxResult add(Music music, MultipartFile file) throws Exception {
+    
     if (file.getSize() > 0) {
       String newFileName = MultipartHelper.generateFilename(file.getOriginalFilename());  
       File attachfile = new File(servletContext.getRealPath(SAVED_DIR) 
@@ -183,7 +180,7 @@ public class MusicController {
       file.transferTo(attachfile);
       music.setAttachFile(newFileName);
     }
-    */
+    
     musicDao.insert(music);
     
     return new AjaxResult("success", null);
@@ -196,8 +193,8 @@ public class MusicController {
   }
 
   @RequestMapping(value="update", method=RequestMethod.POST)
-  public AjaxResult update(Music music/*, MultipartFile file*/) throws Exception {
-    /*
+  public AjaxResult update(Music music, MultipartFile file) throws Exception {
+    
     if (file.getSize() > 0) {
       String newFileName = MultipartHelper.generateFilename(file.getOriginalFilename());  
       File attachfile = new File(servletContext.getRealPath(SAVED_DIR) 
@@ -207,7 +204,7 @@ public class MusicController {
     } else if (music.getAttachFile().length() == 0) {
       music.setAttachFile(null);
     }
-    */
+    
     
     if (musicDao.update(music) <= 0) {
       return new AjaxResult("failure", null);
@@ -229,4 +226,4 @@ public class MusicController {
 
     return new AjaxResult("success", null);
   }
-}
+*/}

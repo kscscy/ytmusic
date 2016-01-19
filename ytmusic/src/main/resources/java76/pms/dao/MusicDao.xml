@@ -9,11 +9,11 @@
     <id 		column="bno" 		property="no"/>
     <result column="cre_dt" 		property="createdDate"/>
     <result column="afile" 		property="attachFile"/>
-  </resultMap>
+  </resultMap> 
 
   <select id="selectList" resultMap="musicMap" parameterType="map">
     select 
-      bno,
+    	mu_no,
       title,
       views,
       cre_dt 
