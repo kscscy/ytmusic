@@ -38,11 +38,9 @@ app.post('/', function (req, res) {
 					//console.log("이미존재하는 이메일");
 					res.json({status:'fail'});
 					console.log(rows);
-					//res.send(200,'fail');
 				}
 			});
   //res.send('Hello World!');
-  
 });
 
 app.get('/', function (req, res) {
