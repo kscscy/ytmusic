@@ -104,7 +104,7 @@ $('#signup').click(
 	  	
 	  	$.post('member/add.do', {
 	  		email: email,
-	  		password: $('#password').val()
+	  		password: password
 	  		
 	  	},
 	     function(resultObj) {
