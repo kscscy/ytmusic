@@ -4,3 +4,5 @@
 /.settings/
 /bower_components/
 /.project
+/node_modules/
+/.gitignore

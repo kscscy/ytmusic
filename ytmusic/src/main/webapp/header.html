@@ -1,8 +1,3 @@
-<style>
-.wrap {
-position: relative;
-}
-</style>
 <div class="wrap_header">
   <div class="headerlogo">
       <a id="a1" href="./index.html">N E D A M U</a>
@@ -48,15 +43,18 @@ position: relative;
            <form>
              <div class="form-group">
                <label for="recipient-name" class="control-label">E-mail:</label>
-               <input type="text" class="form-control" id="email">
+               <span>
+               	<button type="button" class="btn btn-primary" id="duplicatecheck">중복검사</button>
+               </span>
+               <input type="text" class="form-control" id="email" placeholder="example@test.com">
              </div>
              <div class="form-group">
                <label for="message-text" class="control-label">Password:</label>
-               <input type="password" class="form-control" id="password" name=>
+               <input type="password" class="form-control" id="password" placeholder="******">
              </div>
              <div class="form-group">
                <label for="message-text" class="control-label">Password Confirm:</label>
-               <input type="password" class="form-control" id="passwordcheck">
+               <input type="password" class="form-control" id="passwordcheck" placeholder="******">
              </div>
            </form>
          </div>
@@ -126,114 +124,7 @@ $("#showmenu").click(function(e){
 </script>
 
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-<style>
-#menu {
-   position: fixed;
-   background-color: black;
-   height: 100%;
-   z-index: 10;
-   width: 280px;
-   color: #bbb;
-   top: 0;
-   -webkit-transition: all 0.3s ease;
-   -moz-transition: all 0.3s ease;
-   transition: all 0.3s ease;
-   opacity: 1;
-   /* font-family: 'Source Sans Pro', sans-serif; */
-   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-   
-}
-
-#menu ul {
-   list-style: none;
-   margin-top: 0;
-   padding: 0
-}
-
-#menu ul li {
-   border-bottom: 1px solid #2a2a2a;
-}
-
-#menu>ul>li>a {
-   border-left: 4px solid #222;
-}
-
-#menu ul li a {
-   color: inherit;
-   font-size: 16px;
-   display: block;
-   padding: 8px 0 8px 7px;
-   text-decoration: none;
-   -webkit-transition: all 0.3s ease;
-   -moz-transition: all 0.3s ease;
-   transition: all 0.3s ease;
-   font-weight: 600;
-}
-
-#menu ul a i {
-   margin-right: 10px;
-   font-size: 18px;
-   margin-top: 3px;
-   width: 20px;
-}
-
-#menu ul a i[class*='fa-caret'] {
-   float: right;
-}
-
-#menu ul a:hover, #menu ul a.active {
-   background-color: #111;
-   border-left-color: #FFCC33;
-   color: #FFCC33;
-}
-
-#menu ul a:hover i:first-child {
-   /* color: #FFCC33; */
-   color: white;
-}
-
-/* Submenu */
-#menu ul li a.active+ul {
-   display: block
-}
-
-#menu ul li ul {
-   margin-top: 0;
-   display: none;
-}
-
-#menu ul li ul li {
-   border-bottom: none;
-}
-
-#menu ul li ul li a {
-   padding-left: 30px;
-}
-
-#menu ul li ul li a:hover {
-   background-color: #1A1A1A;
-}
-
-.left {
-   left: -280px;
-}
-
-.show {
-   left: 0;
-}
-
-#showmenu {
-   margin-left: 100%;
-   position: absolute;
-   top: 300px;
-   padding: 5px 10px 0px 20px;
-   font-size: 1.5em;
-   color: gray;
-   -webkit-transition: all 0.3s ease;
-   -moz-transition: all 0.3s ease;
-   transition: all 0.3s ease;
-}
-</style>   
+<link rel='stylesheet'  href="css/header/header.css" type='text/css'>
 <script>
  if(sessionStorage.getItem('emailSession') != undefined) {
 // if($.session.get('emailSession') != undefined) {
