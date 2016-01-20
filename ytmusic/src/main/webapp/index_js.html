@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>와이 뮤직</title>
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+
+<!-- bootstrap  -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+<link rel="stylesheet" href="css/common.css">
+
+<script type="text/javascript" src="js/wow.min.js"></script>
+
+<!-- main slider -->
+<link rel="stylesheet" href="css/mainslider/mainslider.css">
+
+<!-- scroll-->
+<link rel="stylesheet" href="css/scroll/jquery.mCustomScrollbar.css">
+<script src="js/scroll/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<!-- list slider  -->
+<!-- <link rel="stylesheet" href="css/carousel/sl_layout.css" type="text/css"> -->
+<link rel="stylesheet" href="css/slider/layout.css" type="text/css" />
+
+<!--footer  -->
+<!-- <link rel="shortcut icon" href="image/ft_player/favicon.ico" type="image/x-icon" /> -->
+<!-- <link href="lib/jPlayer/jplayer.blue.monday.css" rel="stylesheet" type="text/css" /> -->
+ <link
+  href="lib/jPlayer/dist/skin/blue.monday/css/jplayer.blue.monday.css"
+  rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+	<div id="header" class="header"></div>
+  
+  <div id="containers"></div>
+  
+	<div id="footer">
+
+<script type="text/javascript" src="lib/jPlayer/dist/jplayer/jquery.jplayer.js"></script>
+ <script type="text/javascript" src="lib/jPlayer/dist/add-on/jplayer.playlist.js"></script>
+  <div id="jp_container_N" class="jp-video jp-video-270p" role="application" aria-label="media player">
+        <div class="jp-type-playlist">
+            <div id="jquery_jplayer_N" class="jp-jplayer"></div>
+            <div class="jp-gui">
+                <div class="jp-interface">
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+                        </div>
+                    </div>
+                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                    <div class="jp-controls-holder">
+                        <div class="jp-controls">
+                            <button class="jp-previous" role="button" tabindex="0">previous</button>
+                            <button class="jp-play" role="button" tabindex="0">play</button>
+                            <button class="jp-next" role="button" tabindex="0">next</button>
+                            <button class="jp-stop" role="button" tabindex="0">stop</button>
+                        </div>
+                        <div class="jp-volume-controls">
+                            <button class="jp-mute" role="button" tabindex="0">mute</button>
+                            <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+                            <div class="jp-volume-bar">
+                                <div class="jp-volume-bar-value"></div>
+                            </div>
+                        </div>
+                        <div class="jp-toggles">
+                            <button class="jp-repeat" role="button" tabindex="0">repeat</button>
+                            <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
+                            <button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+                        </div>
+                    </div>
+                    <!--<div class="jp-details">
+                        <div class="jp-title" aria-label="title">&nbsp;</div>
+                    </div>-->
+                </div>
+            </div>
+            <div class="jp-playlist">
+                <ul>
+                    <!-- The method Playlist.displayPlaylist() uses this unordered list -->
+                    <li>&nbsp;</li>
+                </ul>
+            </div>
+            <div class="jp-no-solution">
+                <span>Update Required</span>
+                To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+            </div>
+        </div>
+    </div>
+    
+    
+	
+	</div>
+
+
+
+	<script>
+
+		$(function() {
+			$("#header").load("header.html");
+		});
+		$(function() {
+			$("#containers").load("main.html");
+		});
+
+	</script>
+
+	<script>
+		$(function() {
+			$('a[href^=#]').click(function() {
+				var speed = 0;
+				var href = $(this).attr("href");
+				var target = $(href == "#" || href == "" ? 'html' : href);
+				var position = target.offset().top;
+				$('body,html').animate({
+					scrollTop : position
+				}, speed, 'swing');
+				return false;
+			});
+		});
+	</script>
+<script src="js/search/search.js"></script>
+
+<!-- 멜론 -->
+<script>
+var agent = navigator.userAgent.toLowerCase();
+ 
+if ((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {
+	  alert("인터넷 익스플로러 브라우저 입니다.");
+	  
+} else {
+	  alert("인터넷 익스플로러 브라우저가 아닙니다.");
+}
+</script>
+<script src="js/melon/planetxsdk.js"></script>
+<script src="js/melon/melon.js"></script>
+
+<script src="js/main.js"></script>
+<script	src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+<script src="js/mainslider/jssor.slider.mini.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/jquery.session.js"></script>
+
+
+
+</body>
+</html>

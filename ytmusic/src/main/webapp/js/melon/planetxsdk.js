@@ -84,13 +84,16 @@ function ($, window, undefined) {
                     nameAttr = doc.createAttribute( "name" );
                     valueAttr = doc.createAttribute( "value" );
                     // setting attribute values
+                    console.log(node);
+                    console.log(typeAttr);
                     typeAttr.value = "hidden";
                     nameAttr.value = name;
-                    valueAttr.value = that[ name ];
+                    valueAttr.value = that[name];
                     // attaching attributes to <input> tag
-                    node.setAttributeNode( typeAttr );
-                    node.setAttributeNode( nameAttr );
-                    node.setAttributeNode( valueAttr );
+
+                    node.setAttributeNode(typeAttr);
+                    node.setAttributeNode(nameAttr);
+                    node.setAttributeNode(valueAttr);
                     // attaching <input> tag to <form> tag
                     that.login_form.appendChild( node );
                 });
@@ -378,7 +381,8 @@ function ($, window, undefined) {
             // defualt setting for ajax request
             var defaultSetting = {
                 beforeSend: function(xhr) {
-                    xhr.setRequestHeader( "appKey", that._getAppkey( ) );
+                    /*xhr.setRequestHeader( "appKey", that._getAppkey( ) );*/
+                	xhr.setRequestHeader( "appKey", "eccc19db-10eb-3194-88f4-9e80d9d368c4");
                 },
                 data: {
                     "version": 1
@@ -396,6 +400,7 @@ function ($, window, undefined) {
                 $.extend(  true, queryObject, userSetting );
             }
             // Use Microsoft XDR for IE browser
+            /*if ((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ) {*/
             if ( this.isIE ) {
                 myGetRequest = new ajaxRequest();
                 myGetRequest.onreadystatechange = function() {

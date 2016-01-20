@@ -1,3 +1,29 @@
+   var myPlaylist = new jPlayerPlaylist({
+      jPlayer: "#jquery_jplayer_N",
+      cssSelectorAncestor: "#jp_container_N"
+   }, [
+      /* 재생로그에 있는 음악들을 로그인하면 추가하도록 {
+         title:"Cro Magnon Man",
+         artist:"The Stark Palace",
+         mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
+         oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg",
+         poster: "http://www.jplayer.org/audio/poster/The_Stark_Palace_640x360.png"
+      } */
+   ], {
+      playlistOptions: {
+         enableRemoveControls: true
+      },
+      swfPath: "../../dist/jplayer",
+      supplied: "webmv, ogv, m4v, oga, mp3",
+      useStateClassSkin: true,
+      autoBlur: false,
+      smoothPlayBar: true,
+      keyEnabled: true,
+      audioFullScreen: true,
+      autoPlay: true
+   });
+
+
   var listUrl = 'PLFgquLnL59anNXuf1M87FT1O169Qt6-Lp';
   var count = 0;
   var liCountId = 0;
@@ -202,24 +228,24 @@
     }
     
     function playMusic(item) {
-    	$(footer).empty();
-    	console.log(item);
     	var title = item.title;
     	var vid = item.resourceId.videoId;
     	var musicImage = item.thumbnails.medium.url;
-    	console.log("vid : " + vid);
-    	console.log("musicImage : " + musicImage);
     	/*var musicUrl = "audio/" + vid + ".m4a";*/
     	$.getJSON('music/ajax/musicPlay.do?music_id='+vid+'&title='+title+'&img='+musicImage, function(resultObj) {
-            var ajaxResult = resultObj.ajaxResult;
-            console.log(ajaxResult);
+    		var ajaxResult = resultObj.ajaxResult;
             if (ajaxResult.status == "success") {
-                $(footer).append('<audio controls="" autoplay="" name="media"><source src = '+ajaxResult.data+' type="audio/webm"></audio>');
-                $(footer).append('<a href="'+ajaxResult+'" download="aaac.aac">다운로드</a>');
-                console.log(ajaxResult);
-                console.log("playMusic : 완료");
-		    	/*setTimeout(createMusic(musicUrl), 2500);*/
-            }
+                  var musicUrl = ajaxResult.data;
+              }
+            console.log(musicUrl);
+            myPlaylist.add({
+               title : title,
+               artist : "",
+               free:true,
+               mp3:musicUrl,
+               poster: musicImage
+            },true);
+            console.log(musicImage);
     	}); 
     }
     
@@ -230,37 +256,3 @@
         console.log("playMusic : 완료");
     }
     
-/*    function makeRequest() {
-        var q = $('#query').val();
-        var request = gapi.client.youtube.search.list({
-                   q: q,
-                part: 'snippet',
-                 maxResults: 30
-        });
-        request.execute(function(response) {
-                var str = JSON.stringify(response.result);
-                //$('#search-container').html('<pre>' + str + '</pre>');
-                $('#resultTbody').empty();
-                $('#resultThead').empty();
-                
-                var resultItems = response.result.items;
-                //console.log(resultItems);
-                var i = 1;
-                $('#resultThead').append('<tr><th>선택</th><th>썸네일</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
-                $.each(resultItems, function(index, item) {
-                  title = item.snippet.title;
-                  videoId = item.id.videoId;
-                  vidThumburl =  item.snippet.thumbnails.default.url;
-                  vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
-                  $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="musicBtn-'+videoId+'" type="button" class="btn btn-default btn-sm")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+'<td><button id="videoBtn-'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
-                  
-                  $('#musicBtn-'+videoId).click(function() {
-                     playMusic(item);
-                  });
-                  $('#videoBtn-'+videoId).click(function() {
-                     playVideo(item); 
-                  });
-                  i++;
-                });
-        });
-    */

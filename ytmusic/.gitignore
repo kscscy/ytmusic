@@ -5,4 +5,7 @@
 /bower_components/
 /.project
 /node_modules/
+<<<<<<< HEAD
+=======
 /.gitignore
+>>>>>>> a3a096058318799bf2d490300734e1717037a1c8

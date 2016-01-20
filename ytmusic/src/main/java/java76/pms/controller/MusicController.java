@@ -37,9 +37,9 @@ public class MusicController {
         log.debug(System.getProperty("os.name"));
         if (System.getProperty("os.name").startsWith("Win")) {
           p = Runtime.getRuntime()
-              .exec("c:/ytdl/youtube-dl.exe -g --extract-audio --audio-format aac --audio-quality 0 --add-header 'Access-Control-Allow-Origin':'*'; " + musicUrl);
+              .exec("c:/ytdl/youtube-dl.exe -g -f 140 " + musicUrl);
         } else if (System.getProperty("os.name").startsWith("Mac")) {
-          p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g --extract-audio --audio-format aac --audio-quality 0 " + musicUrl);
+          p = Runtime.getRuntime().exec("/usr/local/bin/youtube-dl -g -f 140 " + musicUrl);
         }
         
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
