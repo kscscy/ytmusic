@@ -194,11 +194,11 @@ function melonchart(data) {
 function byteLength(obj) {
    var str = obj;
    var _byte = 0;
-   console.log("str : " + str);
+   /*console.log("str : " + str);*/
    if(str.length != 0) {
 	  for (var i=0; i < str.length; i++) {
 	      var str2 = str.charAt(i);
-	      console.log("--> " + escape(str2).length);
+	      /*console.log("--> " + escape(str2).length);*/
 	      if(escape(str2).length > 4) {
              _byte += 3;
 	      } else {
@@ -206,7 +206,7 @@ function byteLength(obj) {
 	      }
 	  }
    }
-   console.log(" ");
+/*   console.log(" ");*/
    return _byte;
 }
 
@@ -242,7 +242,6 @@ function melonchart2(data) {
 	          if(byteLength(songN) > 30) {
 	        	  songN2 = songN.substring(0, 30) + "..";
 	        	  songN3 = songN.substring(0, 20) + "..";
-	        	  console.log(byteLength(songN) );
 	          } else {
 	        	  songN2 = songN;
 	        	  songN3 = songN;
@@ -252,16 +251,14 @@ function melonchart2(data) {
 	          /*if(artistN.byteLength() > 12) {*/
 	          if(byteLength(artistN) > 10) {
 	        	  artistN2 = artistN.substring(0, 10) + "..";
-		          console.log(byteLength(songN));
 	          } else {
 	        	  artistN2 = artistN;
 	          }
-	          console.log(artistN2);
 
 	          
-	          
-	          var videoId = item.id;
-	          var vidThumburl = item.image;
+	          console.log(item);
+	          var videoId = item.music_id;
+	          var vidThumburl = item.img;
 	    	  var result =  '<tr class="chart">'
 	    		  +'<td class="ranking" ><strong class="num1">'+i+'</strong></td>'
 	    		  +'<!-- 곡 -->'
