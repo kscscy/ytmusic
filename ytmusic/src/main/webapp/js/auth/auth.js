@@ -1,6 +1,10 @@
+$(document).ready(function() {
+	
+	sessionStorage.removeItem('checkEmail');
+	sessionStorage.removeItem('checkedEmail');
+});
 $(function() {
 	var useremail = $.cookie('useremail');
-
 	if(useremail != undefined) {
 
 		$("#useremail").val(useremail);
@@ -29,7 +33,6 @@ $(function() {
 				if (password == '' || password == null) {
 					alert('비밀번호를 입력하세요');
 					$("input[id=userpassword]").focus();
-					focus.password;
 					return false;
 				}
 
@@ -53,18 +56,18 @@ $(function() {
 						sessionStorage.setItem('noSession', noSession);
 						//$.session.set('emailSession',emailSession);
 						//$.session.set('noSession',noSession);
-						//sessionStorage.setItem("emailsession", emailsession);
 						location.href = "index.html";
 
 					} else {
 						alert("이메일 또는 비밀번호를 확인하세요.");
 					}
 				},'json');
-			})
-})
+			});
+});
 
 $('#signup').click(
 		function(event) {
+			//sessionStorage.removeItem('checkEmail');
 			//console.log("세션테스트 : " + sessionStorage.getItem("emailsession"));
 			var email = $('#email').val();
 			var password = $('#password').val();
@@ -85,7 +88,6 @@ $('#signup').click(
 			if (password == '' || password == null) {
 				alert('비밀번호를 입력하세요');
 				$("input[id=password]").focus();
-				focus.password;
 				return false;
 			}
 
@@ -101,25 +103,37 @@ $('#signup').click(
 				$("input[id=password]").focus();
 				return false;
 			} 
-
-
-			$.post('member/add.do', {
-				email: email,
-				password: password
-
-			},
-			function(resultObj) {
-				var ajaxResult = resultObj.ajaxResult;
-				if (ajaxResult.status == "success") {
-					location.href = "index.html";
+			if (sessionStorage.getItem('checkEmail') === 'success') {
+				if (sessionStorage.getItem('checkedEmail') === $('#email').val()){
+					$.post('member/add.do', {
+						email: email,
+						password: password
+						
+					},
+					function(resultObj) {
+						var ajaxResult = resultObj.ajaxResult;
+						if (ajaxResult.status == "success") {
+							alert("회원가입 성공!");
+							location.href = "index.html";
+						} else {
+							alert("회원가입 실패");
+						}
+					},'json');
+					
 				} else {
-					alert("회원가입실패");
+					alert("중복검사를 다시 하세요");
+					$("input[id=email]").focus();
 				}
-			},'json');
+			} else {
+				alert("이메일 중복을 검사하세요");
+				$("input[id=email]").focus();
+			}
+
 		});
 
 $('#duplicateCheck').click(
 		function(event) {
+			
 			var email = $('#email').val();
 			var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
@@ -145,13 +159,20 @@ $('#duplicateCheck').click(
 					xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 				}
 			}).done(function(resultObj) {
-				console.log("done??????????");
 				var result = resultObj;
 				if (result.status == "success") {
-					alert("중복검사 통과");
-
+					//alert("사용 가능한 이메일");
+					$("#dc").text('사용 가능한 이메일 입니다.');
+					
+					sessionStorage.setItem('checkEmail', result.status);
+					sessionStorage.setItem('checkedEmail', email);
+					console.log((sessionStorage.getItem('checkEmail') === 'success'));
+					console.log((sessionStorage.getItem('checkedEmail') === $('#email').val()));
+					//console.log(sessionStorage.getItem('checkEmail'));
 				} else if (result.status == "fail") {
-					alert("중복된 이메일");
+					//alert("중복된 이메일");
+					$("#dc").text('사용할 수 없는 이메일 입니다.');
+					$("input[id=email]").focus();
 				}
 			});
 		});
@@ -167,11 +188,17 @@ $('#logoutbtn').click(
 					function(resultObj) {
 				var ajaxResult = resultObj.ajaxResult;
 				if (ajaxResult.status == "success") {
-
-					$.session.clear();
-					$.session.remove('emailSession');
-					$.session.remove('noSession');
+					sessionStorage.clear();
+					//$.session.clear();
+					//$.session.remove('emailSession');
+					//$.session.remove('noSession');
 					location.href = "index.html";
 				}
 			},'json');
+		});
+$('#closeBtn').click(
+
+		function(event) {
+			sessionStorage.removeItem('checkEmail');
+			location.href = "index.html";
 		});
