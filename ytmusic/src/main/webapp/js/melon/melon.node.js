@@ -1,18 +1,50 @@
 $(function () { 
-	console.log("!!");
-/*	PlanetX.init( {
-	  appkey : "eccc19db-10eb-3194-88f4-9e80d9d368c4" ,   // 본인의 appkey 정보 입력
-	  client_id : "3a0c9d41-64af-3248-ad43-da4810b23d84", // 본인의 client id 정보 입력
-	  redirect_uri : 'http://localhost:8080/ytmusic/index.html',
-	  scope : "melon,user",              // 앱에서 접근할 수 있는 서비스 리스트
-	   savingToken : true                  // Token 자동 저장 옵션 (default : true)  
-	  } );*/
-	console.log("!!");
 	
+	var mysql      = require('mysql'); //mysql 연동 라이브러리 객체 준비
+	
+	var connection = mysql.createConnection({
+	  host     : 'localhost',
+	  user     : 'java76',
+	  password : '1111',
+	  database : 'ytmusic'
+	});
+
+	connection.connect();
+	connection.query(
+			"delete from checktime where title=?",
+			['okok'],
+			function(err, rows, fields) {
+				if (err) throw err;
+				
+				console.log("변경 성공");
+	});
+
+	connection.query(
+			"select * from board",
+			function(err, rows, fields) {
+				if (err) throw err;
+				for (var i = 0; i < rows.length; i++) {
+					console.log(rows[i].title, rows[i].content);
+				}
+	});
+	connection.end();
+	
+	//1시간 단위 실행
 	callMelonToday();
 	callMelonChart();
 	nedamuChart();
 });
+
+
+
+
+
+
+
+
+
+
+
 
 function callMelonToday() {
   PlanetX.api("get", "http://apis.skplanetx.com/melon/newreleases/albums?count=10&page=1&version=1", "JSON", {'version': 1}, melonToday);
