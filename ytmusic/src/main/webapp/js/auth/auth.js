@@ -102,12 +102,43 @@ $('#signup').click(
 				return false;
 			} 
 
+
+			$.post('member/add.do', {
+				email: email,
+				password: password
+
+			},
+			function(resultObj) {
+				var ajaxResult = resultObj.ajaxResult;
+				if (ajaxResult.status == "success") {
+					location.href = "index.html";
+				} else {
+					alert("회원가입실패");
+				}
+			},'json');
+		});
+
+$('#duplicateCheck').click(
+		function(event) {
+			var email = $('#email').val();
+			var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+			if (email == '' || email == null) {
+				alert('email을 입력하세요');
+
+				$("input[id=email]").focus();
+				return false;
+			}
+			if(!regEmail.test(email)) {
+				alert('유효하지 않은 email입니다');
+				$("input[id=email]").focus();
+				return false;
+			}
 			$.ajax({
 				url: "http://localhost:8081",
 				type: 'POST',
 				data: {
 					email: email,
-					password: password
 				},
 				dataType:'json',
 				beforeSend: function (xhr) {
@@ -118,48 +149,19 @@ $('#signup').click(
 				var result = resultObj;
 				if (result.status == "success") {
 					alert("중복검사 통과");
-					
+
 				} else if (result.status == "fail") {
 					alert("중복된 이메일");
 				}
-				
-				/*
-	      var ajaxResult = resultObj.ajaxResult;
-	      if (ajaxResult.status == "success") {
-	        location.href = "index.html";
-	      } else {
-	        alert("회원가입실패");
-	      }
-	      */
-	    });
+			});
 		});
 
-/*
-	  	//$.post('member/add.do', {
-	  	$.post('http://localhost:8081', {
-	  		email: email,
-	  		password: password
-
-	  	},
-	     function(resultObj) {
-	      var ajaxResult = resultObj.ajaxResult;
-	      if (ajaxResult.status == "success") {
-	        location.href = "index.html";
-	      } else {
-	        alert("회원가입실패");
-	      }
-	    },'json');
-
-
- */
 
 
 
 $('#logoutbtn').click(
 
 		function(event) {
-			//var loginSession = $.session.get('loginSession');
-			//console.log("로그아웃클릭 : "+loginSession);
 
 			$.getJSON('auth/logout.do',
 					function(resultObj) {

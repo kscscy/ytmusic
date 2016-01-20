@@ -1,1 +1,5 @@
-123123123213
+node.js 설치파
+express
+cors
+mysql
+bodyparser
