@@ -33,11 +33,13 @@ app.post('/', function (req, res) {
 				if (err) throw err;
 				if (rows.length===0) {
 					console.log("새거");
-					res.json({status:'success'});
+					res.status(200).json({ status: 'success' });
+					//res.json({status:'success'});
 				} else {
-					//console.log("이미존재하는 이메일");
-					res.json({status:'fail'});
-					console.log(rows);
+					console.log("이미존재");
+					res.status(200).json({ status: 'fail' });
+					//res.json({status:'fail'});
+					//console.log(rows);
 				}
 			});
   //res.send('Hello World!');
