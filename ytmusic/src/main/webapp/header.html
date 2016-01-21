@@ -3,21 +3,22 @@
       <a id="a1" href="./index.html">N E D A M U</a>
    </div>
    <!-- <div id="buttons" style="padding: 15px 150px 0 400px;"> -->
-   <div id="buttons" style=" margin:15px 0 0 360px">
+  <div id="buttons" style=" margin:15px 0 0 360px">
       <div style="float:left;>
          <span id="searchBox">
-         <input id="query" value='' style="width:300px;" type="text" placeholder="  검색어 입력" />
-         <button id="search-button" onclick="keyWordsearch()" class="btn btn-default btn-xs">Search</button> 
+         <input id="query" value='' style="width:300px; border-radius: 10em 10em 10em 10em; border: 1px solid gray;" type="text" placeholder="                             검색어 입력" />
+         <button id="search-button"  onclick="keyWordsearch()" class="btn btn-default btn-xs" style="background:white; font-size: 1.5em; border: 1px; padding-bottom: 5px; color: darkcyan;"><i class="fa fa-search"></i></button> 
          </span>
       </div>
-      <div style="float:right;">
-         <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
-            data-target="#signInModal" data-whatever="@mdo" id="loginbtn">로그인</button>
-         <button style="display:none" id="logoutbtn" class="btn btn-primary">로그아웃</button>    
-         <button type="button" class="btn btn-default btn-xs" data-toggle="modal"
-            data-target="#signUpModal" data-whatever="@fat" id="register">회원가입</button>
+<div style="float:right;">
+         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal" data-whatever="@mdo"
+                  id="loginbtn" style="background: white; border: 1px; font-size: 15px; color: black; font-family: sans-serif; text-decoration: none;">로그인</button>
+         <button style="display: none" id="logoutbtn" class="btn btn-default btn-xs">로그아웃</button>  
+          <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signUpModal" data-whatever="@fat" 
+                id="register" style="background: white; font-size: 15px; color: black; border: 1px; font-family: sans-serif; text-decoration: none;">회원가입</button>
+         <!-- <input style="display:none" id="test" value='' style="width:20px;" type="text" placeholder="" />    -->
          <a style="display:none" href="myalbumlist.html"id="test">내 앨범</a>   
-      </div> 
+      </div>
    </div>
     
    <div style="position: absolute; border-top: 1px solid gray; width: 1024px; bottom: 0; background-color:white;"></div>

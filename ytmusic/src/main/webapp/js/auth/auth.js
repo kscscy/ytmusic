@@ -196,9 +196,11 @@ $('#logoutbtn').click(
 				}
 			},'json');
 		});
+/*
 $('#closeBtn').click(
 
 		function(event) {
 			sessionStorage.removeItem('checkEmail');
 			location.href = "index.html";
 		});
+*/
