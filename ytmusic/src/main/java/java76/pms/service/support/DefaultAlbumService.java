@@ -92,7 +92,7 @@ public class DefaultAlbumService implements AlbumService {
     paramMap.put("mu_no", music_no);
     paramMap.put("seq_no", seq_no);
     
-		return albumDao.deleteMusic(paramMap);
+		return albumDao.updateMusic(paramMap);
 	}
 
 

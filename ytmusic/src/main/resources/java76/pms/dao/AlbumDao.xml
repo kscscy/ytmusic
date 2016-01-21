@@ -24,6 +24,7 @@
   <select id="selectOne" resultType="map" parameterType="int">
     select
     	music.mu_no, 
+    	a_music.seq_no,
     	id,
       title,
       img,
@@ -35,7 +36,7 @@
      inner join a_music
      on music.mu_no = a_music.mu_no
     where a_no=#{a_no} 
-    order by mu_no
+    order by a_music.seq_no
     asc
   </select>
   
@@ -50,7 +51,8 @@
   </delete>
   
   <update id="updateAlbum" parameterType="map">
-    update album
+    update album 
+    set
       name=#{name}
     where a_no=#{a_no} and mem_no=#{mem_no}
   </update>
@@ -58,6 +60,13 @@
   <insert id="insertMusic" parameterType="map">
   	insert into a_music(a_no, mu_no)
 		values(#{a_no},#{mu_no})  	
+  </insert>
+  
+  <insert id="updateMusic" parameterType="map">
+  	update a_music 
+  	set 
+  		seq_no=#{seq_no}
+  	where a_no=#{a_no} and mu_no=#{mu_no}	
   </insert>
   
   <delete id="deleteMusic" parameterType="map">
