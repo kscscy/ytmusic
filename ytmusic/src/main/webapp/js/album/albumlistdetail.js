@@ -6,7 +6,7 @@ $(function() {
 	var music = new Array();
 	var musiclist = new Array();
 
-	$.getJSON('album/musiclist.do?album_no='+album_no, function (resultObj) {
+	$.getJSON('album/musiclist.do?album_no=' + album_no, function (resultObj) {
 		var table = $("#listTable");
 		for (music of resultObj.data) {
 			$("<tr id=tablerow-" + music.seq_no + ">")
@@ -26,17 +26,18 @@ $(function() {
 					var result = confirm("곡을 삭제하시겠습니까?");
 					if(result){
 
-						var music_no = this.id;
-						$.getJSON('album/deletemusic.do?album_no=' + album_no + '&music_no='+ music_no, 
-								function(resultObj) {
+						$.post('album/deletemusic.do', {
+							album_no : album_no,
+							music_no : this.id
+						},
+						function(resultObj) {
 							var ajaxResult = resultObj.ajaxResult;
 							if (ajaxResult.status == "success") {
-								//location.href = "myalbumlistdetail.html?album_no=" + album_no;
 								location.reload(true);
 							} else {
-								alert("음악 삭제에 실패했습니다.");
+								alert("음악 삭제 실패");
 							}
-						});
+						},'json');
 					}
 					else {
 						return false;
@@ -57,16 +58,18 @@ $(function() {
 
 							$('input:checkbox[id="checkMusic"]').each(function() {
 								if(this.checked == true){
-									var music_no = this.value;
-									$.getJSON('album/deletemusic.do?album_no=' + album_no + '&music_no='+ music_no, 
-											function(resultObj) {
+									$.post('album/deletemusic.do', {
+										album_no : album_no,
+										music_no : this.value
+									},
+									function(resultObj) {
 										var ajaxResult = resultObj.ajaxResult;
 										if (ajaxResult.status == "success") {
 											location.reload(true);
 										} else {
-											alert("음악 삭제에 실패했습니다.");
+											alert("음악 삭제 실패");
 										}
-									});
+									},'json');
 								} 
 							});
 
@@ -119,18 +122,7 @@ $(function() {
 								console.log(musiclist[i].mu_no);
 								musiclist[i].seq_no = seq_session[i];
 								music_no = musiclist[i].mu_no;
-/*
-								$.getJSON('album/updatemusic.do?album_no=' + album_no + '&music_no='+ music_no + '&seq_no=' + musiclist[i].seq_no, 
-										function(resultObj) {
-									var ajaxResult = resultObj.ajaxResult;
-									if (ajaxResult.status == "success") {
-										//location.href = "myalbumlistdetail.html?album_no=" + album_no;
-										location.reload(true);
-									} else {
-										alert("목록 변경에 실패했습니다.");
-									}
-								});
-*/
+								
 								$.post('album/updatemusic.do', {
 									album_no : album_no,
 									music_no : music_no,

@@ -78,7 +78,7 @@ public class AlbumController {
     return new AjaxResult("success", null);
   }
   
-  @RequestMapping(value="deletealbum", method=RequestMethod.GET)
+  @RequestMapping(value="deletealbum", method=RequestMethod.POST)
   public AjaxResult deleteAlbum(int album_no,int member_no) throws Exception {
     
     if (albumService.removeAlbum(album_no, member_no) <= 0) {
@@ -105,7 +105,7 @@ public class AlbumController {
     return new AjaxResult("success", null);
   }
   
-  @RequestMapping(value="deletemusic", method=RequestMethod.GET)
+  @RequestMapping(value="deletemusic", method=RequestMethod.POST)
   public AjaxResult deleteMusic(int album_no, int music_no) throws Exception {
   	
     if (albumService.removeMusicFromAlbum(album_no, music_no) <= 0) {
