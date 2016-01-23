@@ -22,6 +22,7 @@ $(function() {
                 console.log(no_array_data);
                 sessionStorage.setItem("no_array_data",no_array_data);
                 
+                /*
                 $(table).parent().find('.result').append(
                         $('<strong>').text('The urlencoded serialized string:'))
                         .append($('<pre class="prettyprint">').text(data))
@@ -29,6 +30,7 @@ $(function() {
                         .append($('<pre class="prettyprint">').text(decodeURIComponent(data)));
                         
                 prettyPrint();
+                */
             },
             dragHandle: ".dragHandle"
             	

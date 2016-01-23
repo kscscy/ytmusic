@@ -17,7 +17,8 @@
           <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signUpModal" data-whatever="@fat" 
                 id="register" style="background: white; font-size: 15px; color: black; border: 1px; font-family: sans-serif; text-decoration: none;">회원가입</button>
          <!-- <input style="display:none" id="test" value='' style="width:20px;" type="text" placeholder="" />    -->
-         <a style="display:none" href="myalbumlist.html"id="test">내 앨범</a>   
+         <button style="display: none" id="myalbumbtn" class="btn btn-default btn-xs">내 앨범</button>  
+        <!--  <button onclick='open_in_frame("http://m.daum.net")' id="test">다음</button> -->
       </div>
    </div>
     
@@ -109,6 +110,14 @@ $("#showmenu").click(function(e){
          }
       });
 </script>
+<script>
+	$("#myalbumbtn").click(function() {
+	  $("#containers").empty();
+	  $("#containers").load("myalbumlist.html");
+	});
+	</script>
+
+
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -136,7 +145,7 @@ $("#showmenu").click(function(e){
    $("#logoutbtn").show();
    $("#loginbtn").hide();
    $("#register").hide();
-   $("#test").show();
+   $("#myalbumbtn").show();
    //$('#test').val($.session.get('emailSession'));
  }
 </script>

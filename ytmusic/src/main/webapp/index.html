@@ -38,8 +38,14 @@
 
 <body>
 	<div id="header" class="header"></div>
+
+  <div id="containers">
   
-  <div id="containers"></div>
+  <!--
+   	<iframe id="cont_frame" frameborder="0" src="main.html" scrolling="No"
+  	onLoad="setIFrameHeight(this)" width="1024" height=""></iframe>
+ -->  	
+  </div>
   
 	<div id="footer">
 
@@ -106,12 +112,13 @@
 		$(function() {
 			$("#header").load("header.html");
 		});
-		$(function() {
+	 
+		 $(function() {
 			$("#containers").load("main.html");
-		});
-
+			
+		});  
+ 
 	</script>
-
 	<script>
 		$(function() {
 			$('a[href^=#]').click(function() {
@@ -137,7 +144,6 @@
 <script src="js/mainslider/jssor.slider.mini.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script src="js/jquery.session.js"></script>
-
 
 
 </body>
