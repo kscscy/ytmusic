@@ -1,3 +1,19 @@
+delete from check_time;
+insert into check_time(s_time,c_kind) values(10,1);
+insert into check_time(s_time,c_kind) values(10,2);
+
+delete from a_music;
+INSERT INTO `ytmusic`.`A_MUSIC` (`SEQ_NO`, `A_NO`, `ID`) VALUES ('1', '1', 'BC2dRkm8ATU');
+INSERT INTO `ytmusic`.`A_MUSIC` (`SEQ_NO`, `A_NO`, `ID`) VALUES ('2', '1', 'c2EJMd7ZN7w');
+INSERT INTO `ytmusic`.`A_MUSIC` (`SEQ_NO`, `A_NO`, `ID`) VALUES ('3', '1', 'ej2Td1mKeoQ');
+INSERT INTO `ytmusic`.`A_MUSIC` (`SEQ_NO`, `A_NO`, `ID`) VALUES ('4', '1', 'FMlcn-_jpWY');
+INSERT INTO `ytmusic`.`A_MUSIC` (`SEQ_NO`, `A_NO`, `ID`) VALUES ('5', '1', 'VOAoF09QG6k');
+
+INSERT INTO ALBUM (`A_NO`, `MEM_NO`, `NAME`) VALUES ('1', '1', '1월 앨범');
+INSERT INTO ALBUM (`A_NO`, `MEM_NO`, `NAME`) VALUES ('2', '1', '2월 앨범');
+INSERT INTO ALBUM (`A_NO`, `MEM_NO`, `NAME`) VALUES ('3', '1', '3월 앨범');
+
+
 -- 검색로그
 DROP TABLE IF EXISTS SEARCH RESTRICT;
 
@@ -15,6 +31,12 @@ DROP TABLE IF EXISTS A_MUSIC RESTRICT;
 
 -- 재생로그
 DROP TABLE IF EXISTS PLAYLOG RESTRICT;
+
+-- 뮤직차트
+DROP TABLE IF EXISTS CHART_MUSIC RESTRICT;
+
+-- 타임체크
+DROP TABLE IF EXISTS CHECK_TIME RESTRICT;
 
 -- 검색로그
 CREATE TABLE SEARCH (
@@ -42,15 +64,17 @@ ALTER TABLE SEARCH
 
 -- 음악
 CREATE TABLE MUSIC (
-  ID     VARCHAR(50)   NOT NULL COMMENT '음악아이디', -- 음악아이디
-  MU_NO  INTEGER       NOT NULL COMMENT '음악번호', -- 음악번호
-  TITLE  VARCHAR(255)  NOT NULL COMMENT '음악제목', -- 음악제목
-  IMG    VARCHAR(255)  NOT NULL COMMENT '음악이미지', -- 음악이미지
-  A_URL  VARCHAR(1000) NOT NULL COMMENT '음악오디오URL', -- 음악오디오URL
-  V_URL  VARCHAR(1000) NULL     COMMENT '음악비디오URL', -- 음악비디오URL
-  COUNT  INTEGER       NULL     COMMENT '음악재생횟수', -- 음악재생횟수
-  VIEWS  INTEGER       NULL     COMMENT '음악조회수', -- 음악조회수
-  EXPIRE BIGINT        NOT NULL COMMENT '유효기간' -- 유효기간
+  ID      VARCHAR(50)   NOT NULL COMMENT '음악아이디', -- 음악아이디
+  MU_NO   INTEGER       NOT NULL COMMENT '음악번호', -- 음악번호
+  Y_TITLE VARCHAR(255)  NOT NULL COMMENT '유투브제목', -- 유투브제목
+  TITLE   VARCHAR(255)  NOT NULL COMMENT '음악제목', -- 음악제목
+  ARTIST  VARCHAR(255)  NULL     COMMENT '아티스트', -- 아티스트
+  IMG     VARCHAR(255)  NOT NULL COMMENT '음악이미지', -- 음악이미지
+  A_URL   VARCHAR(1000) NOT NULL COMMENT '음악오디오URL', -- 음악오디오URL
+  V_URL   VARCHAR(1000) NULL     COMMENT '음악비디오URL', -- 음악비디오URL
+  COUNT   INTEGER       NULL     COMMENT '음악재생횟수', -- 음악재생횟수
+  VIEWS   INTEGER       NULL     COMMENT '음악조회수', -- 음악조회수
+  EXPIRE  BIGINT        NOT NULL COMMENT '유효기간' -- 유효기간
 )
 COMMENT '음악';
 
@@ -112,11 +136,11 @@ CREATE UNIQUE INDEX UIX_MEMBER
 ALTER TABLE MEMBER
   MODIFY COLUMN MEM_NO INTEGER NOT NULL AUTO_INCREMENT COMMENT '회원번호';
 
--- 앨범음악
+  
 CREATE TABLE A_MUSIC (
+  SEQ_NO INTEGER     NOT NULL COMMENT '순서', -- 순서
   A_NO   INTEGER     NOT NULL COMMENT '앨범번호', -- 앨범번호
-  ID     VARCHAR(50) NOT NULL COMMENT '음악아이디', -- 음악아이디
-  SEQ_NO INTEGER     NOT NULL COMMENT '순서' -- 순서
+  ID     VARCHAR(50) NOT NULL COMMENT '음악아이디' -- 음악아이디
 )
 COMMENT '앨범음악';
 
@@ -124,10 +148,13 @@ COMMENT '앨범음악';
 ALTER TABLE A_MUSIC
   ADD CONSTRAINT PK_A_MUSIC -- 앨범음악 기본키2
     PRIMARY KEY (
-      A_NO, -- 앨범번호
-      ID    -- 음악아이디
+      SEQ_NO, -- 순서
+      A_NO,   -- 앨범번호
+      ID      -- 음악아이디
     );
 
+ALTER TABLE A_MUSIC
+  MODIFY COLUMN SEQ_NO INTEGER NOT NULL AUTO_INCREMENT COMMENT '순서';
 -- 재생로그
 CREATE TABLE PLAYLOG (
   PL_NO  INTEGER      NOT NULL COMMENT '재생목록번호', -- 재생목록번호
@@ -148,6 +175,35 @@ ALTER TABLE PLAYLOG
 
 ALTER TABLE PLAYLOG
   MODIFY COLUMN PL_NO INTEGER NOT NULL AUTO_INCREMENT COMMENT '재생목록번호';
+
+-- 뮤직차트
+CREATE TABLE CHART_MUSIC (
+  CM_NO   INTEGER      NOT NULL COMMENT '차트음악번호', -- 차트음악번호
+  Y_TITLE VARCHAR(255) NULL     COMMENT '유투브제목', -- 유투브제목
+  TITLE   VARCHAR(255) NULL     COMMENT '음악제목', -- 음악제목
+  ARTIST  VARCHAR(255) NULL     COMMENT '가수명', -- 가수명
+  IMG     VARCHAR(255) NULL     COMMENT '이미지', -- 이미지
+  C_KIND  INTEGER      NULL     COMMENT '차트종류', -- 차트종류
+  ID      VARCHAR(50)  NULL     COMMENT '음악아이디' -- 음악아이디
+)
+COMMENT '뮤직차트';
+
+-- 뮤직차트
+ALTER TABLE CHART_MUSIC
+  ADD CONSTRAINT PK_CHART_MUSIC -- 뮤직차트 기본키
+    PRIMARY KEY (
+      CM_NO -- 차트음악번호
+    );
+
+ALTER TABLE CHART_MUSIC
+  MODIFY COLUMN CM_NO INTEGER NOT NULL AUTO_INCREMENT COMMENT '차트음악번호';
+
+-- 타임체크
+CREATE TABLE CHECK_TIME (
+  C_KIND INTEGER NOT NULL COMMENT '차트종류', -- 차트종류
+  S_TIME BIGINT  NOT NULL DEFAULT 10 COMMENT '저장시간' -- 저장시간
+)
+COMMENT '타임체크';
 
 -- 앨범
 ALTER TABLE ALBUM

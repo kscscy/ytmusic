@@ -1,28 +1,25 @@
 <div class="wrap_header">
   <div class="headerlogo">
-      <a id="a1" href="./index.html">N E D A M U</a>
+      <img src="image/N.png" style="position: absolute;"><a id="a1" onclick="mainInit();">E D A M U</a>
    </div>
-   <!-- <div id="buttons" style="padding: 15px 150px 0 400px;"> -->
-  <div id="buttons" style=" margin:15px 0 0 360px">
+   <div id="buttons" style=" margin:15px 0 0 580px">
       <div style="float:left;>
          <span id="searchBox">
-         <input id="query" value='' style="width:300px; border-radius: 10em 10em 10em 10em; border: 1px solid gray;" type="text" placeholder="                             검색어 입력" />
-         <button id="search-button"  onclick="keyWordsearch()" class="btn btn-default btn-xs" style="background:white; font-size: 1.5em; border: 1px; padding-bottom: 5px; color: darkcyan;"><i class="fa fa-search"></i></button> 
+         <input id="query" value='' style="width:400px; border-radius: 10em 10em 10em 10em; border: 1px solid gray;" type="text" placeholder="                                         검색어 입력" />
+         <button id="search-button"  onclick="keyWordsearch()" class="btn btn-default btn-xs" style="background:white; font-size: 1.5em; border: 1px; padding-bottom: 5px; color: darkcyan;"><i class="fa fa-search" style="
+    color: gray;"></i></button> 
          </span>
       </div>
-<div style="float:right;">
-         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal" data-whatever="@mdo"
-                  id="loginbtn" style="background: white; border: 1px; font-size: 15px; color: black; font-family: sans-serif; text-decoration: none;">로그인</button>
-         <button style="display: none" id="logoutbtn" class="btn btn-default btn-xs">로그아웃</button>  
-          <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signUpModal" data-whatever="@fat" 
-                id="register" style="background: white; font-size: 15px; color: black; border: 1px; font-family: sans-serif; text-decoration: none;">회원가입</button>
-         <!-- <input style="display:none" id="test" value='' style="width:20px;" type="text" placeholder="" />    -->
-         <button style="display: none" id="myalbumbtn" class="btn btn-default btn-xs">내 앨범</button>  
-        <!--  <button onclick='open_in_frame("http://m.daum.net")' id="test">다음</button> -->
+      <div style="float:right; ">
+      <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signInModal" data-whatever="@mdo"
+              id="loginbtn" style="background: white; border: 1px; font-size: 15px; color: black; font-family: sans-serif; text-decoration: none;">로그인</button>
+      <button style="display: none" id="logoutbtn" class="btn btn-default btn-xs">로그아웃</button>
+      <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#signUpModal" data-whatever="@fat" 
+              id="register" style="background: white; font-size: 15px; color: black; border: 1px; font-family: sans-serif; text-decoration: none;">회원가입</button>
+      <button style="display: none" id="myalbumbtn" class="btn btn-default btn-xs">내 앨범</button>  
       </div>
    </div>
     
-   <div style="position: absolute; border-top: 1px solid gray; width: 1024px; bottom: 0; background-color:white;"></div>
 </div>
    <!-- Modal -->
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -61,7 +58,7 @@
            </form>
          </div>
          <div class="modal-footer">
-           <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
            <button type="button" class="btn btn-primary" id="signup">Sign up</button>
          </div>
        </div>
@@ -90,7 +87,7 @@
            </form>
          </div>
          <div class="modal-footer">
-           <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
            <button type="button" class="btn btn-primary" id="login">LOGIN</button>
          </div>
        </div>
@@ -110,14 +107,6 @@ $("#showmenu").click(function(e){
          }
       });
 </script>
-<script>
-	$("#myalbumbtn").click(function() {
-	  $("#containers").empty();
-	  $("#containers").load("myalbumlist.html");
-	});
-	</script>
-
-
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -132,6 +121,35 @@ $("#showmenu").click(function(e){
   })();
 
 </script>
+
+<script>
+  var tnum = 0;
+  if (tnum == 0) {
+  $("#myalbumbtn").click(function() {
+     console.log(tnum);
+    tnum++;
+    $("#containers").empty();
+    $("#containers").load("myalbumlist.html"); 
+    
+
+    $.getJSON('album/albumlist.do?member_no='+sessionStorage.getItem('noSession'), function (resultObj) {
+      var table = $("#listTable");
+      for (var album of resultObj.data) {
+        $("<tr>")
+        .html("<td>" + album.a_no + 
+            "</td><td>" + 
+            "<a class='detailLnk' album_no='" + album.a_no + "'>" + album.name + "</a>" +
+            "</td><td><button id='"+ album.a_no +"' class='deleteBtn' type='button' class='btn btn-warning btn-xs'>삭제</button>" + 
+            "</td></tr>"
+        )
+        .appendTo(table);
+
+      }
+    })
+  });
+  }
+</script>
+
 
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel='stylesheet'  href="css/header/header.css" type='text/css'>

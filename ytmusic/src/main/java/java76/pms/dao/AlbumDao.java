@@ -18,6 +18,7 @@ public interface AlbumDao {
   int insertMusic(Map<String,Object> paramMap);
   int updateMusic(Map<String,Object> paramMap);
   int deleteMusic(Map<String,Object> paramMap);
+  int deleteAllMusic(Map<String,Object> paramMap);
   
 }
 

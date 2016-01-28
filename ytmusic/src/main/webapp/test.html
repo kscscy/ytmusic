@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+var a = new Array();
+var b = new Array();
+a = [asdf, wqer, sdxzvc, asfgd];
+b = [0, 0, 0, 0];
+  
+b[1] = a[0];
+
+a[0] = 0;
+
+for(var i = 0; i < a.length; i++) {
+    if (a[i] != 0 && b[i] == 0) {
+			b[i] = a[i];
+		} else if(a[i] != 0 && b[i] != 0) {
+			b[i+1] = a[i];
+		} else if(a[i] == 0 && b[i] == 0) {
+		      b[i] = a[i+1];
+		      a[i+1] = 0;
+	  } 
+}
+//초 기화전
+console.log(a);
+a = b;
+console.log(b);
+
+//초기화 후
+b = [0, 0, 0, 0];
+console.log(a);
+console.log(b);
+
+b[2] = a[1];
+
+a[1] = 0;
+
+for(var i = 0; i < a.length; i++) {
+    if (a[i] != 0 && b[i] == 0) {
+      b[i] = a[i];
+    } else if(a[i] != 0 && b[i] != 0) {
+      b[i+1] = a[i];
+    } else if(a[i] == 0 && b[i] == 0) {
+          b[i] = a[i+1];
+          a[i+1] = 0;
+    } 
+}
+a = b;
+console.log(b);
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+.moreChart_btns {
+	border: none;
+	background-color: transparent;
+	font-size: 17px;
+}
+
+.resultTbody a {
+	font-size: 12px;
+	font-weight: normal;
+	color: black;
+}
+
+.moreChart_tag>th {
+	font-size: 12px;
+	font-weight: 800;
+	color: gray;
+}
+
+.moreChart_tag>th:nth-child(4+n) {
+	text-align: center;
+	width: 100px;
+}
+
+.moreChart_tag>th:nth-child(3) {
+	padding-left: 10px;
+}
+
+.moreChart_tag>th:nth-child(4) {
+	padding-left: 5px;
+}
+
+#moreChart_img {
+	width: 102px;
+	height: 64px position: relative;
+	width: 102px;
+	height: 64px;
+	float: left;
+}
+
+#moreChart_title_p {
+	position: relative;
+	float: left;
+	left: 15px;
+	top: 20px;
+}
+
+.moreChart_tr .btn-default {
+	position: relative;
+	border-radius: 100px;
+}
+
+.moreChart_icon_td {
+	padding-left: 0px;
+	width: 55px;
+}

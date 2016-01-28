@@ -16,9 +16,13 @@ public interface AlbumService {
   		int album_no,int member_no);
   int removeAlbum(int album_no,int member_no);
   
-  int registerMusicIntoAlbum(int album_no, int music_no);
-  int changeMusicFromAlbum(int album_no, int music_no, int seq_no);
-  int removeMusicFromAlbum(int album_no, int music_no);
+  
+  int registerMusicIntoAlbum(int album_no, String music_id);
+  
+  //int changeMusicFromAlbum(int album_no, String music_id);
+  
+  int removeMusicFromAlbum(int album_no, String music_id);
+  int removeAllMusicFromAlbum(int album_no);
 }
 
 

@@ -3,17 +3,16 @@
   .chartList_a {
     color: black;
   }
-  a {
-    color:black;
-    font-size:;
-    font-weight: normal;
-  }
   
   .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: middle;
     border-top: 1px solid #ddd;
+
+    color:black;
+    font-weight: normal;
+    font-size: 12px;
     }
     
     p {
@@ -24,18 +23,53 @@
       display: none;
     }
     
-    .chart:HOVER .chartImg {
-      display: inline;
-    }
     
+	  .chart {
+	  font-size: 12px;
+	  }
     .chartTitle {
+      display: block;
+    }
+    .chart:HOVER .chartImg {
       display: inline;
     }
     .chart:HOVER .chartTitle {
       display: none;
+    } 
+
+    .chart.hover .chartImg {
+      display: block;
+    }
+    .chart.hover .chartTitle {
+      display: none;
     }
 
+  
+  
+/* 차트 css */  
+.chart_tag p:nth-child(1){
+  width: 100px;
+  position: absolute;
+  left: 0;
+  padding-top: 3px;
+  padding-left: 7px;
+}
+.melonChart_more{
+  position: relative;
+  float: right;
+  right: 0;
+  width: 44px;
+  font-size: 11px;
+  padding-top: 7px;
+  background-color: transparent;
+  border: none;
+}
+.chart_tag {
+  height: 36px;
+  position: relative;
+}
 
-  .chart {
-  font-size: 12px;
-  }
+.chart button {
+	background-color: transparent;
+  border: none;
+}

@@ -86,7 +86,7 @@
       var request = gapi.client.youtube.playlistItems
           .list(requestOptions);
         
-      count++;
+/*      count++;
       if (count < 2) {
 
         request.execute(function(response) {
@@ -97,54 +97,55 @@
             document.body.appendChild(s3);
             //console.log("appended");
         });
-      } else {
-        request.execute(function(response) {
+      } else {*/
+    request.execute(function(response) {
+        
+    	// 리스트 슬라이더 js 호출
+      var playlistItems = response.result.items;
+      
+      if (playlistItems) {
+        $('#categories').empty();
+        
+        $.each(playlistItems, function(index, item) {
+           // console.log(liCountId2);
+            if(liCountId == 0) {
+              liCountId2 = liCountId;  
+              li = '<ul class="sliderimage" id=ulCountId-'+liCountId2+' style="padding-left:30px; left:0px;"><li class="liCon_1" id=liCountId-'+liCountId2+'></li></ul>';
+              $('#categories').append(li);
+            } else if(liCountId % 10 == 0) {
+              liCountId2 = liCountId;  
+              li = '<ul class="sliderimage" id=ulCountId-'+liCountId2+' style="padding-left:30px; right:0px;"><li class="liCon_1" id=liCountId-'+liCountId2+'></li></ul>';
+              $('#categories').append(li);
+            }
             
-        	// 리스트 슬라이더 js 호출
-          var playlistItems = response.result.items;
-          if (playlistItems) {
-            $('#categories').empty();
+            ++liCountId;
+            displayResult(item.snippet);
             
-            $.each(playlistItems, function(index, item) {
-               // console.log(liCountId2);
-                if(liCountId == 0) {
-                  liCountId2 = liCountId;  
-                  li = '<ul class="sliderimage" id=ulCountId-'+liCountId2+' style="padding-left:30px; left:0px;"><li class="liCon_1" id=liCountId-'+liCountId2+'></li></ul>';
-                  $('#categories').append(li);
-                } else if(liCountId % 10 == 0) {
-                  liCountId2 = liCountId;  
-                  li = '<ul class="sliderimage" id=ulCountId-'+liCountId2+' style="padding-left:30px; right:0px;"><li class="liCon_1" id=liCountId-'+liCountId2+'></li></ul>';
-                  $('#categories').append(li);
-                }
-                
-                ++liCountId;
-                displayResult(item.snippet);
-                
-             });
-            
-            /*if(scriptCount < 2) {*/
-            	/*scriptCount++;*/
-              var s4 = document.createElement('script');
-              s4.type = "text/javascript";
-              s4.src = "js/slider/jquery-photostack.js";
-              document.body.appendChild(s4);
-              
-              var s3 = document.createElement('script');
-              s3.type = "text/javascript";
-              s3.src = "js/main-slider.js";
-              document.body.appendChild(s3);
-            /*}*/
+         });
+        
+        /*if(scriptCount < 2) {*/
+        	/*scriptCount++;*/
+          var s4 = document.createElement('script');
+          s4.type = "text/javascript";
+          s4.src = "js/slider/jquery-photostack.js";
+          document.body.appendChild(s4);
+          
+          var s3 = document.createElement('script');
+          s3.type = "text/javascript";
+          s3.src = "js/main-slider.js";
+          document.body.appendChild(s3);
+        /*}*/
 
-           } else {
-          $('#categories').append('Sorry you have no uploaded videos');
-          }
-        });
-        liCountId = 0;
-        liCountId2 = 1;
-        count = 0;
-        songCount = 1;
+       } else {
+      $('#categories').append('Sorry you have no uploaded videos');
       }
-    }
+    });
+    liCountId = 0;
+    liCountId2 = 1;
+    count = 0;
+    songCount = 1;
+  /*}*/
+  }
    
     function displayResult(videoSnippet) {
       var title = videoSnippet.title;
@@ -170,7 +171,7 @@
       vidThumbimg = '<li class="liCon_2" style="">'
       		+'<div class="imgContainer" style="background: url('+vidThumburl+') no-repeat; background-size: 180px 110px; height:110px; width:180px;">'
       	    +'<div class="buttonContainer" style="height:110px; width:180px;">'
-      	    +'<span id="pMusicBtn'+videoId+'" class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""></span>'
+      	    +'<span id="pMusicBtn'+videoId+'" class="glyphicon glyphicon-headphones" aria-hidden="true" style=""></span>'
       	    +'</div></div>'
             /*+'<a href="javascript:playMusic('+result+');"><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/></a>'*/
       	    /*+'<a href="#" onclick=playMusic('+result+')><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style=""/></a>'*/
@@ -191,6 +192,7 @@
       	playMusic(videoSnippet);
       });
       songCount++;
+
    }
 /*    $('#subinfoDropmenu').modal({
     	  backdrop: 'static',
@@ -200,22 +202,48 @@
     
     function dropdownsMenu(songId) {
     	$(".dropdown-menu").remove();
-    	
+   
         var result = songId;
-    	
-    	console.log(songId);
     	var content =
     	  '<ul  class="dropdown-menu">'
         + '<li><a href="#">동영상 보기</a></li>'
         + '<li><a href="#">유투브 페이지</a></li>'
         + '<li><a href="#">재생목록에 추가</a></li>'
         + '<li class="divider"></li>'
-        + '<li><a href="#">내 앨범에 추가 '+result+'</a></li>'
+        + '<li id="albumListTag-'+songId+'" class="albumListTag"><a href="#">내 앨범에 추가 </a></li>'
         + '</ul>'
 
-        console.log(result);
         $('#'+result).append(content);
+    	
+        $(".albumListTag").mouseenter(function(){
+          	dropdownsAlbum("albumListTag-"+songId);
+      	    //$(".albumListTag").css("background-color", "yellow");
+        });
+        $(".albumListTag").mouseleave(function(){
+          	$(".dropdownAlbumList").remove();
+        });
+        $(".dropdown-menu").mouseleave(function(){
+          	$(".dropdown-menu").remove();
+        });
     }
+    
+    function dropdownsAlbum(albumId) {
+        var result = albumId;
+    	var content =
+    	  '<ul  class="dropdownAlbumList">'
+        + '<li ><a  href="#">1월 앨범</a></li>'
+        + '<li ><a  href="#">2월 앨범</a></li>'
+        + '<li ><a  href="#">발라드 앨범</a></li>'
+        + '</ul>'
+
+        $('#'+result).append(content);
+    	
+        /*$(".albumListTag").mouseover(function(){
+          	console.log("mouseover");
+      	    $(".albumListTag").css("background-color", "yellow");
+        });*/
+    }
+    
     
     
     function nextPage() {
@@ -255,4 +283,85 @@
         $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
         console.log("playMusic : 완료");
     }
+    
+    function keyWordsearch(){
+    	console.log("keyWordsearch()-호출");
+        gapi.client.setApiKey('AIzaSyDBgX7Mi8lKTH5pSvx3L_hhz8bCxP2-WP0');
+        gapi.client.load('youtube', 'v3', function() {
+        	$("#mainWrapper").empty();
+                makeSearchResult();
+        });
+    }
+    
+    function makeSearchResult() {
+    	console.log("makeSearchResult()-호출");
+
+        var q = $('#query').val();
+        var request = gapi.client.youtube.search.list({
+                   q: q,
+                part: 'snippet',
+                 maxResults: 30
+        });
+        
+        request.execute(function(response) {
+                var str = JSON.stringify(response.result);
+                //$('#search-container').html('<pre>' + str + '</pre>');
+                $('#mainContainer').empty();
+                $('#resultTbody').empty();
+                $('#resultThead').empty();
+                
+                var resultItems = response.result.items;
+                //console.log(resultItems);
+                var i = 1;
+                $('#resultThead').append('<tr class="moreChart_tag"><th>선택</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생<br>목록</th><th>앨범</th>');
+                $.each(resultItems, function(index, item) {
+                	if(item.id.kind === "youtube#video") {
+                    	console.log(item);
+                        //displayResult(item.snippet);
+                       var TITLE = item.snippet.title;
+                       var ID = item.id.videoId;
+                       var IMG =  item.snippet.thumbnails.default.url;
+                       
+                       var result = 
+                       	'<tr class="moreChart_tr">'
+                       	+'<td> <input type="checkbox" value='+ID+' name="check"></td>' 
+                       	+'<td>'+i+'</td>'
+                       	
+               	  		+'<td scope="row" class="">'
+               			+'<div class="">'
+               			+'<a title="'+TITLE+'">'
+               			+'<img id="moreChart_img" src="'+IMG+'" alt="'+TITLE+'">'
+               			+'</a>'
+               			+'<p id="moreChart_title_p" class="">'
+               			+'<a href="" title="'+TITLE+'">'+TITLE+'</a>'
+               			+'</p>'
+               			+'</div>'
+               			+'</td>'
+                       	+'<td class="moreChart_icon_td"><button class="moreChart_btns" id="searchMoreBtn'+ID+'" type="button" onclick=playMusic("'+ID+'")>'
+                       	+'<span class="glyphicon glyphicon-headphones" aria-hidden="true">'
+                       	+'</span></button></td>'
+                       	+'<td class="moreChart_icon_td"><button class="moreChart_btns" id="newBtn'+ID+'" type="button" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+ID+'")>'
+                       	+'<span class="glyphicon glyphicon-film" aria-hidden="true">'
+                       	+'</span></button></td>'
+                       	+'<td class="moreChart_icon_td"><button class="moreChart_btns" type="button" >'
+                       	+'<span class="glyphicon glyphicon-plus" aria-hidden="true">'
+                       	+'</span></button></td>'
+                       	+'<td class="moreChart_icon_td"><button class="moreChart_btns" type="button">'
+                       	+'<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">'
+                       	+'</span></button></td>'
+
+                       	+'</tr>' 
+                      $('#resultTbody').append(result);
+                       
+                       var _item2 = {"Y_TITLE" : TITLE, "IMG" : IMG, "ID" : ID};
+                   	  
+                       $('#searchMoreBtn'+ID).click(function() {
+                         	console.log("search play music click");
+                         	playMusic2(_item2);
+                       });
+                       i++;
+                	}
+                });
+        });
+}
     

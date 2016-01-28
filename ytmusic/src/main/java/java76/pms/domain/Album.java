@@ -8,7 +8,6 @@ public class Album implements Serializable {
 	protected int		 album_no;
 	protected int		 member_no;
 	protected String album_name;
-	protected int 	 seq_no;
 	
 	public int getAlbum_no() {
 		return album_no;
@@ -28,12 +27,5 @@ public class Album implements Serializable {
 	public void setAlbum_name(String album_name) {
 		this.album_name = album_name;
 	}
-	public int getSeq_no() {
-		return seq_no;
-	}
-	public void setSeq_no(int seq_no) {
-		this.seq_no = seq_no;
-	}
-	
 	
 }

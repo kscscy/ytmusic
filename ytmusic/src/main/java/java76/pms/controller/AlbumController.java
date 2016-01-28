@@ -30,7 +30,6 @@ public class AlbumController {
   		int member_no) throws Exception {
     
   	List<Album> albums = albumService.getAlbumList(member_no);
-    log.debug("albums? "+albums);
     
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("status", "success");
@@ -42,9 +41,7 @@ public class AlbumController {
   @RequestMapping(value="musiclist", method=RequestMethod.GET)
   public Object musicList(
   		int album_no) throws Exception {
-  	log.debug(album_no);
   	List<Music> musics = albumService.getMusicListByAlbum(album_no);
-  	log.debug(musics);
   	
   	HashMap<String,Object> resultMap = new HashMap<>();
   	resultMap.put("status", "success");
@@ -53,11 +50,6 @@ public class AlbumController {
   	return resultMap;
   }
   
-  
-  /*@RequestMapping(value="ad", method=RequestMethod.GET)
-  public String form() {
-    return "board/BoardForm";
-  }*/
       
   @RequestMapping(value="addalbum", method=RequestMethod.POST)
   public AjaxResult addAlbum(Album album) throws Exception {
@@ -88,27 +80,38 @@ public class AlbumController {
   }
   /* album music 구분선 */
   @RequestMapping(value="addmusic", method=RequestMethod.POST)
-  public AjaxResult addMusic(int album_no, int music_no) throws Exception {
+  public AjaxResult addMusic(int album_no, String music_id) throws Exception {
     
-    if (albumService.registerMusicIntoAlbum(album_no, music_no) <= 0) {
+    if (albumService.registerMusicIntoAlbum(album_no, music_id) <= 0) {
     	new AjaxResult("failure", null);
     }
     return new AjaxResult("success", null);
   }
   
+  /*
   @RequestMapping(value="updatemusic", method=RequestMethod.POST)
   public AjaxResult updateMusic(int album_no, int music_no, int seq_no) throws Exception {
-    
+    log.debug("seq_no :"  + seq_no + " album_no : "+album_no + " music_no :" + music_no);
     if (albumService.changeMusicFromAlbum(album_no, music_no, seq_no) <= 0) {
       return new AjaxResult("failure", null);
     } 
     return new AjaxResult("success", null);
   }
+  */
   
   @RequestMapping(value="deletemusic", method=RequestMethod.POST)
-  public AjaxResult deleteMusic(int album_no, int music_no) throws Exception {
+  public AjaxResult deleteMusic(int album_no, String music_id) throws Exception {
   	
-    if (albumService.removeMusicFromAlbum(album_no, music_no) <= 0) {
+    if (albumService.removeMusicFromAlbum(album_no, music_id) <= 0) {
+      return new AjaxResult("failure", null);
+    } 
+    return new AjaxResult("success", null);
+  }
+  
+  @RequestMapping(value="deleteallmusic", method=RequestMethod.POST)
+  public AjaxResult deleteAllMusic(int album_no) throws Exception {
+  	
+    if (albumService.removeAllMusicFromAlbum(album_no) <= 0) {
       return new AjaxResult("failure", null);
     } 
     return new AjaxResult("success", null);

@@ -7,13 +7,16 @@ public class Music  implements Serializable {
 
   protected int       music_no;
   protected String 		music_id;
+  protected String    y_title;
   protected String    title;
   protected String    img;
   protected String		audioURL;
   protected String		videoURL;
+  protected String    artist;
   protected int       count;
   protected int       views;
   protected long 			expire;
+  
   
 	public int getMusic_no() {
 		return music_no;
@@ -27,7 +30,16 @@ public class Music  implements Serializable {
 	public void setMusic_id(String music_id) {
 		this.music_id = music_id;
 	}
-	public String getTitle() {
+	
+	public String getY_title() {
+    return y_title;
+  }
+  
+  public void setY_title(String y_title) {
+    this.y_title = y_title;
+  }
+  
+  public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
@@ -69,5 +81,15 @@ public class Music  implements Serializable {
 	public void setExpire(long expire) {
 		this.expire = expire;
 	}
+  public String getArtist() {
+    return artist;
+  }
+  
+  public void setArtist(String artist) {
+    this.artist = artist;
+  }
+  
+	
+	
   
 }

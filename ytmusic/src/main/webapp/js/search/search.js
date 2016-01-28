@@ -53,7 +53,7 @@
       	
          $('#resultTbody').empty();
          $('#resultThead').empty();
-         $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>썸네일</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
+         $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>앨범</th><th>다운</th>');
         $.each(playlistItems, function(index, item) {
           var title = item.snippet.title;
           var videoId = item.snippet.resourceId.videoId;
@@ -79,10 +79,8 @@
 
     
     $('#resultTbody').append('<tr> <th scope="row"></th> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-primary btn-lg" onclick=playMusic("'+videoId+'")>'+'음악 재생'+'</button></td><td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")>동영상 재생</button></td></tr>');
-    
-    
   }
-
+/*
   // Retrieve the next page of videos in the playlist.
   function nextPage() {
     requestVideoPlaylist(playlistId, nextPageToken);
@@ -91,7 +89,7 @@
   // Retrieve the previous page of videos in the playlist.
   function previousPage() {
     requestVideoPlaylist(playlistId, prevPageToken);
-  }
+  }*/
   
 
     function getChartList(chartListId){
@@ -126,24 +124,60 @@
                     var resultItems = response.result.items;
                     //console.log(resultItems);
                     var i = 1;
-                    $('#resultThead').append('<tr><th>선택</th><th>번호</th><th>썸네일</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생목록</th><th>내앨범</th><th>다운</th>');
+                    $('#resultThead').append('<tr class="moreChart_tag"><th>선택</th><th>번호</th><th>제목</th><th>듣기</th><th>뮤비</th><th>재생<br>목록</th><th>앨범</th>');
                     $.each(resultItems, function(index, item) {
+                    	console.log(item);
                        //displayResult(item.snippet);
-                      title = item.snippet.title;
-                      videoId = item.id.videoId;
-                      vidThumburl =  item.snippet.thumbnails.default.url;
-                      vidThumbimg = '<img id="thumb" src="'+vidThumburl+'" alt="No  Image Available." style="width:102px;height:64px">';
+                      var TITLE = item.snippet.title;
+                      var ID = item.id.videoId;
+                      var IMG =  item.snippet.thumbnails.default.url;
                       
-                      $('#resultTbody').append('<tr> <td> <input type="checkbox" value='+videoId+' name="check"> </td> <td>'+i+'</td> <td>'+vidThumbimg+'</td> <td>'+title+'</td>'+'<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" onclick=playMusic("'+videoId+'")><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></button></td>'+              '<td><button id="newBtn'+videoId+'" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+videoId+'")><span class="glyphicon glyphicon-film" aria-hidden="true"></span></button></td>'                 +'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button></td>'+'<td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></button></td>');
+                      var result = 
+                      	'<tr class="moreChart_tr">'
+                      	+'<td> <input type="checkbox" value='+ID+' name="check"></td>' 
+                      	+'<td>'+i+'</td>'
+                      	
+              	  		+'<td scope="row" class="">'
+              			+'<div class="">'
+              			+'<a title="'+TITLE+'">'
+              			+'<img id="moreChart_img" src="'+IMG+'" alt="'+TITLE+'">'
+              			+'</a>'
+              			+'<p id="moreChart_title_p" class="">'
+              			+'<a href="" title="'+TITLE+'">'+TITLE+'</a>'
+              			+'</p>'
+              			+'</div>'
+              			+'</td>'
+                      	+'<td class="moreChart_icon_td"><button class="moreChart_btns" id="searchMoreBtn'+ID+'" type="button" onclick=playMusic("'+ID+'")>'
+                      	+'<span class="glyphicon glyphicon-headphones" aria-hidden="true">'
+                      	+'</span></button></td>'
+                      	+'<td class="moreChart_icon_td"><button class="moreChart_btns" id="newBtn'+ID+'" type="button" data-toggle="modal" data-target="#myModal" onclick=playVideo("'+ID+'")>'
+                      	+'<span class="glyphicon glyphicon-film" aria-hidden="true">'
+                      	+'</span></button></td>'
+                      	+'<td class="moreChart_icon_td"><button class="moreChart_btns" type="button" >'
+                      	+'<span class="glyphicon glyphicon-plus" aria-hidden="true">'
+                      	+'</span></button></td>'
+                      	+'<td class="moreChart_icon_td"><button class="moreChart_btns" type="button">'
+                      	+'<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">'
+                      	+'</span></button></td>'
+   
+                      	+'</tr>' 
+                     $('#resultTbody').append(result);
+                      
+                      var _item2 = {"Y_TITLE" : TITLE, "IMG" : IMG, "ID" : ID};
+                  	  
+                      $('#searchMoreBtn'+ID).click(function() {
+                        	console.log("search play music click");
+                        	playMusic2(_item2);
+                      });
                       i++;
                     });
             });
     }
 
-    
+/*    
    
     function playMusic(vid) {
-       /* $.post('ajax/musicPlay.do', {
+        $.post('ajax/musicPlay.do', {
           vid: vid
        }, function(resultObj) {
           var ajaxResult = resultObj.ajaxResult;
@@ -159,7 +193,7 @@
              .html('<video controls="" autoplay="" name="media"><source src = '+musicUrl+ ' type="audio/webm"></video>')
                 .appendTo(footer);
          
-       }, 'json');  */
+       }, 'json');  
        
        
        
@@ -179,8 +213,8 @@
            $(footer).append('<a href="'+musicUrl+'" download="aaac.aac">다운로드</a>');
          
        }); 
-    }
-   
+    }*/
+   /*
     function playVideo(vid) {
         $.getJSON('music/ajax/videoPlay.do?vid='+vid, function(resultObj) {
           var ajaxResult = resultObj.ajaxResult;
@@ -199,7 +233,7 @@
     
     $('#myModal').click(function () {
        $('.modal-body').empty();
-    });
+    });*/
 
   
   

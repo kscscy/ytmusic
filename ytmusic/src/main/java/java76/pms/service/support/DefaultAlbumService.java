@@ -62,27 +62,38 @@ public class DefaultAlbumService implements AlbumService {
 	}
 
 	@Override
-	public int registerMusicIntoAlbum(int album_no, int music_no) {
+	public int registerMusicIntoAlbum(int album_no, String music_id) {
 		log.debug("registerMusicIntoAlbum() 호출됨");
 		
 		HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("a_no", album_no);
-    paramMap.put("mu_no", music_no);
+    paramMap.put("id", music_id);
     
 		return albumDao.insertMusic(paramMap);
 	}
 
 	@Override
-	public int removeMusicFromAlbum(int album_no, int music_no) {
+	public int removeMusicFromAlbum(int album_no, String music_id) {
 		log.debug("removeMusicFromAlbum() 호출됨");
 		
 		HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("a_no", album_no);
-    paramMap.put("mu_no", music_no);
+    paramMap.put("id", music_id);
     
 		return albumDao.deleteMusic(paramMap);
 	}
 
+	@Override
+	public int removeAllMusicFromAlbum(int album_no) {
+		log.debug("removeAllMusicFromAlbum() 호출됨");
+		
+		HashMap<String,Object> paramMap = new HashMap<>();
+    paramMap.put("a_no", album_no);
+    
+		return albumDao.deleteAllMusic(paramMap);
+	}
+
+	/*
 	@Override
 	public int changeMusicFromAlbum(int album_no, int music_no, int seq_no) {
 		log.debug("changeMusicFromAlbum() 호출됨");
@@ -94,7 +105,7 @@ public class DefaultAlbumService implements AlbumService {
     
 		return albumDao.updateMusic(paramMap);
 	}
-
+	*/
 
 }
 

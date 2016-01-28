@@ -361,7 +361,7 @@ function ($, window, undefined) {
                     if (jqXHR.status === 0 ) {
                         alert("jqXHR.status 0: Network Problem");
                     } else if (jqXHR.status === 401) {
-                        alert("jqXHR.status 401: Unauthorized");
+                        alert("jqXHR.status 401: Unauthorized?");
                         // location.href = "https://developers.skplanetx.com/login/";
                     } else if (jqXHR.status === 403) {
                         alert("jqXHR.status 403: Forbidden");
@@ -382,7 +382,7 @@ function ($, window, undefined) {
             var defaultSetting = {
                 beforeSend: function(xhr) {
                     /*xhr.setRequestHeader( "appKey", that._getAppkey( ) );*/
-                	xhr.setRequestHeader( "appKey", "eccc19db-10eb-3194-88f4-9e80d9d368c4");
+                	xhr.setRequestHeader( "appKey", "2f6df8cf-4753-3e98-8751-7db39b087571");
                 },
                 data: {
                     "version": 1

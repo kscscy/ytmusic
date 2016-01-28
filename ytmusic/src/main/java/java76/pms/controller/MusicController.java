@@ -30,6 +30,61 @@ public class MusicController {
    
   private static final Logger log = Logger.getLogger(MusicController.class);  
   
+  HashMap<String, String> splitTitleArtist(String str) {
+    HashMap<String, String> map = new HashMap<>();
+    String artist = "";
+    String title = "";
+    
+    String tempArtist = "";
+    String tempArtist2 = "";
+        
+    
+    if(str.contains("-") || str.contains("–") || str.contains("_") || str.contains("--")) {
+        String[] titleSplit = str.split("-");
+        if(titleSplit.length == 2) {
+          artist = titleSplit[0];
+          title = titleSplit[1];
+        }        
+        if(titleSplit.length == 1) {
+          titleSplit = str.split("–");
+          if(titleSplit.length == 2) {
+            artist = titleSplit[0];
+            title = titleSplit[1];
+          }
+        }
+        if (titleSplit.length == 1){
+          titleSplit = str.split("_");
+          if(titleSplit.length == 2) {
+            artist = titleSplit[0];
+            title = titleSplit[1];
+          }
+        }
+        if (titleSplit.length == 1){
+          titleSplit = str.split("--");
+          if(titleSplit.length == 2) {
+            artist = titleSplit[0];
+            title = titleSplit[1];
+          }
+        }
+        
+        if (titleSplit.length > 2){
+          title = str;
+          artist = "이름 없음";
+        }
+        
+    } else {
+      title = str;
+      artist = "이름 없음";
+    }
+    
+    if (artist.length() > title.length()) {
+      
+    }
+    map.put("title", title);
+    map.put("artist", artist);
+    return map;
+  }
+  
   String getUrl(String musicUrl) {
     String result = null;
     try {
@@ -93,12 +148,25 @@ public class MusicController {
     }
     log.debug("music 저장");
     String url = getUrl(musicUrl);
-    long expire = Long.parseLong(url.split("expire=")[1].substring(0,10))*1000;
+    
+    String expireStr = "";
+    try {
+      expireStr = url.split("expire=")[1].substring(0,10);
+    } catch (Exception e) {
+      expireStr = url.split("expire/")[1].substring(0,10);
+    }
+    
+    long expire = Long.parseLong(expireStr)*1000;
     music = new Music();
     music.setMusic_id(object.getMusic_id());
     music.setImg(object.getImg());
     music.setCount(1);
-    music.setTitle(object.getTitle());
+    log.debug(object.getTitle());
+    HashMap<String, String> map = splitTitleArtist(object.getTitle());
+    music.setY_title(object.getTitle());
+    music.setTitle(map.get("title"));
+    music.setArtist(map.get("artist"));
+
     music.setViews(object.getViews());
     music.setExpire(expire);
     music.setAudioURL(url);
@@ -157,8 +225,6 @@ public class MusicController {
     return new AjaxResult("success", videoUrl1);
   }
 
-  
-  
   
   
   @RequestMapping("list")
